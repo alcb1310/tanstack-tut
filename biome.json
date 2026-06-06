@@ -6,7 +6,8 @@
 		"useIgnoreFile": true
 	},
 	"files": {
-		"ignoreUnknown": false
+		"ignoreUnknown": false,
+		"includes": ["**/*", "!**/*.gen.ts", "!src/components/ui/*"]
 	},
 	"formatter": {
 		"enabled": true,
@@ -18,10 +19,17 @@
 			"recommended": true
 		}
 	},
+	"css": {
+		"parser": {
+			"tailwindDirectives": true
+		}
+	},
 	"javascript": {
 		"formatter": {
 			"quoteStyle": "double",
-			"semicolons": "asNeeded"
+			"semicolons": "asNeeded",
+			"jsxQuoteStyle": "single",
+			"arrowParentheses": "asNeeded"
 		}
 	},
 	"assist": {
