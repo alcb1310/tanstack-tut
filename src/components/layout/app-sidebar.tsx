@@ -1,8 +1,20 @@
 import { Link } from "@tanstack/react-router"
 import {
+	BanknoteArrowDownIcon,
+	BrickWallIcon,
+	CableIcon,
+	ChartBarStackedIcon,
 	ChartCandlestickIcon,
+	ChartSplineIcon,
 	ChevronRightIcon,
+	ClipboardClockIcon,
+	FolderKanbanIcon,
+	FolderOpenIcon,
+	LayoutListIcon,
 	ReceiptTextIcon,
+	ScaleIcon,
+	ShellIcon,
+	ShoppingBasketIcon,
 	ShoppingCartIcon,
 	type LucideProps,
 } from "lucide-react"
@@ -61,6 +73,81 @@ const menuData: DataType[] = [
 				title: "Cierre mensual",
 				url: "/transacciones/cierre",
 				icon: ChartCandlestickIcon,
+			},
+		],
+	},
+	{
+		title: "Reportes",
+		items: [
+			{
+				title: "Actual",
+				url: "/reportes/actual",
+				icon: FolderOpenIcon,
+			},
+			{
+				title: "Cuadre",
+				url: "/reportes/cuadre",
+				icon: ScaleIcon,
+			},
+			{
+				title: "Gastado por Partida",
+				url: "/reportes/gastado-por-partida",
+				icon: BanknoteArrowDownIcon,
+			},
+			{
+				title: "Histórico",
+				url: "/reportes/historico",
+				icon: ClipboardClockIcon,
+			},
+		],
+	},
+	{
+		title: "Parámetros",
+		items: [
+			{
+				title: "Categorias",
+				url: "/parametros/categorias",
+				icon: ChartBarStackedIcon,
+			},
+			{
+				title: "Materiales",
+				url: "/parametros/materiales",
+				icon: BrickWallIcon,
+			},
+			{
+				title: "Partidas",
+				url: "/parametros/partidas",
+				icon: LayoutListIcon,
+			},
+			{
+				title: "Proyectos",
+				url: "/parametros/proyectos",
+				icon: FolderKanbanIcon,
+			},
+			{
+				title: "Proveedores",
+				url: "/parametros/proveedores",
+				icon: CableIcon,
+			},
+			{
+				title: "Rubros",
+				url: "/parametros/rubros",
+				icon: ShoppingBasketIcon,
+			},
+		],
+	},
+	{
+		title: "Analisis",
+		items: [
+			{
+				title: "Cantidades",
+				url: "/analisis/cantidades",
+				icon: ShellIcon,
+			},
+			{
+				title: "Analisis",
+				url: "/analisis/analisis",
+				icon: ChartSplineIcon,
 			},
 		],
 	},
