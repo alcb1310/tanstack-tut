@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as AuthedRouteRouteImport } from './routes/_authed/route'
 import { Route as AuthedIndexRouteImport } from './routes/_authed/index'
 import { Route as AuthedTransaccionesPresupuestoRouteImport } from './routes/_authed/transacciones/presupuesto'
@@ -26,6 +27,11 @@ import { Route as AuthedParametrosCategoriasRouteImport } from './routes/_authed
 import { Route as AuthedAnalisisCantidadesRouteImport } from './routes/_authed/analisis/cantidades'
 import { Route as AuthedAnalisisAnalisisRouteImport } from './routes/_authed/analisis/analisis'
 
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthedRouteRoute = AuthedRouteRouteImport.update({
   id: '/_authed',
   getParentRoute: () => rootRouteImport,
@@ -117,6 +123,7 @@ const AuthedAnalisisAnalisisRoute = AuthedAnalisisAnalisisRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof AuthedIndexRoute
+  '/login': typeof LoginRoute
   '/analisis/analisis': typeof AuthedAnalisisAnalisisRoute
   '/analisis/cantidades': typeof AuthedAnalisisCantidadesRoute
   '/parametros/categorias': typeof AuthedParametrosCategoriasRoute
@@ -133,6 +140,7 @@ export interface FileRoutesByFullPath {
   '/transacciones/presupuesto': typeof AuthedTransaccionesPresupuestoRoute
 }
 export interface FileRoutesByTo {
+  '/login': typeof LoginRoute
   '/': typeof AuthedIndexRoute
   '/analisis/analisis': typeof AuthedAnalisisAnalisisRoute
   '/analisis/cantidades': typeof AuthedAnalisisCantidadesRoute
@@ -152,6 +160,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_authed': typeof AuthedRouteRouteWithChildren
+  '/login': typeof LoginRoute
   '/_authed/': typeof AuthedIndexRoute
   '/_authed/analisis/analisis': typeof AuthedAnalisisAnalisisRoute
   '/_authed/analisis/cantidades': typeof AuthedAnalisisCantidadesRoute
@@ -172,6 +181,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/login'
     | '/analisis/analisis'
     | '/analisis/cantidades'
     | '/parametros/categorias'
@@ -188,6 +198,7 @@ export interface FileRouteTypes {
     | '/transacciones/presupuesto'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | '/login'
     | '/'
     | '/analisis/analisis'
     | '/analisis/cantidades'
@@ -206,6 +217,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/_authed'
+    | '/login'
     | '/_authed/'
     | '/_authed/analisis/analisis'
     | '/_authed/analisis/cantidades'
@@ -225,10 +237,18 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   AuthedRouteRoute: typeof AuthedRouteRouteWithChildren
+  LoginRoute: typeof LoginRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authed': {
       id: '/_authed'
       path: ''
@@ -386,6 +406,7 @@ const AuthedRouteRouteWithChildren = AuthedRouteRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   AuthedRouteRoute: AuthedRouteRouteWithChildren,
+  LoginRoute: LoginRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
