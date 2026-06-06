@@ -1,6 +1,9 @@
 ---
 lockfileVersion: '9.0'
 
+onlyBuiltDependencies:
+  - msw
+
 importers:
 
   .:
@@ -2588,6 +2591,7 @@ packages:
     resolution: {integrity: sha512-ALe+N10S72cyx94cMcy3Zs4HhXCj35sgeAL4c+WTvKi0zWnbd8/h0lcFqv0mb2P+aSgAdD7p9HzvA0DiUPxsyg==}
     engines: {node: '>=18'}
     hasBin: true
+    requiresBuild: true
     peerDependencies:
       typescript: '>= 4.8.x'
     peerDependenciesMeta:
@@ -5638,6 +5642,7 @@ snapshots:
       typescript: 6.0.3
     transitivePeerDependencies:
       - '@types/node'
+    requiresBuild: true
 
   mute-stream@3.0.0: {}
 
