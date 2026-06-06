@@ -4,6 +4,7 @@ import {
 	SidebarProvider,
 	SidebarTrigger,
 } from "@/components/ui/sidebar"
+import { AppSidebar } from "@/components/layout/app-sidebar"
 
 export const Route = createFileRoute("/_authed")({
 	component: RouteComponent,
@@ -12,6 +13,7 @@ export const Route = createFileRoute("/_authed")({
 function RouteComponent() {
 	return (
 		<SidebarProvider>
+			<AppSidebar />
 			<SidebarInset>
 				<header className='flex h-16 shrink-0 items-center gap-2 border-b px-4'>
 					<SidebarTrigger className='-ml-1' />
