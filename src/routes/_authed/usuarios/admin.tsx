@@ -1,14 +1,14 @@
 import { useSuspenseQuery } from "@tanstack/react-query"
 import { createFileRoute } from "@tanstack/react-router"
 import type { ColumnDef } from "@tanstack/react-table"
-import { DeleteIcon, EditIcon, PlusIcon } from "lucide-react"
+import { DeleteIcon } from "lucide-react"
 import PageTitle from "@/components/layout/page-title"
 import { DataTable } from "@/components/table/data-table"
-import { Button } from "@/components/ui/button"
 import { Spinner } from "@/components/ui/spinner"
+import { UserCreateDrawer } from "@/drawers/usuarios/crear-usuario"
+import { UserEditDrawer } from "@/drawers/usuarios/editar-usuario"
 import { GetAllUsers } from "@/queries/user"
 import type { UserResponse } from "@/types/user"
-import { UserCreateDrawer } from "@/drawers/usuarios/crear-usuario"
 
 export const Route = createFileRoute("/_authed/usuarios/admin")({
 	component: RouteComponent,
@@ -44,7 +44,7 @@ function RouteComponent() {
 
 				return (
 					<div className='flex px-3 justify-end items-center gap-2'>
-						<EditIcon size={16} className='text-yellow-600' />
+						<UserEditDrawer user={usuario} />
 						<DeleteIcon size={16} className='text-red-600' />
 					</div>
 				)
