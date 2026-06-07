@@ -23,3 +23,24 @@ export const GetAllProjects = createServerFn({ method: "GET" })
 		})
 		return response.json()
 	})
+
+export const CreateProject = createServerFn({ method: "POST" })
+	.inputValidator((data: ProjectType) => data)
+	.handler(async ({ data }) => {
+		const token = getCookie(cookieName)
+
+		const response = await fetch(`${URL}/parametros/proyectos`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+			body: JSON.stringify(data),
+		})
+		if (!response.ok) {
+			const data = await response.json()
+			throw new Error(data.error)
+		}
+
+		return
+	})
