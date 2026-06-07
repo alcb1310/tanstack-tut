@@ -1,6 +1,6 @@
 import { createServerFn } from "@tanstack/react-start"
 import { getCookie } from "@tanstack/react-start/server"
-import type { BudgetItemResponse } from "@/types/partidas"
+import type { BudgetItem, BudgetItemResponse } from "@/types/partidas"
 
 const URL = import.meta.env.VITE_BACKEND_SERVER
 const cookieName = "BCA-TOKEN"
@@ -32,3 +32,25 @@ export const GetAllPartidas = createServerFn({ method: "GET" })
 			return response.json()
 		},
 	)
+
+export const CreatePartida = createServerFn({ method: "POST" })
+	.inputValidator((data: BudgetItem) => data)
+	.handler(async ({ data }) => {
+		const token = getCookie(cookieName)
+
+		const response = await fetch(`${URL}/parametros/partidas`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+			body: JSON.stringify(data),
+		})
+
+		if (!response.ok) {
+			const data = await response.json()
+			throw new Error(data.error)
+		}
+
+		return
+	})
