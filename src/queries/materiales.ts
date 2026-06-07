@@ -47,3 +47,26 @@ export const CreateMaterial = createServerFn({ method: "POST" })
 
 		return
 	})
+
+export const UpdateMaterial = createServerFn({ method: "POST" })
+	.inputValidator((data: MaterialType) => data)
+	.handler(async ({ data }) => {
+		const token = getCookie(cookieName)
+
+		const response = await fetch(`${URL}/parametros/materiales/${data.id}`, {
+			method: "PUT",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+			body: JSON.stringify(data),
+		})
+
+		if (!response.ok) {
+			const data = await response.json()
+
+			throw new Error(data.error)
+		}
+
+		return
+	})
