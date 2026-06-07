@@ -8,6 +8,7 @@ import { Spinner } from "@/components/ui/spinner"
 import { MaterialCreateDrawer } from "@/drawers/materiales/crear-material"
 import { GetAllMaterials } from "@/queries/materiales"
 import type { MaterialType } from "@/types/materiales"
+import { MaterialEditDrawer } from "@/drawers/materiales/editar-material"
 
 export const Route = createFileRoute("/_authed/parametros/materiales")({
 	component: RouteComponent,
@@ -48,7 +49,17 @@ function RouteComponent() {
 				const material = row.original
 				if (!material.id) return null
 
-				return <EditIcon size={10} className='text-yellow-600' />
+				return (
+					<MaterialEditDrawer
+						material={{
+							code: material.code,
+							name: material.name,
+							unit: material.unit,
+							id: material.id,
+							category: material.category,
+						}}
+					/>
+				)
 			},
 		},
 	]
