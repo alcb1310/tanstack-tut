@@ -1,4 +1,5 @@
 import { createServerFn } from "@tanstack/react-start"
+import { setCookie } from "@tanstack/react-start/server"
 
 const URL = import.meta.env.VITE_BACKEND_SERVER
 
@@ -29,5 +30,8 @@ export const LoginMutation = createServerFn({ method: "POST" })
 			throw new Error(err.error)
 		}
 
-		return (await response.json()) as LoginResponse
+		const auth = (await response.json()) as LoginResponse
+		setCookie("BCA-TOKEN", auth.token, { httpOnly: true })
+
+		return auth
 	})

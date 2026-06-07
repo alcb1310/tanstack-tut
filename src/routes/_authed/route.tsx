@@ -1,4 +1,6 @@
-import { createFileRoute, Outlet } from "@tanstack/react-router"
+import { createFileRoute, Outlet, redirect } from "@tanstack/react-router"
+import { createServerFn } from "@tanstack/react-start"
+import { getCookie } from "@tanstack/react-start/server"
 import { AppSidebar } from "@/components/layout/app-sidebar"
 import {
 	SidebarInset,
@@ -6,8 +8,25 @@ import {
 	SidebarTrigger,
 } from "@/components/ui/sidebar"
 
+const readCookieFn = createServerFn({ method: "GET" }).handler(async () => {
+	const cookieValue = getCookie("BCA-TOKEN")
+
+	if (!cookieValue) {
+		return { cookieValue: null }
+	}
+	return { cookieValue }
+})
+
 export const Route = createFileRoute("/_authed")({
 	component: RouteComponent,
+	loader: async () => {
+		const token = await readCookieFn()
+		if (!token.cookieValue) {
+			throw redirect({ to: "/login" })
+		}
+
+		return { cookieValue: token }
+	},
 })
 
 function RouteComponent() {
