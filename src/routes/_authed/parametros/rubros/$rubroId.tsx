@@ -20,6 +20,7 @@ import { GetAllRubrosMaterials } from "@/queries/rubro-material"
 import { GetOneRubro, UpdateRubro } from "@/queries/rubros"
 import type { RubroMaterialResponseTye } from "@/types/rubro-material"
 import { type RubrosType, rubrosSchema } from "@/types/rubros"
+import { RubroMaterialCreateDrawer } from "@/drawers/rubro-material/crear-rubro-material"
 
 export const Route = createFileRoute("/_authed/parametros/rubros/$rubroId")({
 	component: RouteComponent,
@@ -203,11 +204,7 @@ function RouteComponent() {
 				</form>
 			</FormBackground>
 			{(isLoading || rubroLoading) && <Spinner />}
-
-			<Button variant='detail' className='my-3'>
-				<PlusIcon size={16} />
-				Agregar Material
-			</Button>
+			<RubroMaterialCreateDrawer item={rubro?.id as string} />
 
 			<DataTable data={data} columns={columns} />
 		</div>
