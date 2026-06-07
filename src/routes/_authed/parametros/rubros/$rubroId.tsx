@@ -9,6 +9,7 @@ import { DataTable } from "@/components/table/data-table"
 import { Button, buttonVariants } from "@/components/ui/button"
 import { FieldGroup, FieldSet } from "@/components/ui/field"
 import { Spinner } from "@/components/ui/spinner"
+import { RubroMaterialDeleteDialog } from "@/drawers/rubro-material/borrar-rubro-material"
 import { RubroMaterialCreateDrawer } from "@/drawers/rubro-material/crear-rubro-material"
 import { RubroMaterialEditDrawer } from "@/drawers/rubro-material/editar-rubro-material"
 import { useAppForm } from "@/hooks/app-form"
@@ -98,12 +99,12 @@ function RouteComponent() {
 							material_name={row.original.material.name}
 							material={material}
 						/>
+						<RubroMaterialDeleteDialog
+							material_name={row.original.material.name}
+							material={material}
+						/>
 					</div>
 				)
-				// <ItemMaterialsDeleteDialog
-				// material_name={row.original.material.name}
-				// material={material}
-				// />
 			},
 		},
 	]
