@@ -3,6 +3,7 @@ import { Link, useNavigate } from "@tanstack/react-router"
 import { createServerFn } from "@tanstack/react-start"
 import { deleteCookie } from "@tanstack/react-start/server"
 import { ChevronsUpDown, LogOutIcon } from "lucide-react"
+import { UserChangePasswordDialog } from "@/drawers/usuarios/cambiar-contrasena"
 import { MeQuery } from "@/queries/user"
 import {
 	DropdownMenu,
@@ -73,6 +74,8 @@ export function UserNav() {
 									</Link>
 								</DropdownMenuItem>
 							))}
+
+							<UserChangePasswordDialog />
 						</DropdownMenuGroup>
 						<DropdownMenuSeparator />
 						<DropdownMenuItem
