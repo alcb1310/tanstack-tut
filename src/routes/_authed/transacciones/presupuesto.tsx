@@ -1,18 +1,17 @@
 import { useQueryClient, useSuspenseQueries } from "@tanstack/react-query"
 import { createFileRoute } from "@tanstack/react-router"
 import type { ColumnDef } from "@tanstack/react-table"
-import { EditIcon, PlusIcon } from "lucide-react"
 import { useEffect, useState } from "react"
 import PageTitle from "@/components/layout/page-title"
 import { DataTable } from "@/components/table/data-table"
-import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { NativeSelect, NativeSelectOption } from "@/components/ui/native-select"
 import { Spinner } from "@/components/ui/spinner"
+import { PresupuestoCreateDrawer } from "@/drawers/presupuesto/crear-presupuesto"
+import { PresupuestoUpdateDrawer } from "@/drawers/presupuesto/editar-presupuesto"
 import { GetAllBudgets } from "@/queries/presupuesto"
 import { GetAllProjects } from "@/queries/proyectos"
 import type { BudgetResponseType } from "@/types/presupuesto"
-import { PresupuestoCreateDrawer } from "@/drawers/presupuesto/crear-presupuesto"
 
 export const Route = createFileRoute("/_authed/transacciones/presupuesto")({
 	component: RouteComponent,
@@ -150,7 +149,7 @@ function RouteComponent() {
 				return (
 					<>
 						{!budget.budget_item.accumulate && (
-							<EditIcon size={16} className='text-yellow-600' />
+							<PresupuestoUpdateDrawer budget={budget} />
 						)}
 					</>
 				)
