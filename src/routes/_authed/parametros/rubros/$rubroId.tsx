@@ -1,13 +1,7 @@
 import { useMutation, useSuspenseQueries } from "@tanstack/react-query"
 import { createFileRoute, Link } from "@tanstack/react-router"
 import type { ColumnDef } from "@tanstack/react-table"
-import {
-	CircleXIcon,
-	DeleteIcon,
-	EditIcon,
-	PlusIcon,
-	SaveIcon,
-} from "lucide-react"
+import { CircleXIcon, SaveIcon } from "lucide-react"
 import { toast } from "sonner"
 import { FormBackground } from "@/components/layout/form-background"
 import PageTitle from "@/components/layout/page-title"
@@ -15,12 +9,16 @@ import { DataTable } from "@/components/table/data-table"
 import { Button, buttonVariants } from "@/components/ui/button"
 import { FieldGroup, FieldSet } from "@/components/ui/field"
 import { Spinner } from "@/components/ui/spinner"
+import { RubroMaterialCreateDrawer } from "@/drawers/rubro-material/crear-rubro-material"
+import { RubroMaterialEditDrawer } from "@/drawers/rubro-material/editar-rubro-material"
 import { useAppForm } from "@/hooks/app-form"
 import { GetAllRubrosMaterials } from "@/queries/rubro-material"
 import { GetOneRubro, UpdateRubro } from "@/queries/rubros"
-import type { RubroMaterialResponseTye } from "@/types/rubro-material"
+import type {
+	RubroMaterialResponseTye,
+	RubroMaterialType,
+} from "@/types/rubro-material"
 import { type RubrosType, rubrosSchema } from "@/types/rubros"
-import { RubroMaterialCreateDrawer } from "@/drawers/rubro-material/crear-rubro-material"
 
 export const Route = createFileRoute("/_authed/parametros/rubros/$rubroId")({
 	component: RouteComponent,
@@ -89,29 +87,23 @@ function RouteComponent() {
 			id: "actions",
 			header: "Acciones",
 			cell: ({ row }) => {
-				const _material: RubroMaterialType = {
+				const material: RubroMaterialType = {
 					item_id: row.original.item.id as string,
 					material_id: row.original.material.id as string,
 					quantity: row.original.quantity,
 				}
 				return (
 					<div className='flex px-3 justify-end items-center gap-2'>
-						<EditIcon size={15} className='text-yellow-600' />
-						<DeleteIcon size={15} className='text-red-600' />
+						<RubroMaterialEditDrawer
+							material_name={row.original.material.name}
+							material={material}
+						/>
 					</div>
 				)
-				// return (
-				// 	<div className='flex px-3 justify-end items-center gap-2'>
-				// 		<ItemMaterialsEditDrawer
-				// 			material_name={row.original.material.name}
-				// 			material={material}
-				// 		/>
-				// 		<ItemMaterialsDeleteDialog
-				// 			material_name={row.original.material.name}
-				// 			material={material}
-				// 		/>
-				// 	</div>
-				// )
+				// <ItemMaterialsDeleteDialog
+				// material_name={row.original.material.name}
+				// material={material}
+				// />
 			},
 		},
 	]
