@@ -1,13 +1,13 @@
 import { useQueryClient, useSuspenseQuery } from "@tanstack/react-query"
 import { createFileRoute } from "@tanstack/react-router"
 import type { ColumnDef } from "@tanstack/react-table"
-import { CheckIcon, EditIcon, PlusIcon, X } from "lucide-react"
+import { CheckIcon, EditIcon, X } from "lucide-react"
 import { useEffect, useState } from "react"
 import PageTitle from "@/components/layout/page-title"
 import { DataTable } from "@/components/table/data-table"
-import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Spinner } from "@/components/ui/spinner"
+import { ProjectCreateDrawer } from "@/drawers/proyectos/crear-proyecto"
 import { GetAllProjects } from "@/queries/proyectos"
 import type { ProjectType } from "@/types/proyectos"
 
@@ -97,11 +97,7 @@ function RouteComponent() {
 			{(isLoading || isFetching) && <Spinner />}
 
 			<div className='flex my-3 justify-start gap-4'>
-				<Button>
-					<PlusIcon size={16} />
-					Crear Partida
-				</Button>
-
+				<ProjectCreateDrawer />
 				<Input
 					placeholder='Buscar'
 					value={query}
