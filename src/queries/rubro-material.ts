@@ -83,3 +83,27 @@ export const UpdateRubroMaterial = createServerFn({ method: "POST" })
 
 		return
 	})
+
+export const DeleteRubroMaterial = createServerFn({ method: "POST" })
+	.inputValidator((data: { rubroId: string; materialId: string }) => data)
+	.handler(async ({ data: { rubroId, materialId } }) => {
+		const token = getCookie(cookieName)
+
+		const response = await fetch(
+			`${URL}/parametros/rubros/${rubroId}/materiales/${materialId}`,
+			{
+				method: "DELETE",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${token}`,
+				},
+			},
+		)
+
+		if (!response.ok) {
+			const error = await response.json()
+			throw new Error(error)
+		}
+
+		return
+	})
