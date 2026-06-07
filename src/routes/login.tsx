@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query"
-import { createFileRoute } from "@tanstack/react-router"
+import { createFileRoute, useNavigate } from "@tanstack/react-router"
 import { toast } from "sonner"
 import z from "zod"
 import {
@@ -27,10 +27,12 @@ const inputSchema = z.object({
 })
 
 function RouteComponent() {
+	const navigation = useNavigate()
+
 	const loginMutation = useMutation({
 		mutationFn: LoginMutation,
 		onSuccess: () => {
-			toast.success("login exitoso")
+			navigation({ to: "/" })
 		},
 		onError: error => {
 			toast.error(error.message, {
