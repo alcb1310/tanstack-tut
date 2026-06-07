@@ -94,6 +94,28 @@ export const UpdateUser = createServerFn({ method: "POST" })
 		return
 	})
 
+export const UpdatePassword = createServerFn({ method: "POST" })
+	.inputValidator((data: { password: string }) => data)
+	.handler(async ({ data }) => {
+		const token = getCookie(cookieName)
+
+		const response = await fetch(`${URL}/users`, {
+			method: "PUT",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+			body: JSON.stringify(data),
+		})
+
+		if (!response.ok) {
+			const data = await response.json()
+			throw new Error(data.error)
+		}
+
+		return
+	})
+
 export const DeleteUser = createServerFn({ method: "POST" })
 	.inputValidator((data: { id: string }) => data)
 	.handler(async ({ data: { id } }) => {
