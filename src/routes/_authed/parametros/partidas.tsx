@@ -8,9 +8,9 @@ import { DataTable } from "@/components/table/data-table"
 import { Input } from "@/components/ui/input"
 import { Spinner } from "@/components/ui/spinner"
 import { PartidaCreateDrawer } from "@/drawers/partidas/crear-partida"
+import { PartidaEditDrawer } from "@/drawers/partidas/editar-partida"
 import { GetAllPartidas } from "@/queries/partidas"
 import type { BudgetItemResponse } from "@/types/partidas"
-import { PartidaEditDrawer } from "@/drawers/partidas/editar-partida"
 
 export const Route = createFileRoute("/_authed/parametros/partidas")({
 	component: RouteComponent,

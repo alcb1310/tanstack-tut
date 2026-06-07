@@ -15,13 +15,13 @@ import {
 } from "@/components/ui/drawer"
 import { Field, FieldGroup, FieldLabel, FieldSet } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
+import { Switch } from "@/components/ui/switch"
 import { useAppForm } from "@/hooks/app-form"
 import { UpdatePartida } from "@/queries/partidas"
 import {
 	type BudgetItemResponse,
 	budgetItemUpdateSchema,
 } from "@/types/partidas"
-import { Switch } from "@/components/ui/switch"
 
 type PartidaEditDrawerProps = {
 	partida: BudgetItemResponse
