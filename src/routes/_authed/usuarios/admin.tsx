@@ -1,10 +1,10 @@
 import { useSuspenseQuery } from "@tanstack/react-query"
 import { createFileRoute } from "@tanstack/react-router"
 import type { ColumnDef } from "@tanstack/react-table"
-import { DeleteIcon } from "lucide-react"
 import PageTitle from "@/components/layout/page-title"
 import { DataTable } from "@/components/table/data-table"
 import { Spinner } from "@/components/ui/spinner"
+import { UserDeleteDialog } from "@/drawers/usuarios/borrar-usuario"
 import { UserCreateDrawer } from "@/drawers/usuarios/crear-usuario"
 import { UserEditDrawer } from "@/drawers/usuarios/editar-usuario"
 import { GetAllUsers } from "@/queries/user"
@@ -45,7 +45,7 @@ function RouteComponent() {
 				return (
 					<div className='flex px-3 justify-end items-center gap-2'>
 						<UserEditDrawer user={usuario} />
-						<DeleteIcon size={16} className='text-red-600' />
+						<UserDeleteDialog user={usuario} />
 					</div>
 				)
 			},
