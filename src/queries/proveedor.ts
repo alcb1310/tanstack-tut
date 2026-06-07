@@ -49,3 +49,25 @@ export const CreateSupplier = createServerFn({ method: "POST" })
 
 		return
 	})
+
+export const UpdateSupplier = createServerFn({ method: "POST" })
+	.inputValidator((data: { data: SupplierCreateType; id: string }) => data)
+	.handler(async ({ data: { data, id } }) => {
+		const token = getCookie(cookieName)
+
+		const response = await fetch(`${URL}/parametros/proveedores/${id}`, {
+			method: "PUT",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+			body: JSON.stringify(data),
+		})
+
+		if (!response.ok) {
+			const data = await response.json()
+
+			throw new Error(data.error)
+		}
+		return
+	})
