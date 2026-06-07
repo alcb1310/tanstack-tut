@@ -23,6 +23,8 @@
 		"@fontsource-variable/inter": "^5.2.8",
 		"@fontsource-variable/jetbrains-mono": "^5.2.8",
 		"@tailwindcss/vite": "^4.3.0",
+		"@tanstack/react-form": "^1.33.0",
+		"@tanstack/react-form-start": "^1.33.0",
 		"@tanstack/react-router": "^1.170.11",
 		"@tanstack/react-start": "^1.168.20",
 		"class-variance-authority": "^0.7.1",
