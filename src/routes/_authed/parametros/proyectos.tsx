@@ -1,13 +1,14 @@
 import { useQueryClient, useSuspenseQuery } from "@tanstack/react-query"
 import { createFileRoute } from "@tanstack/react-router"
 import type { ColumnDef } from "@tanstack/react-table"
-import { CheckIcon, EditIcon, X } from "lucide-react"
+import { CheckIcon, X } from "lucide-react"
 import { useEffect, useState } from "react"
 import PageTitle from "@/components/layout/page-title"
 import { DataTable } from "@/components/table/data-table"
 import { Input } from "@/components/ui/input"
 import { Spinner } from "@/components/ui/spinner"
 import { ProjectCreateDrawer } from "@/drawers/proyectos/crear-proyecto"
+import { ProjectEditDrawer } from "@/drawers/proyectos/editar-proyecto"
 import { GetAllProjects } from "@/queries/proyectos"
 import type { ProjectType } from "@/types/proyectos"
 
@@ -83,10 +84,9 @@ function RouteComponent() {
 		{
 			id: "actions",
 			cell: ({ row }) => {
-				const _project = row.original
+				const project = row.original
 
-				return <EditIcon size={16} className='text-yellow-600' />
-				// return <EditProjectDrawer project={project} />
+				return <ProjectEditDrawer project={project} />
 			},
 		},
 	]
