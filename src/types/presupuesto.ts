@@ -1,0 +1,25 @@
+import { z } from "zod"
+import { budgetItemSchema } from "./partidas"
+import { projectSchema } from "./proyectos"
+
+export const nullableFloat = z.object({
+	Float64: z.number(),
+	Valid: z.boolean(),
+})
+
+export const budgetResponseSchema = z.object({
+	project: projectSchema,
+	budget_item: budgetItemSchema,
+	initial_quantity: nullableFloat,
+	initial_cost: nullableFloat,
+	initial_total: z.number(),
+	spent_quantity: nullableFloat,
+	spent_total: z.number(),
+	remaining_quantity: nullableFloat,
+	remaining_cost: nullableFloat,
+	remaining_total: z.number(),
+	updated_budget: z.number(),
+	company_id: z.string().uuid().optional(),
+})
+
+export type BudgetResponseType = z.infer<typeof budgetResponseSchema>
