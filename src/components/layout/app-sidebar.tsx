@@ -32,6 +32,7 @@ import {
 import {
 	Sidebar,
 	SidebarContent,
+	SidebarFooter,
 	SidebarGroup,
 	SidebarHeader,
 	SidebarMenu,
@@ -41,6 +42,7 @@ import {
 	SidebarMenuSubButton,
 	SidebarMenuSubItem,
 } from "../ui/sidebar"
+import { UserNav } from "./user-nav"
 
 type ItemsType = {
 	title: string
@@ -50,7 +52,7 @@ type ItemsType = {
 	>
 }
 
-type DataType = {
+export type DataType = {
 	title: string
 	items: ItemsType[]
 }
@@ -202,6 +204,9 @@ export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
 					</SidebarMenu>
 				</SidebarGroup>
 			</SidebarContent>
+			<SidebarFooter>
+				<UserNav />
+			</SidebarFooter>
 		</Sidebar>
 	)
 }
