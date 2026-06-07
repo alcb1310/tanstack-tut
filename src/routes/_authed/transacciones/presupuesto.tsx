@@ -12,6 +12,7 @@ import { Spinner } from "@/components/ui/spinner"
 import { GetAllBudgets } from "@/queries/presupuesto"
 import { GetAllProjects } from "@/queries/proyectos"
 import type { BudgetResponseType } from "@/types/presupuesto"
+import { PresupuestoCreateDrawer } from "@/drawers/presupuesto/crear-presupuesto"
 
 export const Route = createFileRoute("/_authed/transacciones/presupuesto")({
 	component: RouteComponent,
@@ -184,10 +185,7 @@ function RouteComponent() {
 		<div>
 			<PageTitle title='Presupuesto' />
 			<div className='flex my-3 justify-start gap-4'>
-				<Button variant='default'>
-					<PlusIcon size={16} />
-					Crear Presupuesto
-				</Button>
+				<PresupuestoCreateDrawer />
 
 				<NativeSelect
 					name={"proyectos"}
