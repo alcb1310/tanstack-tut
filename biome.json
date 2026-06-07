@@ -16,7 +16,14 @@
 	"linter": {
 		"enabled": true,
 		"rules": {
-			"recommended": true
+			"recommended": true,
+			"correctness": {
+				"useExhaustiveDependencies": {
+					"options": {
+						"reportUnnecessaryDependencies": false
+					}
+				}
+			}
 		}
 	},
 	"css": {
