@@ -1,11 +1,11 @@
 import { useSuspenseQuery } from "@tanstack/react-query"
 import { createFileRoute } from "@tanstack/react-router"
 import type { ColumnDef } from "@tanstack/react-table"
-import { EditIcon, PlusIcon } from "lucide-react"
+import { EditIcon } from "lucide-react"
 import PageTitle from "@/components/layout/page-title"
 import { DataTable } from "@/components/table/data-table"
-import { Button } from "@/components/ui/button"
 import { Spinner } from "@/components/ui/spinner"
+import { CategoryCreateDrawer } from "@/drawers/categorias/crear-categoria"
 import { GetAllCategories } from "@/queries/categorias"
 import type { CategoryType } from "@/types/categorias"
 
@@ -46,10 +46,7 @@ function RouteComponent() {
 
 			{isLoading && <Spinner />}
 
-			<Button variant='default' className='my-3'>
-				<PlusIcon />
-				Crear Categoria
-			</Button>
+			<CategoryCreateDrawer />
 
 			<div className='max-w-1/3'>
 				<DataTable columns={columns} data={data} />
