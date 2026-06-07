@@ -58,3 +58,28 @@ export const CreateRubroMaterial = createServerFn({ method: "POST" })
 
 		return
 	})
+
+export const UpdateRubroMaterial = createServerFn({ method: "POST" })
+	.inputValidator((data: RubroMaterialType) => data)
+	.handler(async ({ data }) => {
+		const token = getCookie(cookieName)
+
+		const response = await fetch(
+			`${URL}/parametros/rubros/${data.item_id}/materiales/${data.material_id}`,
+			{
+				method: "PUT",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${token}`,
+				},
+				body: JSON.stringify(data),
+			},
+		)
+
+		if (!response.ok) {
+			const error = await response.json()
+			throw new Error(error)
+		}
+
+		return
+	})
