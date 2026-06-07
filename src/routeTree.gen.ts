@@ -12,6 +12,8 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as AuthedRouteRouteImport } from './routes/_authed/route'
 import { Route as AuthedIndexRouteImport } from './routes/_authed/index'
+import { Route as AuthedUsuariosPerfilRouteImport } from './routes/_authed/usuarios/perfil'
+import { Route as AuthedUsuariosAdminRouteImport } from './routes/_authed/usuarios/admin'
 import { Route as AuthedTransaccionesPresupuestoRouteImport } from './routes/_authed/transacciones/presupuesto'
 import { Route as AuthedTransaccionesFacturaRouteImport } from './routes/_authed/transacciones/factura'
 import { Route as AuthedTransaccionesCierreRouteImport } from './routes/_authed/transacciones/cierre'
@@ -40,6 +42,16 @@ const AuthedRouteRoute = AuthedRouteRouteImport.update({
 const AuthedIndexRoute = AuthedIndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => AuthedRouteRoute,
+} as any)
+const AuthedUsuariosPerfilRoute = AuthedUsuariosPerfilRouteImport.update({
+  id: '/usuarios/perfil',
+  path: '/usuarios/perfil',
+  getParentRoute: () => AuthedRouteRoute,
+} as any)
+const AuthedUsuariosAdminRoute = AuthedUsuariosAdminRouteImport.update({
+  id: '/usuarios/admin',
+  path: '/usuarios/admin',
   getParentRoute: () => AuthedRouteRoute,
 } as any)
 const AuthedTransaccionesPresupuestoRoute =
@@ -146,6 +158,8 @@ export interface FileRoutesByFullPath {
   '/transacciones/cierre': typeof AuthedTransaccionesCierreRoute
   '/transacciones/factura': typeof AuthedTransaccionesFacturaRoute
   '/transacciones/presupuesto': typeof AuthedTransaccionesPresupuestoRoute
+  '/usuarios/admin': typeof AuthedUsuariosAdminRoute
+  '/usuarios/perfil': typeof AuthedUsuariosPerfilRoute
 }
 export interface FileRoutesByTo {
   '/login': typeof LoginRoute
@@ -165,6 +179,8 @@ export interface FileRoutesByTo {
   '/transacciones/cierre': typeof AuthedTransaccionesCierreRoute
   '/transacciones/factura': typeof AuthedTransaccionesFacturaRoute
   '/transacciones/presupuesto': typeof AuthedTransaccionesPresupuestoRoute
+  '/usuarios/admin': typeof AuthedUsuariosAdminRoute
+  '/usuarios/perfil': typeof AuthedUsuariosPerfilRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -186,6 +202,8 @@ export interface FileRoutesById {
   '/_authed/transacciones/cierre': typeof AuthedTransaccionesCierreRoute
   '/_authed/transacciones/factura': typeof AuthedTransaccionesFacturaRoute
   '/_authed/transacciones/presupuesto': typeof AuthedTransaccionesPresupuestoRoute
+  '/_authed/usuarios/admin': typeof AuthedUsuariosAdminRoute
+  '/_authed/usuarios/perfil': typeof AuthedUsuariosPerfilRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -207,6 +225,8 @@ export interface FileRouteTypes {
     | '/transacciones/cierre'
     | '/transacciones/factura'
     | '/transacciones/presupuesto'
+    | '/usuarios/admin'
+    | '/usuarios/perfil'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/login'
@@ -226,6 +246,8 @@ export interface FileRouteTypes {
     | '/transacciones/cierre'
     | '/transacciones/factura'
     | '/transacciones/presupuesto'
+    | '/usuarios/admin'
+    | '/usuarios/perfil'
   id:
     | '__root__'
     | '/_authed'
@@ -246,6 +268,8 @@ export interface FileRouteTypes {
     | '/_authed/transacciones/cierre'
     | '/_authed/transacciones/factura'
     | '/_authed/transacciones/presupuesto'
+    | '/_authed/usuarios/admin'
+    | '/_authed/usuarios/perfil'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -274,6 +298,20 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof AuthedIndexRouteImport
+      parentRoute: typeof AuthedRouteRoute
+    }
+    '/_authed/usuarios/perfil': {
+      id: '/_authed/usuarios/perfil'
+      path: '/usuarios/perfil'
+      fullPath: '/usuarios/perfil'
+      preLoaderRoute: typeof AuthedUsuariosPerfilRouteImport
+      parentRoute: typeof AuthedRouteRoute
+    }
+    '/_authed/usuarios/admin': {
+      id: '/_authed/usuarios/admin'
+      path: '/usuarios/admin'
+      fullPath: '/usuarios/admin'
+      preLoaderRoute: typeof AuthedUsuariosAdminRouteImport
       parentRoute: typeof AuthedRouteRoute
     }
     '/_authed/transacciones/presupuesto': {
@@ -401,6 +439,8 @@ interface AuthedRouteRouteChildren {
   AuthedTransaccionesCierreRoute: typeof AuthedTransaccionesCierreRoute
   AuthedTransaccionesFacturaRoute: typeof AuthedTransaccionesFacturaRoute
   AuthedTransaccionesPresupuestoRoute: typeof AuthedTransaccionesPresupuestoRoute
+  AuthedUsuariosAdminRoute: typeof AuthedUsuariosAdminRoute
+  AuthedUsuariosPerfilRoute: typeof AuthedUsuariosPerfilRoute
 }
 
 const AuthedRouteRouteChildren: AuthedRouteRouteChildren = {
@@ -420,6 +460,8 @@ const AuthedRouteRouteChildren: AuthedRouteRouteChildren = {
   AuthedTransaccionesCierreRoute: AuthedTransaccionesCierreRoute,
   AuthedTransaccionesFacturaRoute: AuthedTransaccionesFacturaRoute,
   AuthedTransaccionesPresupuestoRoute: AuthedTransaccionesPresupuestoRoute,
+  AuthedUsuariosAdminRoute: AuthedUsuariosAdminRoute,
+  AuthedUsuariosPerfilRoute: AuthedUsuariosPerfilRoute,
 }
 
 const AuthedRouteRouteWithChildren = AuthedRouteRoute._addFileChildren(

@@ -18,11 +18,11 @@ const userData: DataType = {
 	items: [
 		{
 			title: "Perfil",
-			url: "/",
+			url: "/usuarios/perfil",
 		},
 		{
 			title: "Administrar",
-			url: "/",
+			url: "/usuarios/admin",
 		},
 	],
 }
