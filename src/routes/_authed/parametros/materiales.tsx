@@ -1,14 +1,13 @@
 import { useSuspenseQuery } from "@tanstack/react-query"
 import { createFileRoute } from "@tanstack/react-router"
 import type { ColumnDef } from "@tanstack/react-table"
-import { EditIcon } from "lucide-react"
 import PageTitle from "@/components/layout/page-title"
 import { DataTable } from "@/components/table/data-table"
 import { Spinner } from "@/components/ui/spinner"
 import { MaterialCreateDrawer } from "@/drawers/materiales/crear-material"
+import { MaterialEditDrawer } from "@/drawers/materiales/editar-material"
 import { GetAllMaterials } from "@/queries/materiales"
 import type { MaterialType } from "@/types/materiales"
-import { MaterialEditDrawer } from "@/drawers/materiales/editar-material"
 
 export const Route = createFileRoute("/_authed/parametros/materiales")({
 	component: RouteComponent,
