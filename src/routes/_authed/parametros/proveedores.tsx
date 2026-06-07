@@ -1,13 +1,13 @@
 import { useQueryClient, useSuspenseQuery } from "@tanstack/react-query"
 import { createFileRoute } from "@tanstack/react-router"
 import type { ColumnDef } from "@tanstack/react-table"
-import { EditIcon, PlusIcon } from "lucide-react"
+import { EditIcon } from "lucide-react"
 import { useEffect, useState } from "react"
 import PageTitle from "@/components/layout/page-title"
 import { DataTable } from "@/components/table/data-table"
-import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Spinner } from "@/components/ui/spinner"
+import { SupplierCreateDrawer } from "@/drawers/proveedores/crear-proveedor"
 import { GetAllSuppliers } from "@/queries/proveedor"
 import type { SupplierType } from "@/types/proveedor"
 
@@ -77,10 +77,7 @@ function RouteComponent() {
 			<PageTitle title='Proveedores' />
 
 			<div className='flex my-3 justify-start gap-4'>
-				<Button>
-					<PlusIcon size={16} />
-					Crear Proveedor
-				</Button>
+				<SupplierCreateDrawer />
 
 				<Input
 					placeholder='Buscar'
