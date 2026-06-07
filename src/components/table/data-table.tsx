@@ -2,8 +2,23 @@ import {
 	type ColumnDef,
 	flexRender,
 	getCoreRowModel,
+	getPaginationRowModel,
 	useReactTable,
 } from "@tanstack/react-table"
+import {
+	ChevronLeft,
+	ChevronRight,
+	ChevronsLeft,
+	ChevronsRight,
+} from "lucide-react"
+import { Button } from "../ui/button"
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "../ui/select"
 import {
 	Table,
 	TableBody,
@@ -26,6 +41,7 @@ export function DataTable<TData, TValue>({
 		data,
 		columns,
 		getCoreRowModel: getCoreRowModel(),
+		getPaginationRowModel: getPaginationRowModel(),
 	})
 
 	return (
@@ -72,6 +88,70 @@ export function DataTable<TData, TValue>({
 					)}
 				</TableBody>
 			</Table>
+			<div className='flex items-center justify-end space-x-2 py-4'>
+				<div className='flex-1 text-xs text-muted-foreground'>
+					<div className='flex items-center space-x-2'>
+						<p>Filas por página</p>
+						<Select
+							value={`${table.getState().pagination.pageSize}`}
+							onValueChange={value => {
+								table.setPageSize(Number(value))
+							}}
+						>
+							<SelectTrigger size='sm' className='h-8 w-17.5'>
+								<SelectValue
+									placeholder={table.getState().pagination.pageSize}
+								/>
+							</SelectTrigger>
+							<SelectContent side='top'>
+								{[10, 25, 50].map(pageSize => (
+									<SelectItem key={pageSize} value={`${pageSize}`}>
+										{pageSize}
+									</SelectItem>
+								))}
+							</SelectContent>
+						</Select>
+					</div>
+				</div>
+				<div className='flex items-center gap-2'>
+					<Button
+						variant='outline'
+						size='sm'
+						onClick={() => table.firstPage()}
+						disabled={!table.getCanPreviousPage()}
+					>
+						<span className='sr-only'>Go to first page</span>
+						<ChevronsLeft />
+					</Button>
+					<Button
+						variant='outline'
+						size='sm'
+						onClick={() => table.previousPage()}
+						disabled={!table.getCanPreviousPage()}
+					>
+						<span className='sr-only'>Go to previous page</span>
+						<ChevronLeft />{" "}
+					</Button>
+					<Button
+						variant='outline'
+						size='sm'
+						onClick={() => table.nextPage()}
+						disabled={!table.getCanNextPage()}
+					>
+						<span className='sr-only'>Go to next page</span>
+						<ChevronRight />
+					</Button>
+					<Button
+						variant='outline'
+						size='sm'
+						onClick={() => table.lastPage()}
+						disabled={!table.getCanNextPage()}
+					>
+						<span className='sr-only'>Go to last page</span>
+						<ChevronsRight />
+					</Button>
+				</div>
+			</div>
 		</div>
 	)
 }
