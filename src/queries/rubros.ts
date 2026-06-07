@@ -26,3 +26,26 @@ export const GetAllRubros = createServerFn({ method: "GET" }).handler(
 		return await response.json()
 	},
 )
+
+export const CreateRubro = createServerFn({ method: "GET" })
+	.inputValidator((data: RubrosType) => data)
+	.handler(async ({ data }) => {
+		const token = getCookie(cookieName)
+
+		const response = await fetch(`${URL}/parametros/rubros`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+			body: JSON.stringify(data),
+		})
+
+		if (!response.ok) {
+			const data = await response.json()
+
+			throw new Error(data.error)
+		}
+
+		return (await response.json()) as RubrosType
+	})
