@@ -122,14 +122,14 @@ const menuData: DataType[] = [
 				icon: LayoutListIcon,
 			},
 			{
-				title: "Proyectos",
-				url: "/parametros/proyectos",
-				icon: FolderKanbanIcon,
-			},
-			{
 				title: "Proveedores",
 				url: "/parametros/proveedores",
 				icon: CableIcon,
+			},
+			{
+				title: "Proyectos",
+				url: "/parametros/proyectos",
+				icon: FolderKanbanIcon,
 			},
 			{
 				title: "Rubros",
