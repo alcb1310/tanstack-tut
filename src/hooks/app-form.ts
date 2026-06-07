@@ -1,5 +1,6 @@
 import { createFormHook, createFormHookContexts } from "@tanstack/react-form"
 import { FormButton } from "@/components/forms/form-button"
+import { TextField } from "@/components/forms/text-field"
 
 export const { fieldContext, formContext, useFormContext, useFieldContext } =
 	createFormHookContexts()
@@ -7,6 +8,6 @@ export const { fieldContext, formContext, useFormContext, useFieldContext } =
 export const { useAppForm } = createFormHook({
 	fieldContext,
 	formContext,
-	fieldComponents: {},
+	fieldComponents: { TextField },
 	formComponents: { FormButton },
 })
