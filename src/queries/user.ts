@@ -1,6 +1,6 @@
 import { createServerFn } from "@tanstack/react-start"
 import { getCookie } from "@tanstack/react-start/server"
-import type { UserResponse } from "@/types/user"
+import type { UserCreate, UserResponse } from "@/types/user"
 
 const URL = import.meta.env.VITE_BACKEND_SERVER
 const cookieName = "BCA-TOKEN"
@@ -49,3 +49,25 @@ export const GetAllUsers = createServerFn({ method: "GET" }).handler(
 		return await response.json()
 	},
 )
+
+export const CreateUser = createServerFn({ method: "POST" })
+	.inputValidator((data: UserCreate) => data)
+	.handler(async ({ data }) => {
+		const token = getCookie(cookieName)
+
+		const response = await fetch(`${URL}/users`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+			body: JSON.stringify(data),
+		})
+
+		if (!response.ok) {
+			const data = await response.json()
+			throw new Error(data.error)
+		}
+
+		return
+	})
