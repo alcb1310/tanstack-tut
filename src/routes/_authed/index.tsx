@@ -1,15 +1,28 @@
+import { useSuspenseQuery } from "@tanstack/react-query"
 import { createFileRoute } from "@tanstack/react-router"
-import { Button } from "@/components/ui/button"
+import { MeQuery } from "@/queries/user"
 
 export const Route = createFileRoute("/_authed/")({
 	component: RouteComponent,
+	loader: ({ context: { queryClient } }) => {
+		queryClient.prefetchQuery({
+			queryKey: ["me"],
+			queryFn: () => MeQuery(),
+		})
+	},
 })
 
 function RouteComponent() {
+	const { data } = useSuspenseQuery({
+		queryKey: ["me"],
+		queryFn: () => MeQuery(),
+	})
+
 	return (
 		<div>
-			<h1 className='text-2xl font-bold'>Hello "/"!</h1>
-			<Button>Button</Button>
+			<p>
+				Bienvenido <span className='font-bold text-chart-3'>{data?.name}</span>
+			</p>
 		</div>
 	)
 }
