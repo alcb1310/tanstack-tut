@@ -1,11 +1,11 @@
 import { useSuspenseQuery } from "@tanstack/react-query"
 import { createFileRoute } from "@tanstack/react-router"
 import type { ColumnDef } from "@tanstack/react-table"
-import { EditIcon } from "lucide-react"
 import PageTitle from "@/components/layout/page-title"
 import { DataTable } from "@/components/table/data-table"
 import { Spinner } from "@/components/ui/spinner"
 import { CategoryCreateDrawer } from "@/drawers/categorias/crear-categoria"
+import { CategoryEditDrawer } from "@/drawers/categorias/editar-categoria"
 import { GetAllCategories } from "@/queries/categorias"
 import type { CategoryType } from "@/types/categorias"
 
@@ -35,7 +35,7 @@ function RouteComponent() {
 			cell: ({ row }) => {
 				const category = row.original
 
-				return <EditIcon size={10} className='text-yellow-600' />
+				return <CategoryEditDrawer category={category} />
 			},
 		},
 	]
