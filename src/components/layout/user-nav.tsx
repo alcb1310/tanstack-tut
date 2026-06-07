@@ -1,5 +1,7 @@
 import { Link, useNavigate } from "@tanstack/react-router"
-import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "../ui/sidebar"
+import { createServerFn } from "@tanstack/react-start"
+import { deleteCookie } from "@tanstack/react-start/server"
+import { ChevronsUpDown, LogOutIcon } from "lucide-react"
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -8,10 +10,8 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "../ui/dropdown-menu"
-import { ChevronsUpDown, LogOutIcon } from "lucide-react"
+import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "../ui/sidebar"
 import type { DataType } from "./app-sidebar"
-import { createServerFn } from "@tanstack/react-start"
-import { deleteCookie } from "@tanstack/react-start/server"
 
 const userData: DataType = {
 	title: "User",
