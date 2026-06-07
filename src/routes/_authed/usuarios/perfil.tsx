@@ -1,6 +1,7 @@
 import { useSuspenseQuery } from "@tanstack/react-query"
 import { createFileRoute } from "@tanstack/react-router"
 import PageTitle from "@/components/layout/page-title"
+import { Spinner } from "@/components/ui/spinner"
 import { MeQuery } from "@/queries/user"
 
 export const Route = createFileRoute("/_authed/usuarios/perfil")({
