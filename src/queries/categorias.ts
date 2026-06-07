@@ -47,3 +47,26 @@ export const CreateCategory = createServerFn({ method: "POST" })
 
 		return
 	})
+
+export const UpdateCategory = createServerFn({ method: "POST" })
+	.inputValidator((data: CategoryType) => data)
+	.handler(async ({ data }) => {
+		const token = getCookie(cookieName)
+
+		const response = await fetch(`${URL}/parametros/categorias/${data.id}`, {
+			method: "PUT",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+			body: JSON.stringify(data),
+		})
+
+		if (!response.ok) {
+			const data = await response.json()
+
+			throw new Error(data.error)
+		}
+
+		return
+	})
