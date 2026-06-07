@@ -1,6 +1,6 @@
 import { createServerFn } from "@tanstack/react-start"
 import { getCookie } from "@tanstack/react-start/server"
-import type { SupplierType } from "@/types/proveedor"
+import type { SupplierCreateType, SupplierType } from "@/types/proveedor"
 
 const URL = import.meta.env.VITE_BACKEND_SERVER
 const cookieName = "BCA-TOKEN"
@@ -25,4 +25,27 @@ export const GetAllSuppliers = createServerFn({ method: "GET" })
 		}
 
 		return response.json()
+	})
+
+export const CreateSupplier = createServerFn({ method: "POST" })
+	.inputValidator((data: SupplierCreateType) => data)
+	.handler(async ({ data }) => {
+		const token = getCookie(cookieName)
+
+		const response = await fetch(`${URL}/parametros/proveedores`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+			body: JSON.stringify(data),
+		})
+
+		if (!response.ok) {
+			const data = await response.json()
+
+			throw new Error(data.error)
+		}
+
+		return
 	})
