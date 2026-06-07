@@ -11,12 +11,12 @@ import {
 	FolderKanbanIcon,
 	FolderOpenIcon,
 	LayoutListIcon,
+	type LucideProps,
 	ReceiptTextIcon,
 	ScaleIcon,
 	ShellIcon,
 	ShoppingBasketIcon,
 	ShoppingCartIcon,
-	type LucideProps,
 } from "lucide-react"
 import type {
 	ComponentProps,
@@ -24,6 +24,11 @@ import type {
 	RefAttributes,
 } from "react"
 import type { FileRoutesByTo } from "@/routeTree.gen"
+import {
+	Collapsible,
+	CollapsibleContent,
+	CollapsibleTrigger,
+} from "../ui/collapsible"
 import {
 	Sidebar,
 	SidebarContent,
@@ -36,11 +41,6 @@ import {
 	SidebarMenuSubButton,
 	SidebarMenuSubItem,
 } from "../ui/sidebar"
-import {
-	Collapsible,
-	CollapsibleContent,
-	CollapsibleTrigger,
-} from "../ui/collapsible"
 
 type ItemsType = {
 	title: string
