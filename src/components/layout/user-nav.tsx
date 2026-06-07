@@ -1,7 +1,9 @@
+import { useQuery } from "@tanstack/react-query"
 import { Link, useNavigate } from "@tanstack/react-router"
 import { createServerFn } from "@tanstack/react-start"
 import { deleteCookie } from "@tanstack/react-start/server"
 import { ChevronsUpDown, LogOutIcon } from "lucide-react"
+import { MeQuery } from "@/queries/user"
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -33,7 +35,11 @@ const logout = createServerFn({ method: "POST" }).handler(async () => {
 
 export function UserNav() {
 	const navigate = useNavigate()
-	const data = { name: "Andres", email: "7JQJ7@example.com" }
+	const { data } = useQuery({
+		queryKey: ["me"],
+		queryFn: () => MeQuery(),
+		staleTime: 1000 * 60 * 10, // 10 minutes
+	})
 
 	return (
 		<SidebarMenu>
