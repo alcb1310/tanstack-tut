@@ -1,14 +1,14 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router"
+import { CircleXIcon, SaveIcon } from "lucide-react"
+import { toast } from "sonner"
 import { FormBackground } from "@/components/layout/form-background"
 import PageTitle from "@/components/layout/page-title"
 import { Button, buttonVariants } from "@/components/ui/button"
 import { FieldGroup, FieldSet } from "@/components/ui/field"
 import { useAppForm } from "@/hooks/app-form"
 import { CreateRubro } from "@/queries/rubros"
-import { rubrosSchema, type RubrosType } from "@/types/rubros"
-import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router"
-import { SaveIcon, CircleXIcon } from "lucide-react"
-import { toast } from "sonner"
+import { type RubrosType, rubrosSchema } from "@/types/rubros"
 
 export const Route = createFileRoute("/_authed/parametros/rubros/crear")({
 	component: RouteComponent,

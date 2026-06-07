@@ -1,9 +1,6 @@
-import {
-	RubroMaterialResponseTye,
-	RubroMaterialType,
-} from "@/types/rubro-material"
 import { createServerFn } from "@tanstack/react-start"
 import { getCookie } from "@tanstack/react-start/server"
+import type { RubroMaterialResponseTye } from "@/types/rubro-material"
 
 const URL = import.meta.env.VITE_BACKEND_SERVER
 const cookieName = "BCA-TOKEN"

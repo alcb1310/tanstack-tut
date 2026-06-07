@@ -1,3 +1,14 @@
+import { useMutation, useSuspenseQueries } from "@tanstack/react-query"
+import { createFileRoute, Link } from "@tanstack/react-router"
+import type { ColumnDef } from "@tanstack/react-table"
+import {
+	CircleXIcon,
+	DeleteIcon,
+	EditIcon,
+	PlusIcon,
+	SaveIcon,
+} from "lucide-react"
+import { toast } from "sonner"
 import { FormBackground } from "@/components/layout/form-background"
 import PageTitle from "@/components/layout/page-title"
 import { DataTable } from "@/components/table/data-table"
@@ -6,14 +17,9 @@ import { FieldGroup, FieldSet } from "@/components/ui/field"
 import { Spinner } from "@/components/ui/spinner"
 import { useAppForm } from "@/hooks/app-form"
 import { GetAllRubrosMaterials } from "@/queries/rubro-material"
-import { GetOneRubro } from "@/queries/rubros"
-import { RubroMaterialResponseTye } from "@/types/rubro-material"
-import { rubrosSchema, type RubrosType } from "@/types/rubros"
-import { useMutation, useSuspenseQueries } from "@tanstack/react-query"
-import { createFileRoute, Link } from "@tanstack/react-router"
-import type { ColumnDef } from "@tanstack/react-table"
-import { CircleXIcon, DeleteIcon, EditIcon, SaveIcon } from "lucide-react"
-import { toast } from "sonner"
+import { GetOneRubro, UpdateRubro } from "@/queries/rubros"
+import type { RubroMaterialResponseTye } from "@/types/rubro-material"
+import { type RubrosType, rubrosSchema } from "@/types/rubros"
 
 export const Route = createFileRoute("/_authed/parametros/rubros/$rubroId")({
 	component: RouteComponent,
