@@ -28,3 +28,24 @@ export const MeQuery = createServerFn({ method: "GET" }).handler(
 		return await response.json()
 	},
 )
+
+export const GetAllUsers = createServerFn({ method: "GET" }).handler(
+	async (): Promise<UserResponse[]> => {
+		const token = getCookie(cookieName)
+
+		const response = await fetch(`${URL}/users`, {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		})
+
+		if (!response.ok) {
+			const data = await response.json()
+			throw new Error(data.error)
+		}
+
+		return await response.json()
+	},
+)
