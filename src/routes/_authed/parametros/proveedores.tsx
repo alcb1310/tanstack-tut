@@ -1,13 +1,13 @@
 import { useQueryClient, useSuspenseQuery } from "@tanstack/react-query"
 import { createFileRoute } from "@tanstack/react-router"
 import type { ColumnDef } from "@tanstack/react-table"
-import { EditIcon } from "lucide-react"
 import { useEffect, useState } from "react"
 import PageTitle from "@/components/layout/page-title"
 import { DataTable } from "@/components/table/data-table"
 import { Input } from "@/components/ui/input"
 import { Spinner } from "@/components/ui/spinner"
 import { SupplierCreateDrawer } from "@/drawers/proveedores/crear-proveedor"
+import { SupplierEditDrawer } from "@/drawers/proveedores/editar-proveedor"
 import { GetAllSuppliers } from "@/queries/proveedor"
 import type { SupplierType } from "@/types/proveedor"
 
@@ -55,10 +55,9 @@ function RouteComponent() {
 		{
 			id: "actions",
 			cell: ({ row }) => {
-				const _supplier = row.original
+				const supplier = row.original
 
-				return <EditIcon className='inline-block text-yellow-600' />
-				// return <SupplierEditDrawer supplier={supplier} />
+				return <SupplierEditDrawer supplier={supplier} />
 			},
 		},
 	]
