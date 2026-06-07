@@ -1,7 +1,7 @@
 import { useQueryClient, useSuspenseQuery } from "@tanstack/react-query"
 import { createFileRoute } from "@tanstack/react-router"
 import type { ColumnDef } from "@tanstack/react-table"
-import { CheckIcon, EditIcon, X } from "lucide-react"
+import { CheckIcon, X } from "lucide-react"
 import { useEffect, useState } from "react"
 import PageTitle from "@/components/layout/page-title"
 import { DataTable } from "@/components/table/data-table"
@@ -10,6 +10,7 @@ import { Spinner } from "@/components/ui/spinner"
 import { PartidaCreateDrawer } from "@/drawers/partidas/crear-partida"
 import { GetAllPartidas } from "@/queries/partidas"
 import type { BudgetItemResponse } from "@/types/partidas"
+import { PartidaEditDrawer } from "@/drawers/partidas/editar-partida"
 
 export const Route = createFileRoute("/_authed/parametros/partidas")({
 	component: RouteComponent,
@@ -69,10 +70,9 @@ function RouteComponent() {
 		{
 			id: "actions",
 			cell: ({ row }) => {
-				const _partida = row.original
+				const partida = row.original
 
-				return <EditIcon size={16} className='text-yellow-600' />
-				// return <PartidaEditDrawer partida={partida} />
+				return <PartidaEditDrawer partida={partida} />
 			},
 		},
 	]
