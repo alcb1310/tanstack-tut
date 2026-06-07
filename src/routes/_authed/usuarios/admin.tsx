@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button"
 import { Spinner } from "@/components/ui/spinner"
 import { GetAllUsers } from "@/queries/user"
 import type { UserResponse } from "@/types/user"
+import { UserCreateDrawer } from "@/drawers/usuarios/crear-usuario"
 
 export const Route = createFileRoute("/_authed/usuarios/admin")({
 	component: RouteComponent,
@@ -56,10 +57,7 @@ function RouteComponent() {
 			<PageTitle title='Administrar Usuarios' />
 
 			{isLoading && <Spinner />}
-			<Button variant='default' className='my-3'>
-				<PlusIcon />
-				Crear Usuario
-			</Button>
+			<UserCreateDrawer />
 
 			<div className='max-w-2/3'>
 				<DataTable columns={columns} data={data} />
