@@ -1,4 +1,6 @@
+import { useMutation } from "@tanstack/react-query"
 import { createFileRoute } from "@tanstack/react-router"
+import { toast } from "sonner"
 import z from "zod"
 import {
 	Card,
@@ -9,6 +11,7 @@ import {
 } from "@/components/ui/card"
 import { Field, FieldGroup, FieldSet } from "@/components/ui/field"
 import { useAppForm } from "@/hooks/app-form"
+import { LoginMutation } from "@/queries/auth"
 
 export const Route = createFileRoute("/login")({
 	component: RouteComponent,
@@ -24,6 +27,21 @@ const inputSchema = z.object({
 })
 
 function RouteComponent() {
+	const loginMutation = useMutation({
+		mutationFn: LoginMutation,
+		onSuccess: () => {
+			toast.success("login exitoso")
+		},
+		onError: error => {
+			toast.error(error.message, {
+				position: "top-center",
+				style: {
+					color: "red",
+				},
+			})
+		},
+	})
+
 	const form = useAppForm({
 		defaultValues: {
 			email: "",
@@ -33,7 +51,8 @@ function RouteComponent() {
 			onSubmit: inputSchema,
 		},
 		onSubmit: values => {
-			alert(JSON.stringify(values.value))
+			const data = values.value
+			loginMutation.mutate({ data })
 		},
 	})
 
