@@ -93,3 +93,29 @@ export const UpdateUser = createServerFn({ method: "POST" })
 
 		return
 	})
+
+export const DeleteUser = createServerFn({ method: "POST" })
+	.inputValidator((data: { id: string }) => data)
+	.handler(async ({ data: { id } }) => {
+		const token = getCookie(cookieName)
+		console.log("DeleteUser", token)
+
+		const response = await fetch(`${URL}/users/${id}`, {
+			method: "DELETE",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		})
+
+		if (!response.ok) {
+			if (response.status === 403) {
+				throw new Error("No tienes permiso para realizar esta acción")
+			}
+
+			const data = await response.json()
+			throw new Error(data.error)
+		}
+
+		return
+	})
