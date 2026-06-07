@@ -48,3 +48,28 @@ export const CreateBudget = createServerFn({ method: "POST" })
 
 		return
 	})
+
+export const UpdateBudget = createServerFn({ method: "POST" })
+	.inputValidator((data: BudgetEditType) => data)
+	.handler(async ({ data }) => {
+		const token = getCookie(cookieName)
+
+		const response = await fetch(
+			`${URL}/transacciones/presupuestos/${data.project_id}/${data.budget_item_id}`,
+			{
+				method: "PUT",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${token}`,
+				},
+				body: JSON.stringify(data),
+			},
+		)
+
+		if (!response.ok) {
+			const error = await response.json()
+			throw new Error(error.error)
+		}
+
+		return
+	})
