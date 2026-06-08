@@ -26,3 +26,23 @@ export const GetAllInvoices = createServerFn({ method: "GET" }).handler(
 		return response.json()
 	},
 )
+
+export const DeleteInvoice = createServerFn({ method: "POST" })
+	.inputValidator((data: { id: string }) => data)
+	.handler(async ({ data: { id } }) => {
+		const token = getCookie(cookieName)
+		const response = await fetch(`${URL}/transacciones/facturas/${id}`, {
+			method: "DELETE",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		})
+
+		if (!response.ok) {
+			const error = await response.json()
+			throw new Error(error.error)
+		}
+
+		return
+	})
