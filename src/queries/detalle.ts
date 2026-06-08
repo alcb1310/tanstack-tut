@@ -27,3 +27,30 @@ export const GetAllInvoiceDetails = createServerFn({ method: "GET" })
 
 		return await response.json()
 	})
+
+export const CreateInvoiceDetail = createServerFn({ method: "POST" })
+	.inputValidator(
+		(data: { id: string; data: InvoiceDetailsCreateType }) => data,
+	)
+	.handler(async ({ data: { id, data } }) => {
+		const token = getCookie(cookieName)
+
+		const response = await fetch(
+			`${URL}/transacciones/facturas/${id}/detalle`,
+			{
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${token}`,
+				},
+				body: JSON.stringify(data),
+			},
+		)
+
+		if (!response.ok) {
+			const error = await response.json()
+			throw new Error(error.error)
+		}
+
+		return
+	})
