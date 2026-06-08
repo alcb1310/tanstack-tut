@@ -1,4 +1,6 @@
 import z from "zod"
+import { projectSchema } from "./proyectos"
+import { rubrosSchema } from "./rubros"
 
 export const quantityResponseSchema = z.object({
 	id: z.string().uuid(),
