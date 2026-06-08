@@ -24,6 +24,26 @@ export const GetAllProjects = createServerFn({ method: "GET" })
 		return response.json()
 	})
 
+export const GetOneProject = createServerFn({ method: "GET" })
+	.inputValidator((data: { id: string }) => data)
+	.handler(async ({ data: { id } }): Promise<ProjectType> => {
+		const token = getCookie(cookieName)
+
+		const response = await fetch(`${URL}/parametros/proyectos/${id}`, {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		})
+		if (!response.ok) {
+			const data = await response.json()
+			throw new Error(data.error)
+		}
+
+		return response.json()
+	})
+
 export const CreateProject = createServerFn({ method: "POST" })
 	.inputValidator((data: ProjectType) => data)
 	.handler(async ({ data }) => {
