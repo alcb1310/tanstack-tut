@@ -20,6 +20,7 @@ import { GetAllSuppliers } from "@/queries/proveedor"
 import { GetAllProjects } from "@/queries/proyectos"
 import type { InvoiceDetailsResponseType } from "@/types/detalle"
 import { invoiceCreateSchema } from "@/types/facturas"
+import { DetalleCreateDrawer } from "@/drawers/detalles/crear-detalle"
 
 export const Route = createFileRoute(
 	"/_authed/transacciones/factura/$facturaId",
@@ -277,11 +278,7 @@ function RouteComponent() {
 			</FormBackground>
 
 			{(isLoading || isLoadingFactura) && <Spinner />}
-
-			<Button variant='detail' className='my-3'>
-				<PlusIcon size={16} />
-				Agregar Detalle
-			</Button>
+			<DetalleCreateDrawer invoice_id={facturaId} />
 
 			<DataTable columns={columns} data={data} />
 		</div>
