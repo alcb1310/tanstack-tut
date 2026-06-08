@@ -30,6 +30,7 @@ import { Route as AuthedAnalisisAnalisisRouteImport } from './routes/_authed/ana
 import { Route as AuthedTransaccionesFacturaIndexRouteImport } from './routes/_authed/transacciones/factura/index'
 import { Route as AuthedParametrosRubrosIndexRouteImport } from './routes/_authed/parametros/rubros/index'
 import { Route as AuthedTransaccionesFacturaCrearRouteImport } from './routes/_authed/transacciones/factura/crear'
+import { Route as AuthedTransaccionesFacturaFacturaIdRouteImport } from './routes/_authed/transacciones/factura/$facturaId'
 import { Route as AuthedParametrosRubrosCrearRouteImport } from './routes/_authed/parametros/rubros/crear'
 import { Route as AuthedParametrosRubrosRubroIdRouteImport } from './routes/_authed/parametros/rubros/$rubroId'
 
@@ -149,6 +150,12 @@ const AuthedTransaccionesFacturaCrearRoute =
     path: '/transacciones/factura/crear',
     getParentRoute: () => AuthedRouteRoute,
   } as any)
+const AuthedTransaccionesFacturaFacturaIdRoute =
+  AuthedTransaccionesFacturaFacturaIdRouteImport.update({
+    id: '/transacciones/factura/$facturaId',
+    path: '/transacciones/factura/$facturaId',
+    getParentRoute: () => AuthedRouteRoute,
+  } as any)
 const AuthedParametrosRubrosCrearRoute =
   AuthedParametrosRubrosCrearRouteImport.update({
     id: '/parametros/rubros/crear',
@@ -182,6 +189,7 @@ export interface FileRoutesByFullPath {
   '/usuarios/perfil': typeof AuthedUsuariosPerfilRoute
   '/parametros/rubros/$rubroId': typeof AuthedParametrosRubrosRubroIdRoute
   '/parametros/rubros/crear': typeof AuthedParametrosRubrosCrearRoute
+  '/transacciones/factura/$facturaId': typeof AuthedTransaccionesFacturaFacturaIdRoute
   '/transacciones/factura/crear': typeof AuthedTransaccionesFacturaCrearRoute
   '/parametros/rubros/': typeof AuthedParametrosRubrosIndexRoute
   '/transacciones/factura/': typeof AuthedTransaccionesFacturaIndexRoute
@@ -206,6 +214,7 @@ export interface FileRoutesByTo {
   '/usuarios/perfil': typeof AuthedUsuariosPerfilRoute
   '/parametros/rubros/$rubroId': typeof AuthedParametrosRubrosRubroIdRoute
   '/parametros/rubros/crear': typeof AuthedParametrosRubrosCrearRoute
+  '/transacciones/factura/$facturaId': typeof AuthedTransaccionesFacturaFacturaIdRoute
   '/transacciones/factura/crear': typeof AuthedTransaccionesFacturaCrearRoute
   '/parametros/rubros': typeof AuthedParametrosRubrosIndexRoute
   '/transacciones/factura': typeof AuthedTransaccionesFacturaIndexRoute
@@ -232,6 +241,7 @@ export interface FileRoutesById {
   '/_authed/usuarios/perfil': typeof AuthedUsuariosPerfilRoute
   '/_authed/parametros/rubros/$rubroId': typeof AuthedParametrosRubrosRubroIdRoute
   '/_authed/parametros/rubros/crear': typeof AuthedParametrosRubrosCrearRoute
+  '/_authed/transacciones/factura/$facturaId': typeof AuthedTransaccionesFacturaFacturaIdRoute
   '/_authed/transacciones/factura/crear': typeof AuthedTransaccionesFacturaCrearRoute
   '/_authed/parametros/rubros/': typeof AuthedParametrosRubrosIndexRoute
   '/_authed/transacciones/factura/': typeof AuthedTransaccionesFacturaIndexRoute
@@ -258,6 +268,7 @@ export interface FileRouteTypes {
     | '/usuarios/perfil'
     | '/parametros/rubros/$rubroId'
     | '/parametros/rubros/crear'
+    | '/transacciones/factura/$facturaId'
     | '/transacciones/factura/crear'
     | '/parametros/rubros/'
     | '/transacciones/factura/'
@@ -282,6 +293,7 @@ export interface FileRouteTypes {
     | '/usuarios/perfil'
     | '/parametros/rubros/$rubroId'
     | '/parametros/rubros/crear'
+    | '/transacciones/factura/$facturaId'
     | '/transacciones/factura/crear'
     | '/parametros/rubros'
     | '/transacciones/factura'
@@ -307,6 +319,7 @@ export interface FileRouteTypes {
     | '/_authed/usuarios/perfil'
     | '/_authed/parametros/rubros/$rubroId'
     | '/_authed/parametros/rubros/crear'
+    | '/_authed/transacciones/factura/$facturaId'
     | '/_authed/transacciones/factura/crear'
     | '/_authed/parametros/rubros/'
     | '/_authed/transacciones/factura/'
@@ -466,6 +479,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthedTransaccionesFacturaCrearRouteImport
       parentRoute: typeof AuthedRouteRoute
     }
+    '/_authed/transacciones/factura/$facturaId': {
+      id: '/_authed/transacciones/factura/$facturaId'
+      path: '/transacciones/factura/$facturaId'
+      fullPath: '/transacciones/factura/$facturaId'
+      preLoaderRoute: typeof AuthedTransaccionesFacturaFacturaIdRouteImport
+      parentRoute: typeof AuthedRouteRoute
+    }
     '/_authed/parametros/rubros/crear': {
       id: '/_authed/parametros/rubros/crear'
       path: '/parametros/rubros/crear'
@@ -502,6 +522,7 @@ interface AuthedRouteRouteChildren {
   AuthedUsuariosPerfilRoute: typeof AuthedUsuariosPerfilRoute
   AuthedParametrosRubrosRubroIdRoute: typeof AuthedParametrosRubrosRubroIdRoute
   AuthedParametrosRubrosCrearRoute: typeof AuthedParametrosRubrosCrearRoute
+  AuthedTransaccionesFacturaFacturaIdRoute: typeof AuthedTransaccionesFacturaFacturaIdRoute
   AuthedTransaccionesFacturaCrearRoute: typeof AuthedTransaccionesFacturaCrearRoute
   AuthedParametrosRubrosIndexRoute: typeof AuthedParametrosRubrosIndexRoute
   AuthedTransaccionesFacturaIndexRoute: typeof AuthedTransaccionesFacturaIndexRoute
@@ -526,6 +547,8 @@ const AuthedRouteRouteChildren: AuthedRouteRouteChildren = {
   AuthedUsuariosPerfilRoute: AuthedUsuariosPerfilRoute,
   AuthedParametrosRubrosRubroIdRoute: AuthedParametrosRubrosRubroIdRoute,
   AuthedParametrosRubrosCrearRoute: AuthedParametrosRubrosCrearRoute,
+  AuthedTransaccionesFacturaFacturaIdRoute:
+    AuthedTransaccionesFacturaFacturaIdRoute,
   AuthedTransaccionesFacturaCrearRoute: AuthedTransaccionesFacturaCrearRoute,
   AuthedParametrosRubrosIndexRoute: AuthedParametrosRubrosIndexRoute,
   AuthedTransaccionesFacturaIndexRoute: AuthedTransaccionesFacturaIndexRoute,
