@@ -1,9 +1,89 @@
+import { useSuspenseQuery } from "@tanstack/react-query"
 import { createFileRoute } from "@tanstack/react-router"
+import type { ColumnDef } from "@tanstack/react-table"
+import { DeleteIcon, EditIcon, PlusIcon } from "lucide-react"
+import PageTitle from "@/components/layout/page-title"
+import { DataTable } from "@/components/table/data-table"
+import { Button } from "@/components/ui/button"
+import { Spinner } from "@/components/ui/spinner"
+import { GetAllCantidades } from "@/queries/cantidad"
+import type { QuantityResponseType } from "@/types/cantidad"
 
 export const Route = createFileRoute("/_authed/analisis/cantidades")({
 	component: RouteComponent,
+	loader: ({ context: { queryClient } }) => {
+		queryClient.prefetchQuery({
+			queryKey: ["cantidades"],
+			queryFn: () => GetAllCantidades(),
+		})
+	},
 })
 
 function RouteComponent() {
-	return <div>Hello "/_authed/analisis/cantidades"!</div>
+	const { data, isLoading, isFetching } = useSuspenseQuery({
+		queryKey: ["cantidades"],
+		queryFn: () => GetAllCantidades(),
+	})
+
+	const columns: ColumnDef<QuantityResponseType>[] = [
+		{
+			accessorKey: "project.name",
+			header: "Proyecto",
+		},
+		{
+			accessorKey: "rubro.name",
+			header: "Rubro",
+		},
+		{
+			accessorKey: "rubro.unit",
+			header: "Unidad",
+		},
+		{
+			accessorKey: "quantity",
+			header: "Cantidad",
+			cell: ({ row }) => {
+				const q = row.original.quantity
+				return (
+					<span className='block w-full text-right'>
+						{q.toLocaleString("es-EC", {
+							minimumFractionDigits: 2,
+							maximumFractionDigits: 2,
+						})}
+					</span>
+				)
+			},
+		},
+		{
+			id: "actions",
+			cell: ({ row }) => {
+				const _data = row.original
+				return (
+					<div className='flex gap-2'>
+						<EditIcon size={16} className='text-yellow-600' />
+						<DeleteIcon size={16} className='text-red-600' />
+					</div>
+				)
+				// return (
+				// 	<div className='flex gap-2'>
+				// 		<CantidadesEditDrawer cantidad={data} />
+				// 		<CantiadesDeleteDialog cantidad={data} />
+				// 	</div>
+				// )
+			},
+		},
+	]
+
+	return (
+		<div>
+			<PageTitle title='Cantidades' />
+
+			<Button variant={"detail"} className='my-3'>
+				<PlusIcon size={10} />
+				Agregar Cantidad
+			</Button>
+
+			{(isLoading || isFetching) && <Spinner />}
+			<DataTable columns={columns} data={data} />
+		</div>
+	)
 }
