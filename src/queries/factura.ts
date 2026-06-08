@@ -27,6 +27,25 @@ export const GetAllInvoices = createServerFn({ method: "GET" }).handler(
 	},
 )
 
+export const GetOneInvoice = createServerFn({ method: "GET" })
+	.inputValidator((data: { id: string }) => data)
+	.handler(async ({ data: { id } }): Promise<InvoiceCreateType> => {
+		const token = getCookie(cookieName)
+		const response = await fetch(`${URL}/transacciones/facturas/${id}`, {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		})
+
+		if (!response.ok) {
+			throw new Error("Network response was not ok")
+		}
+
+		return await response.json()
+	})
+
 export const CreateInvoice = createServerFn({ method: "POST" })
 	.inputValidator((data: InvoiceCreateType) => data)
 	.handler(async ({ data }) => {
