@@ -1,4 +1,11 @@
+import { useSuspenseQuery } from "@tanstack/react-query"
 import { createFileRoute } from "@tanstack/react-router"
+import { useState } from "react"
+import PageTitle from "@/components/layout/page-title"
+import { FieldGroup, FieldSet } from "@/components/ui/field"
+import { Input } from "@/components/ui/input"
+import { NativeSelect, NativeSelectOption } from "@/components/ui/native-select"
+import { CierreDialog } from "@/drawers/cierre/cierre-dialog"
 import { GetAllProjects } from "@/queries/proyectos"
 
 export const Route = createFileRoute("/_authed/transacciones/cierre")({
@@ -61,7 +68,7 @@ function RouteComponent() {
 							/>
 						</div>
 
-						<ClosureDalog projectId={project} date={fecha} />
+						<CierreDialog projectId={project} date={fecha} />
 					</FieldSet>
 				</FieldGroup>
 			</div>
