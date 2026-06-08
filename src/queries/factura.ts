@@ -67,6 +67,30 @@ export const CreateInvoice = createServerFn({ method: "POST" })
 		return response.json() as Promise<InvoiceResponseType>
 	})
 
+export const UpdateInvoice = createServerFn({ method: "POST" })
+	.inputValidator((data: InvoiceCreateType) => data)
+	.handler(async ({ data }) => {
+		const token = getCookie(cookieName)
+
+		const invoice = { ...data, invoice_date: new Date(data.invoice_date) }
+
+		const response = await fetch(`${URL}/transacciones/facturas/${data.id}`, {
+			method: "PUT",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+			body: JSON.stringify(invoice),
+		})
+
+		if (!response.ok) {
+			const error = await response.json()
+			throw new Error(error.error)
+		}
+
+		return
+	})
+
 export const DeleteInvoice = createServerFn({ method: "POST" })
 	.inputValidator((data: { id: string }) => data)
 	.handler(async ({ data: { id } }) => {
