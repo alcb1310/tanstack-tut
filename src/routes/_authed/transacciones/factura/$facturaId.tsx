@@ -5,7 +5,7 @@ import {
 } from "@tanstack/react-query"
 import { createFileRoute, Link } from "@tanstack/react-router"
 import type { ColumnDef } from "@tanstack/react-table"
-import { CircleXIcon, DeleteIcon, PlusIcon, SaveIcon } from "lucide-react"
+import { CircleXIcon, SaveIcon } from "lucide-react"
 import { toast } from "sonner"
 import { FormBackground } from "@/components/layout/form-background"
 import PageTitle from "@/components/layout/page-title"
@@ -13,6 +13,8 @@ import { DataTable } from "@/components/table/data-table"
 import { Button, buttonVariants } from "@/components/ui/button"
 import { FieldGroup, FieldSet } from "@/components/ui/field"
 import { Spinner } from "@/components/ui/spinner"
+import { DetalleDeleteDialog } from "@/drawers/detalles/borrar-detalle"
+import { DetalleCreateDrawer } from "@/drawers/detalles/crear-detalle"
 import { useAppForm } from "@/hooks/app-form"
 import { GetAllInvoiceDetails } from "@/queries/detalle"
 import { GetOneInvoice, UpdateInvoice } from "@/queries/factura"
@@ -20,7 +22,6 @@ import { GetAllSuppliers } from "@/queries/proveedor"
 import { GetAllProjects } from "@/queries/proyectos"
 import type { InvoiceDetailsResponseType } from "@/types/detalle"
 import { invoiceCreateSchema } from "@/types/facturas"
-import { DetalleCreateDrawer } from "@/drawers/detalles/crear-detalle"
 
 export const Route = createFileRoute(
 	"/_authed/transacciones/factura/$facturaId",
@@ -145,9 +146,8 @@ function RouteComponent() {
 		{
 			id: "actions",
 			cell: ({ row }) => {
-				const _detalle = row.original
-				return <DeleteIcon size={16} className='text-red-500' />
-				// return <DeleteInvoiceDetailsDialog invoice_detail={row.original} />
+				const detalle = row.original
+				return <DetalleDeleteDialog invoice_detail={detalle} />
 			},
 		},
 	]
