@@ -1,6 +1,6 @@
 import { createServerFn } from "@tanstack/react-start"
 import { getCookie } from "@tanstack/react-start/server"
-import type { InvoiceResponseType } from "@/types/facturas"
+import type { InvoiceCreateType, InvoiceResponseType } from "@/types/facturas"
 
 const URL = import.meta.env.VITE_BACKEND_SERVER
 const cookieName = "BCA-TOKEN"
@@ -26,6 +26,27 @@ export const GetAllInvoices = createServerFn({ method: "GET" }).handler(
 		return response.json()
 	},
 )
+
+export const CreateInvoice = createServerFn({ method: "POST" })
+	.inputValidator((data: InvoiceCreateType) => data)
+	.handler(async ({ data }) => {
+		const token = getCookie(cookieName)
+		const response = await fetch(`${URL}/transacciones/facturas`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+			body: JSON.stringify(data),
+		})
+
+		if (!response.ok) {
+			const error = await response.json()
+			throw new Error(error.error)
+		}
+
+		return response.json() as Promise<InvoiceResponseType>
+	})
 
 export const DeleteInvoice = createServerFn({ method: "POST" })
 	.inputValidator((data: { id: string }) => data)
