@@ -1,11 +1,11 @@
 import { useSuspenseQuery } from "@tanstack/react-query"
 import { createFileRoute } from "@tanstack/react-router"
 import type { ColumnDef } from "@tanstack/react-table"
-import { DeleteIcon, EditIcon, PlusIcon } from "lucide-react"
+import { DeleteIcon, EditIcon } from "lucide-react"
 import PageTitle from "@/components/layout/page-title"
 import { DataTable } from "@/components/table/data-table"
-import { Button } from "@/components/ui/button"
 import { Spinner } from "@/components/ui/spinner"
+import { CantidadesCreateDrawer } from "@/drawers/cantidades/crear-cantidad"
 import { GetAllCantidades } from "@/queries/cantidad"
 import type { QuantityResponseType } from "@/types/cantidad"
 
@@ -77,10 +77,7 @@ function RouteComponent() {
 		<div>
 			<PageTitle title='Cantidades' />
 
-			<Button variant={"detail"} className='my-3'>
-				<PlusIcon size={10} />
-				Agregar Cantidad
-			</Button>
+			<CantidadesCreateDrawer />
 
 			{(isLoading || isFetching) && <Spinner />}
 			<DataTable columns={columns} data={data} />
