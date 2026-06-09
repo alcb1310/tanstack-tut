@@ -67,3 +67,24 @@ export const GetBalanceReport = createServerFn({ method: "GET" })
 			return response.json()
 		},
 	)
+
+export const SetBalancedInvoice = createServerFn({ method: "POST" })
+	.inputValidator((data: { invoice_id: string }) => data)
+	.handler(async ({ data: { invoice_id } }) => {
+		const token = getCookie(cookieName)
+
+		const response = await fetch(`${URL}/reportes/cuadre/${invoice_id}`, {
+			method: "PUT",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		})
+
+		if (!response.ok) {
+			const err = await response.json()
+			throw new Error(err.error)
+		}
+
+		return
+	})
