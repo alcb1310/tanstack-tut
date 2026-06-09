@@ -1,4 +1,5 @@
 import { z } from "zod"
+import { InvoiceResponseType } from "./facturas"
 
 export type LevelType = {
 	key: string
@@ -15,3 +16,8 @@ export const actualReportSchema = z.object({
 })
 
 export type ActualReportTypes = z.infer<typeof actualReportSchema>
+
+export type BalanceResponseType = {
+	invoices: InvoiceResponseType[]
+	total: number
+}
