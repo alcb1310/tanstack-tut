@@ -20,3 +20,22 @@ export const GetAllLevels = createServerFn({ method: "GET" }).handler(
 		return await response.json()
 	},
 )
+export const GetAllBugetsByProjectAndLevel = createServerFn({ method: "GET" })
+	.inputValidator((data: { project_id: string; level: string }) => data)
+	.handler(
+		async ({ data: { project_id, level } }): Promise<BudgetResponseType[]> => {
+			const token = getCookie(cookieName)
+
+			const params = new URLSearchParams()
+			params.append("project_id", project_id)
+			params.append("level", level)
+
+			const response = await fetch(`${URL}/reportes/actual?${params}`, {
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${token}`,
+				},
+			})
+			return response.json()
+		},
+	)
