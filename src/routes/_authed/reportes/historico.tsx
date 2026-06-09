@@ -1,9 +1,300 @@
+import { FormBackground } from "@/components/layout/form-background"
+import PageTitle from "@/components/layout/page-title"
+import { ReportDataTable } from "@/components/table/report-data-table"
+import { Button } from "@/components/ui/button"
+import { FieldGroup, FieldSet } from "@/components/ui/field"
+import { Spinner } from "@/components/ui/spinner"
+import { useAppForm } from "@/hooks/app-form"
+import { downloadExcelFile } from "@/lib/excel-download"
+import { histroricExcelExport } from "@/queries/excel"
+import { GetAllProjects } from "@/queries/proyectos"
+import { GetAllHistoric, GetAllLevels } from "@/queries/reportes"
+import type { BudgetResponseType } from "@/types/presupuesto"
+import { reportSchema, type ReportTypes } from "@/types/reportes"
+import { useQuery, useSuspenseQueries } from "@tanstack/react-query"
 import { createFileRoute } from "@tanstack/react-router"
+import type { ColumnDef } from "@tanstack/react-table"
+import { DownloadIcon, PlayIcon } from "lucide-react"
 
 export const Route = createFileRoute("/_authed/reportes/historico")({
 	component: RouteComponent,
+	loader: async ({ context: { queryClient } }) => {
+		Promise.all([
+			queryClient.ensureQueryData({
+				queryKey: ["proyectos", "active"],
+				queryFn: () => GetAllProjects({ data: { active: true } }),
+			}),
+			queryClient.ensureQueryData({
+				queryKey: ["niveles"],
+				queryFn: () => GetAllLevels(),
+			}),
+		])
+	},
 })
 
 function RouteComponent() {
-	return <div>Hello "/_authed/reportes/historico"!</div>
+	const form = useAppForm({
+		defaultValues: {
+			project_id: "",
+			level: "",
+			date: "",
+		} as ReportTypes,
+		validators: {
+			onSubmit: reportSchema,
+		},
+		onSubmit: () => {
+			refetch()
+		},
+	})
+
+	const { data, isLoading, isFetching, refetch } = useQuery({
+		queryKey: ["historico", form.state.values],
+		queryFn: () => GetAllHistoric({ data: form.state.values }),
+		enabled:
+			form.state.values.project_id !== "" &&
+			form.state.values.level !== "" &&
+			form.state.values.date !== "",
+	})
+
+	const columns: ColumnDef<BudgetResponseType>[] = [
+		{
+			accessorKey: "budget_item.code",
+			header: "Código",
+		},
+		{
+			accessorKey: "budget_item.name",
+			header: "Partida",
+		},
+		{
+			accessorKey: "updated_budget",
+			header: "Presupuesto",
+			cell: ({ row }) => {
+				const q = row.original.updated_budget
+
+				return (
+					<span className='block w-full text-right'>
+						{q.toLocaleString("es-EC", {
+							minimumFractionDigits: 2,
+							maximumFractionDigits: 2,
+						})}
+					</span>
+				)
+			},
+		},
+		{
+			id: "gastado",
+			header: () => <span className='block text-center'>Gastado</span>,
+			columns: [
+				{
+					accessorKey: "spent_quantity",
+					header: "Cantidad",
+					cell: ({ row }) => {
+						const q = row.original.spent_quantity
+
+						return (
+							<span className='block w-full text-right'>
+								{q.Valid
+									? q.Float64.toLocaleString("es-EC", {
+											minimumFractionDigits: 2,
+											maximumFractionDigits: 2,
+										})
+									: ""}
+							</span>
+						)
+					},
+				},
+				{
+					accessorKey: "spent_total",
+					header: "Total",
+					cell: ({ row }) => {
+						const q = row.original.spent_total
+
+						return (
+							<span className='block w-full text-right'>
+								{q.toLocaleString("es-EC", {
+									minimumFractionDigits: 2,
+									maximumFractionDigits: 2,
+								})}
+							</span>
+						)
+					},
+				},
+			],
+		},
+		{
+			id: "por gastar",
+			header: () => <span className='block text-center'>Por Gastar</span>,
+			columns: [
+				{
+					accessorKey: "remaining_quantity",
+					header: "Cantidad",
+					cell: ({ row }) => {
+						const q = row.original.remaining_quantity
+
+						return (
+							<span className='block w-full text-right'>
+								{q.Valid
+									? q.Float64.toLocaleString("es-EC", {
+											minimumFractionDigits: 2,
+											maximumFractionDigits: 2,
+										})
+									: ""}
+							</span>
+						)
+					},
+				},
+				{
+					accessorKey: "remaining_cost",
+					header: "Costo",
+					cell: ({ row }) => {
+						const q = row.original.remaining_cost
+
+						return (
+							<span className='block w-full text-right'>
+								{q.Valid
+									? q.Float64.toLocaleString("es-EC", {
+											minimumFractionDigits: 2,
+											maximumFractionDigits: 2,
+										})
+									: ""}
+							</span>
+						)
+					},
+				},
+				{
+					accessorKey: "remaining_total",
+					header: "Total",
+					cell: ({ row }) => {
+						const q = row.original.remaining_total
+
+						return (
+							<span className='block w-full text-right'>
+								{q.toLocaleString("es-EC", {
+									minimumFractionDigits: 2,
+									maximumFractionDigits: 2,
+								})}
+							</span>
+						)
+					},
+				},
+			],
+		},
+	]
+
+	const results = useSuspenseQueries({
+		queries: [
+			{
+				queryKey: ["proyectos", "active"],
+				queryFn: () => GetAllProjects({ data: { active: true } }),
+			},
+			{
+				queryKey: ["niveles"],
+				queryFn: () => GetAllLevels(),
+			},
+		],
+	})
+
+	const proyValues =
+		results[0].data?.map(item => ({
+			label: item.name,
+			value: item.id as string,
+		})) || []
+	proyValues.unshift({
+		label: "Seleccione un proyecto",
+		value: "",
+	})
+
+	const levelValues = results[1].data?.map(item => ({
+		label: item.value,
+		value: item.key,
+	}))
+	levelValues.unshift({
+		label: "Seleccione un nivel",
+		value: "",
+	})
+
+	return (
+		<div>
+			<PageTitle title='Historico' />
+
+			<FormBackground>
+				<form
+					onSubmit={e => {
+						e.preventDefault()
+						e.stopPropagation()
+						form.handleSubmit()
+					}}
+				>
+					<FieldGroup>
+						<FieldSet>
+							<form.AppField name='project_id'>
+								{field => (
+									<field.SelectField
+										label='Proyecto'
+										name='project_id'
+										options={proyValues}
+									/>
+								)}
+							</form.AppField>
+
+							<div className='flex justify-between items-end'>
+								<div className='w-4/12'>
+									<form.AppField name='level'>
+										{field => (
+											<field.SelectField
+												label='Nivel'
+												name='level'
+												options={levelValues}
+											/>
+										)}
+									</form.AppField>
+								</div>
+
+								<div className='w-6/12'>
+									<form.AppField name='date'>
+										{field => (
+											<field.TextField label='Fecha' name='date' type='date' />
+										)}
+									</form.AppField>
+								</div>
+							</div>
+						</FieldSet>
+						<div className='my-4 flex justify-start gap-4'>
+							<Button type='submit'>
+								<PlayIcon size={16} />
+								Generar
+							</Button>
+
+							<Button
+								type='button'
+								variant='detail'
+								onClick={async e => {
+									e.preventDefault()
+									e.stopPropagation()
+
+									if (!form.state.values.project_id || !form.state.values.level)
+										return
+
+									try {
+										const b = await histroricExcelExport({
+											data: form.state.values,
+										})
+
+										downloadExcelFile(await b.blob(), "reporte.xlsx")
+									} catch (e) {
+										console.error(e)
+									}
+								}}
+							>
+								<DownloadIcon size={16} />
+								Exportar
+							</Button>
+						</div>
+					</FieldGroup>
+				</form>
+			</FormBackground>
+			{(isLoading || isFetching) && <Spinner />}
+			{data && <ReportDataTable data={data} columns={columns} />}
+		</div>
+	)
 }
