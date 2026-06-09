@@ -30,3 +30,14 @@ export const balanceReportSchema = z.object({
 })
 
 export type BalanceReportType = z.infer<typeof balanceReportSchema>
+
+export const reportSchema = z.object({
+	project_id: z
+		.string({ message: "Seleccione un proyecto" })
+		.uuid("Seleccione un proyecto"),
+	level: z
+		.string({ message: "Seleccione un nivel" })
+		.min(1, "Seleccione un nivel"),
+	date: z.string().min(1, "Seleccione una fecha"),
+})
+export type ReportTypes = z.infer<typeof reportSchema>
