@@ -1,3 +1,6 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { DeleteIcon } from "lucide-react"
+import { toast } from "sonner"
 import {
 	AlertDialog,
 	AlertDialogAction,
@@ -13,9 +16,6 @@ import {
 import { Button } from "@/components/ui/button"
 import { DeleteCantidad } from "@/queries/cantidad"
 import type { QuantityResponseType } from "@/types/cantidad"
-import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { DeleteIcon } from "lucide-react"
-import { toast } from "sonner"
 
 type CantidadDeleteDialogProps = {
 	cantidad: QuantityResponseType
