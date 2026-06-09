@@ -40,6 +40,39 @@ export const GetAllBugetsByProjectAndLevel = createServerFn({ method: "GET" })
 		},
 	)
 
+export const GetAllHistoric = createServerFn({ method: "GET" })
+	.inputValidator(
+		(data: { project_id: string; level: string; date: string }) => data,
+	)
+	.handler(
+		async ({
+			data: { project_id, level, date },
+		}): Promise<BudgetResponseType[]> => {
+			const token = getCookie(cookieName)
+
+			const params = new URLSearchParams()
+			params.append("project_id", project_id)
+			params.append("level", level)
+			params.append("date", new Date(date).toISOString())
+
+			const response = await fetch(`${URL}/reportes/historico?${params}`, {
+				method: "GET",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${token}`,
+				},
+			})
+
+			if (!response.ok) {
+				throw new Error("Network error")
+			}
+
+			if (response.status === 204) return [] as BudgetResponseType[]
+
+			return response.json()
+		},
+	)
+
 export const GetBalanceReport = createServerFn({ method: "GET" })
 	.inputValidator((data: { project_id: string; date: string }) => data)
 	.handler(
