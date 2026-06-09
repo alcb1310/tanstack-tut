@@ -1,7 +1,7 @@
 import { createServerFn } from "@tanstack/react-start"
 import { getCookie } from "@tanstack/react-start/server"
 import type { BudgetResponseType } from "@/types/presupuesto"
-import type { LevelType } from "@/types/reportes"
+import type { BalanceResponseType, LevelType } from "@/types/reportes"
 
 const URL = import.meta.env.VITE_BACKEND_SERVER
 const cookieName = "BCA-TOKEN"
@@ -36,6 +36,34 @@ export const GetAllBugetsByProjectAndLevel = createServerFn({ method: "GET" })
 					Authorization: `Bearer ${token}`,
 				},
 			})
+			return response.json()
+		},
+	)
+
+export const GetBalanceReport = createServerFn({ method: "GET" })
+	.inputValidator((data: { project_id: string; date: string }) => data)
+	.handler(
+		async ({ data: { project_id, date } }): Promise<BalanceResponseType> => {
+			const token = getCookie(cookieName)
+
+			const dateVal = new Date(date).toISOString()
+
+			const params = new URLSearchParams()
+			params.append("project_id", project_id)
+			params.append("date", dateVal)
+
+			const response = await fetch(`${URL}/reportes/cuadre?${params}`, {
+				method: "GET",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${token}`,
+				},
+			})
+
+			if (!response.ok) {
+				throw new Error("Network error")
+			}
+
 			return response.json()
 		},
 	)
