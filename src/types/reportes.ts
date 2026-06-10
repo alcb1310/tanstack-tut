@@ -47,3 +47,9 @@ export type Spent = {
 	spent: number
 	budget_item: BudgetItem
 }
+
+export type SpentResponseType = {
+	spent: Spent[]
+	total: number
+	project: string
+}
