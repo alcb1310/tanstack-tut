@@ -1,5 +1,6 @@
 import { z } from "zod"
 import { InvoiceResponseType } from "./facturas"
+import { BudgetItem } from "./partidas"
 
 export type LevelType = {
 	key: string
@@ -41,3 +42,8 @@ export const reportSchema = z.object({
 	date: z.string().min(1, "Seleccione una fecha"),
 })
 export type ReportTypes = z.infer<typeof reportSchema>
+
+export type Spent = {
+	spent: number
+	budget_item: BudgetItem
+}
