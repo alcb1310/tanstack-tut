@@ -1,7 +1,11 @@
 import { createServerFn } from "@tanstack/react-start"
 import { getCookie } from "@tanstack/react-start/server"
 import type { BudgetResponseType } from "@/types/presupuesto"
-import type { BalanceResponseType, LevelType } from "@/types/reportes"
+import type {
+	BalanceResponseType,
+	LevelType,
+	SpentResponseType,
+} from "@/types/reportes"
 
 const URL = import.meta.env.VITE_BACKEND_SERVER
 const cookieName = "BCA-TOKEN"
@@ -121,3 +125,30 @@ export const SetBalancedInvoice = createServerFn({ method: "POST" })
 
 		return
 	})
+
+export const GetSpentReport = createServerFn({ method: "GET" })
+	.inputValidator(
+		(data: { project_id: string; level: string; date: string }) => data,
+	)
+	.handler(
+		async ({
+			data: { project_id, level, date },
+		}): Promise<SpentResponseType> => {
+			const token = getCookie(cookieName)
+
+			const params = new URLSearchParams()
+			params.append("project_id", project_id)
+			params.append("level", level)
+			params.append("date", date)
+
+			const response = await fetch(`${URL}/reportes/gastado?${params}`, {
+				method: "GET",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${token}`,
+				},
+			})
+
+			return response.json()
+		},
+	)
