@@ -4,6 +4,7 @@ import type { BudgetResponseType } from "@/types/presupuesto"
 import type {
 	BalanceResponseType,
 	LevelType,
+	SpentDetailsType,
 	SpentResponseType,
 } from "@/types/reportes"
 
@@ -148,6 +149,32 @@ export const GetSpentReport = createServerFn({ method: "GET" })
 					Authorization: `Bearer ${token}`,
 				},
 			})
+
+			return response.json()
+		},
+	)
+
+export const GetSpentDetails = createServerFn({ method: "GET" })
+	.inputValidator(
+		(data: { project_id: string; budget_item_id: string; date: string }) =>
+			data,
+	)
+	.handler(
+		async ({
+			data: { project_id, budget_item_id, date },
+		}): Promise<SpentDetailsType[]> => {
+			const token = getCookie(cookieName)
+
+			const response = await fetch(
+				`${URL}/reportes/gastado/${project_id}/${budget_item_id}/${date}`,
+				{
+					method: "GET",
+					headers: {
+						"Content-Type": "application/json",
+						Authorization: `Bearer ${token}`,
+					},
+				},
+			)
 
 			return response.json()
 		},
