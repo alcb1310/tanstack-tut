@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { CircleXIcon, EditIcon, SaveIcon } from "lucide-react"
+import { CircleXIcon, EditIcon, SaveIcon, UploadIcon } from "lucide-react"
 import { useState } from "react"
 import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
@@ -15,8 +15,10 @@ import {
 } from "@/components/ui/drawer"
 import { FieldGroup, FieldSet } from "@/components/ui/field"
 import { useAppForm } from "@/hooks/app-form"
-import { UpdateProject } from "@/queries/proyectos"
+import { AddFile, UpdateProject } from "@/queries/proyectos"
 import { type ProjectType, projectSchema } from "@/types/proyectos"
+import { UploadButton } from "@/lib/uploadthing"
+import { cn } from "@/lib/utils"
 
 type EditProjectDrawerProps = {
 	project: ProjectType
@@ -41,6 +43,10 @@ export function ProjectEditDrawer({ project }: EditProjectDrawerProps) {
 				},
 			})
 		},
+	})
+
+	const addFile = useMutation({
+		mutationFn: AddFile,
 	})
 
 	const form = useAppForm({
@@ -132,6 +138,44 @@ export function ProjectEditDrawer({ project }: EditProjectDrawerProps) {
 						</div>
 					</DrawerFooter>
 				</form>
+				<UploadButton
+					endpoint={"fileUploader"}
+					onClientUploadComplete={res => {
+						addFile.mutate({
+							data: {
+								project_id: project.id as string,
+								name: res[0].name,
+								url: res[0].ufsUrl,
+							},
+						})
+					}}
+					config={{
+						cn: classes =>
+							cn(
+								classes,
+								"ut-allowed-content:hidden ut-button:rounded-none ut-button:w-fit ut-button:px-2.5 ut-button:text-xs ut-button:font-medium ut-button:bg-primary ut-button:text-primary-foreground ut-button:[a]:hover:bg-primary/80 ut-uploading:opacity-50 ut-uploading:cursor-not-allowed",
+							),
+					}}
+					content={{
+						button: ({ isUploading, uploadProgress }) => {
+							if (isUploading) {
+								return (
+									<>
+										<UploadIcon size={16} className='me-2' />
+										{uploadProgress}
+									</>
+								)
+							}
+
+							return (
+								<>
+									<UploadIcon size={16} className='me-2' />
+									Subir Archivo
+								</>
+							)
+						},
+					}}
+				/>
 			</DrawerContent>
 		</Drawer>
 	)
