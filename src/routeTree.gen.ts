@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as AuthedRouteRouteImport } from './routes/_authed/route'
 import { Route as AuthedIndexRouteImport } from './routes/_authed/index'
+import { Route as ApiUploadthingRouteImport } from './routes/api/uploadthing'
 import { Route as AuthedUsuariosPerfilRouteImport } from './routes/_authed/usuarios/perfil'
 import { Route as AuthedUsuariosAdminRouteImport } from './routes/_authed/usuarios/admin'
 import { Route as AuthedTransaccionesPresupuestoRouteImport } from './routes/_authed/transacciones/presupuesto'
@@ -47,6 +48,11 @@ const AuthedIndexRoute = AuthedIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => AuthedRouteRoute,
+} as any)
+const ApiUploadthingRoute = ApiUploadthingRouteImport.update({
+  id: '/api/uploadthing',
+  path: '/api/uploadthing',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const AuthedUsuariosPerfilRoute = AuthedUsuariosPerfilRouteImport.update({
   id: '/usuarios/perfil',
@@ -172,6 +178,7 @@ const AuthedParametrosRubrosRubroIdRoute =
 export interface FileRoutesByFullPath {
   '/': typeof AuthedIndexRoute
   '/login': typeof LoginRoute
+  '/api/uploadthing': typeof ApiUploadthingRoute
   '/analisis/analisis': typeof AuthedAnalisisAnalisisRoute
   '/analisis/cantidades': typeof AuthedAnalisisCantidadesRoute
   '/parametros/categorias': typeof AuthedParametrosCategoriasRoute
@@ -196,6 +203,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/login': typeof LoginRoute
+  '/api/uploadthing': typeof ApiUploadthingRoute
   '/': typeof AuthedIndexRoute
   '/analisis/analisis': typeof AuthedAnalisisAnalisisRoute
   '/analisis/cantidades': typeof AuthedAnalisisCantidadesRoute
@@ -223,6 +231,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_authed': typeof AuthedRouteRouteWithChildren
   '/login': typeof LoginRoute
+  '/api/uploadthing': typeof ApiUploadthingRoute
   '/_authed/': typeof AuthedIndexRoute
   '/_authed/analisis/analisis': typeof AuthedAnalisisAnalisisRoute
   '/_authed/analisis/cantidades': typeof AuthedAnalisisCantidadesRoute
@@ -251,6 +260,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/login'
+    | '/api/uploadthing'
     | '/analisis/analisis'
     | '/analisis/cantidades'
     | '/parametros/categorias'
@@ -275,6 +285,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/login'
+    | '/api/uploadthing'
     | '/'
     | '/analisis/analisis'
     | '/analisis/cantidades'
@@ -301,6 +312,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/_authed'
     | '/login'
+    | '/api/uploadthing'
     | '/_authed/'
     | '/_authed/analisis/analisis'
     | '/_authed/analisis/cantidades'
@@ -328,6 +340,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   AuthedRouteRoute: typeof AuthedRouteRouteWithChildren
   LoginRoute: typeof LoginRoute
+  ApiUploadthingRoute: typeof ApiUploadthingRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -352,6 +365,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof AuthedIndexRouteImport
       parentRoute: typeof AuthedRouteRoute
+    }
+    '/api/uploadthing': {
+      id: '/api/uploadthing'
+      path: '/api/uploadthing'
+      fullPath: '/api/uploadthing'
+      preLoaderRoute: typeof ApiUploadthingRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/_authed/usuarios/perfil': {
       id: '/_authed/usuarios/perfil'
@@ -561,6 +581,7 @@ const AuthedRouteRouteWithChildren = AuthedRouteRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   AuthedRouteRoute: AuthedRouteRouteWithChildren,
   LoginRoute: LoginRoute,
+  ApiUploadthingRoute: ApiUploadthingRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
