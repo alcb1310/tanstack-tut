@@ -1,3 +1,8 @@
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { createFileRoute } from "@tanstack/react-router"
+import type { ColumnDef } from "@tanstack/react-table"
+import { DownloadIcon, PlayIcon } from "lucide-react"
+import { toast } from "sonner"
 import { FormBackground } from "@/components/layout/form-background"
 import PageTitle from "@/components/layout/page-title"
 import { ReportDataTable } from "@/components/table/report-data-table"
@@ -11,12 +16,7 @@ import { balanceExcelExport } from "@/queries/excel"
 import { GetAllProjects } from "@/queries/proyectos"
 import { GetBalanceReport, SetBalancedInvoice } from "@/queries/reportes"
 import type { InvoiceResponseType } from "@/types/facturas"
-import { balanceReportSchema, type BalanceReportType } from "@/types/reportes"
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { createFileRoute } from "@tanstack/react-router"
-import type { ColumnDef } from "@tanstack/react-table"
-import { DownloadIcon, PlayIcon } from "lucide-react"
-import { toast } from "sonner"
+import { type BalanceReportType, balanceReportSchema } from "@/types/reportes"
 
 export const Route = createFileRoute("/_authed/reportes/cuadre")({
 	component: RouteComponent,

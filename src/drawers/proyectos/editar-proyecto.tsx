@@ -15,10 +15,10 @@ import {
 } from "@/components/ui/drawer"
 import { FieldGroup, FieldSet } from "@/components/ui/field"
 import { useAppForm } from "@/hooks/app-form"
-import { AddFile, UpdateProject } from "@/queries/proyectos"
-import { type ProjectType, projectSchema } from "@/types/proyectos"
 import { UploadButton } from "@/lib/uploadthing"
 import { cn } from "@/lib/utils"
+import { AddFile, UpdateProject } from "@/queries/proyectos"
+import { type ProjectType, projectSchema } from "@/types/proyectos"
 
 type EditProjectDrawerProps = {
 	project: ProjectType
@@ -83,7 +83,7 @@ export function ProjectEditDrawer({ project }: EditProjectDrawerProps) {
 					}}
 				>
 					<DrawerHeader>
-						<DrawerTitle>Crear Proyecto</DrawerTitle>
+						<DrawerTitle>Editar Proyecto</DrawerTitle>
 						<DrawerDescription>Crear un nuevo proyecto</DrawerDescription>
 					</DrawerHeader>
 					<FieldGroup className='my-2 px-4'>

@@ -1,3 +1,6 @@
+import { useQuery } from "@tanstack/react-query"
+import type { ColumnDef } from "@tanstack/react-table"
+import { ViewIcon } from "lucide-react"
 import { ReportDataTable } from "@/components/table/report-data-table"
 import { Button } from "@/components/ui/button"
 import { DialogClose } from "@/components/ui/dialog"
@@ -13,9 +16,6 @@ import {
 import { Spinner } from "@/components/ui/spinner"
 import { GetSpentDetails } from "@/queries/reportes"
 import type { Spent, SpentDetailsType } from "@/types/reportes"
-import { useQuery } from "@tanstack/react-query"
-import type { ColumnDef } from "@tanstack/react-table"
-import { ViewIcon } from "lucide-react"
 
 type SpentDetailsDrawerProps = {
 	report: Spent
