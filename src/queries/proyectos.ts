@@ -86,3 +86,30 @@ export const UpdateProject = createServerFn({ method: "POST" })
 
 		return
 	})
+
+export const AddFile = createServerFn({ method: "POST" })
+	.inputValidator(
+		(data: { project_id: string; name: string; url: string }) => data,
+	)
+	.handler(async ({ data }) => {
+		const token = getCookie(cookieName)
+
+		const response = await fetch(
+			`${URL}/parametros/proyectos/${data.project_id}/archivos`,
+			{
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${token}`,
+				},
+				body: JSON.stringify(data),
+			},
+		)
+
+		if (!response.ok) {
+			const data = await response.json()
+			throw new Error(data.error)
+		}
+
+		return
+	})
