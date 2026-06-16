@@ -21,7 +21,6 @@ import { Route as AuthedReportesHistoricoRouteImport } from './routes/_authed/re
 import { Route as AuthedReportesGastadoPorPartidaRouteImport } from './routes/_authed/reportes/gastado-por-partida'
 import { Route as AuthedReportesCuadreRouteImport } from './routes/_authed/reportes/cuadre'
 import { Route as AuthedReportesActualRouteImport } from './routes/_authed/reportes/actual'
-import { Route as AuthedParametrosProyectosRouteImport } from './routes/_authed/parametros/proyectos'
 import { Route as AuthedParametrosProveedoresRouteImport } from './routes/_authed/parametros/proveedores'
 import { Route as AuthedParametrosPartidasRouteImport } from './routes/_authed/parametros/partidas'
 import { Route as AuthedParametrosMaterialesRouteImport } from './routes/_authed/parametros/materiales'
@@ -30,10 +29,13 @@ import { Route as AuthedAnalisisCantidadesRouteImport } from './routes/_authed/a
 import { Route as AuthedAnalisisAnalisisRouteImport } from './routes/_authed/analisis/analisis'
 import { Route as AuthedTransaccionesFacturaIndexRouteImport } from './routes/_authed/transacciones/factura/index'
 import { Route as AuthedParametrosRubrosIndexRouteImport } from './routes/_authed/parametros/rubros/index'
+import { Route as AuthedParametrosProyectosIndexRouteImport } from './routes/_authed/parametros/proyectos/index'
 import { Route as AuthedTransaccionesFacturaCrearRouteImport } from './routes/_authed/transacciones/factura/crear'
 import { Route as AuthedTransaccionesFacturaFacturaIdRouteImport } from './routes/_authed/transacciones/factura/$facturaId'
 import { Route as AuthedParametrosRubrosCrearRouteImport } from './routes/_authed/parametros/rubros/crear'
 import { Route as AuthedParametrosRubrosRubroIdRouteImport } from './routes/_authed/parametros/rubros/$rubroId'
+import { Route as AuthedParametrosProyectosCrearRouteImport } from './routes/_authed/parametros/proyectos/crear'
+import { Route as AuthedParametrosProyectosProyectoIdRouteImport } from './routes/_authed/parametros/proyectos/$proyectoId'
 
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
@@ -97,12 +99,6 @@ const AuthedReportesActualRoute = AuthedReportesActualRouteImport.update({
   path: '/reportes/actual',
   getParentRoute: () => AuthedRouteRoute,
 } as any)
-const AuthedParametrosProyectosRoute =
-  AuthedParametrosProyectosRouteImport.update({
-    id: '/parametros/proyectos',
-    path: '/parametros/proyectos',
-    getParentRoute: () => AuthedRouteRoute,
-  } as any)
 const AuthedParametrosProveedoresRoute =
   AuthedParametrosProveedoresRouteImport.update({
     id: '/parametros/proveedores',
@@ -150,6 +146,12 @@ const AuthedParametrosRubrosIndexRoute =
     path: '/parametros/rubros/',
     getParentRoute: () => AuthedRouteRoute,
   } as any)
+const AuthedParametrosProyectosIndexRoute =
+  AuthedParametrosProyectosIndexRouteImport.update({
+    id: '/parametros/proyectos/',
+    path: '/parametros/proyectos/',
+    getParentRoute: () => AuthedRouteRoute,
+  } as any)
 const AuthedTransaccionesFacturaCrearRoute =
   AuthedTransaccionesFacturaCrearRouteImport.update({
     id: '/transacciones/factura/crear',
@@ -174,6 +176,18 @@ const AuthedParametrosRubrosRubroIdRoute =
     path: '/parametros/rubros/$rubroId',
     getParentRoute: () => AuthedRouteRoute,
   } as any)
+const AuthedParametrosProyectosCrearRoute =
+  AuthedParametrosProyectosCrearRouteImport.update({
+    id: '/parametros/proyectos/crear',
+    path: '/parametros/proyectos/crear',
+    getParentRoute: () => AuthedRouteRoute,
+  } as any)
+const AuthedParametrosProyectosProyectoIdRoute =
+  AuthedParametrosProyectosProyectoIdRouteImport.update({
+    id: '/parametros/proyectos/$proyectoId',
+    path: '/parametros/proyectos/$proyectoId',
+    getParentRoute: () => AuthedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof AuthedIndexRoute
@@ -185,7 +199,6 @@ export interface FileRoutesByFullPath {
   '/parametros/materiales': typeof AuthedParametrosMaterialesRoute
   '/parametros/partidas': typeof AuthedParametrosPartidasRoute
   '/parametros/proveedores': typeof AuthedParametrosProveedoresRoute
-  '/parametros/proyectos': typeof AuthedParametrosProyectosRoute
   '/reportes/actual': typeof AuthedReportesActualRoute
   '/reportes/cuadre': typeof AuthedReportesCuadreRoute
   '/reportes/gastado-por-partida': typeof AuthedReportesGastadoPorPartidaRoute
@@ -194,10 +207,13 @@ export interface FileRoutesByFullPath {
   '/transacciones/presupuesto': typeof AuthedTransaccionesPresupuestoRoute
   '/usuarios/admin': typeof AuthedUsuariosAdminRoute
   '/usuarios/perfil': typeof AuthedUsuariosPerfilRoute
+  '/parametros/proyectos/$proyectoId': typeof AuthedParametrosProyectosProyectoIdRoute
+  '/parametros/proyectos/crear': typeof AuthedParametrosProyectosCrearRoute
   '/parametros/rubros/$rubroId': typeof AuthedParametrosRubrosRubroIdRoute
   '/parametros/rubros/crear': typeof AuthedParametrosRubrosCrearRoute
   '/transacciones/factura/$facturaId': typeof AuthedTransaccionesFacturaFacturaIdRoute
   '/transacciones/factura/crear': typeof AuthedTransaccionesFacturaCrearRoute
+  '/parametros/proyectos/': typeof AuthedParametrosProyectosIndexRoute
   '/parametros/rubros/': typeof AuthedParametrosRubrosIndexRoute
   '/transacciones/factura/': typeof AuthedTransaccionesFacturaIndexRoute
 }
@@ -211,7 +227,6 @@ export interface FileRoutesByTo {
   '/parametros/materiales': typeof AuthedParametrosMaterialesRoute
   '/parametros/partidas': typeof AuthedParametrosPartidasRoute
   '/parametros/proveedores': typeof AuthedParametrosProveedoresRoute
-  '/parametros/proyectos': typeof AuthedParametrosProyectosRoute
   '/reportes/actual': typeof AuthedReportesActualRoute
   '/reportes/cuadre': typeof AuthedReportesCuadreRoute
   '/reportes/gastado-por-partida': typeof AuthedReportesGastadoPorPartidaRoute
@@ -220,10 +235,13 @@ export interface FileRoutesByTo {
   '/transacciones/presupuesto': typeof AuthedTransaccionesPresupuestoRoute
   '/usuarios/admin': typeof AuthedUsuariosAdminRoute
   '/usuarios/perfil': typeof AuthedUsuariosPerfilRoute
+  '/parametros/proyectos/$proyectoId': typeof AuthedParametrosProyectosProyectoIdRoute
+  '/parametros/proyectos/crear': typeof AuthedParametrosProyectosCrearRoute
   '/parametros/rubros/$rubroId': typeof AuthedParametrosRubrosRubroIdRoute
   '/parametros/rubros/crear': typeof AuthedParametrosRubrosCrearRoute
   '/transacciones/factura/$facturaId': typeof AuthedTransaccionesFacturaFacturaIdRoute
   '/transacciones/factura/crear': typeof AuthedTransaccionesFacturaCrearRoute
+  '/parametros/proyectos': typeof AuthedParametrosProyectosIndexRoute
   '/parametros/rubros': typeof AuthedParametrosRubrosIndexRoute
   '/transacciones/factura': typeof AuthedTransaccionesFacturaIndexRoute
 }
@@ -239,7 +257,6 @@ export interface FileRoutesById {
   '/_authed/parametros/materiales': typeof AuthedParametrosMaterialesRoute
   '/_authed/parametros/partidas': typeof AuthedParametrosPartidasRoute
   '/_authed/parametros/proveedores': typeof AuthedParametrosProveedoresRoute
-  '/_authed/parametros/proyectos': typeof AuthedParametrosProyectosRoute
   '/_authed/reportes/actual': typeof AuthedReportesActualRoute
   '/_authed/reportes/cuadre': typeof AuthedReportesCuadreRoute
   '/_authed/reportes/gastado-por-partida': typeof AuthedReportesGastadoPorPartidaRoute
@@ -248,10 +265,13 @@ export interface FileRoutesById {
   '/_authed/transacciones/presupuesto': typeof AuthedTransaccionesPresupuestoRoute
   '/_authed/usuarios/admin': typeof AuthedUsuariosAdminRoute
   '/_authed/usuarios/perfil': typeof AuthedUsuariosPerfilRoute
+  '/_authed/parametros/proyectos/$proyectoId': typeof AuthedParametrosProyectosProyectoIdRoute
+  '/_authed/parametros/proyectos/crear': typeof AuthedParametrosProyectosCrearRoute
   '/_authed/parametros/rubros/$rubroId': typeof AuthedParametrosRubrosRubroIdRoute
   '/_authed/parametros/rubros/crear': typeof AuthedParametrosRubrosCrearRoute
   '/_authed/transacciones/factura/$facturaId': typeof AuthedTransaccionesFacturaFacturaIdRoute
   '/_authed/transacciones/factura/crear': typeof AuthedTransaccionesFacturaCrearRoute
+  '/_authed/parametros/proyectos/': typeof AuthedParametrosProyectosIndexRoute
   '/_authed/parametros/rubros/': typeof AuthedParametrosRubrosIndexRoute
   '/_authed/transacciones/factura/': typeof AuthedTransaccionesFacturaIndexRoute
 }
@@ -267,7 +287,6 @@ export interface FileRouteTypes {
     | '/parametros/materiales'
     | '/parametros/partidas'
     | '/parametros/proveedores'
-    | '/parametros/proyectos'
     | '/reportes/actual'
     | '/reportes/cuadre'
     | '/reportes/gastado-por-partida'
@@ -276,10 +295,13 @@ export interface FileRouteTypes {
     | '/transacciones/presupuesto'
     | '/usuarios/admin'
     | '/usuarios/perfil'
+    | '/parametros/proyectos/$proyectoId'
+    | '/parametros/proyectos/crear'
     | '/parametros/rubros/$rubroId'
     | '/parametros/rubros/crear'
     | '/transacciones/factura/$facturaId'
     | '/transacciones/factura/crear'
+    | '/parametros/proyectos/'
     | '/parametros/rubros/'
     | '/transacciones/factura/'
   fileRoutesByTo: FileRoutesByTo
@@ -293,7 +315,6 @@ export interface FileRouteTypes {
     | '/parametros/materiales'
     | '/parametros/partidas'
     | '/parametros/proveedores'
-    | '/parametros/proyectos'
     | '/reportes/actual'
     | '/reportes/cuadre'
     | '/reportes/gastado-por-partida'
@@ -302,10 +323,13 @@ export interface FileRouteTypes {
     | '/transacciones/presupuesto'
     | '/usuarios/admin'
     | '/usuarios/perfil'
+    | '/parametros/proyectos/$proyectoId'
+    | '/parametros/proyectos/crear'
     | '/parametros/rubros/$rubroId'
     | '/parametros/rubros/crear'
     | '/transacciones/factura/$facturaId'
     | '/transacciones/factura/crear'
+    | '/parametros/proyectos'
     | '/parametros/rubros'
     | '/transacciones/factura'
   id:
@@ -320,7 +344,6 @@ export interface FileRouteTypes {
     | '/_authed/parametros/materiales'
     | '/_authed/parametros/partidas'
     | '/_authed/parametros/proveedores'
-    | '/_authed/parametros/proyectos'
     | '/_authed/reportes/actual'
     | '/_authed/reportes/cuadre'
     | '/_authed/reportes/gastado-por-partida'
@@ -329,10 +352,13 @@ export interface FileRouteTypes {
     | '/_authed/transacciones/presupuesto'
     | '/_authed/usuarios/admin'
     | '/_authed/usuarios/perfil'
+    | '/_authed/parametros/proyectos/$proyectoId'
+    | '/_authed/parametros/proyectos/crear'
     | '/_authed/parametros/rubros/$rubroId'
     | '/_authed/parametros/rubros/crear'
     | '/_authed/transacciones/factura/$facturaId'
     | '/_authed/transacciones/factura/crear'
+    | '/_authed/parametros/proyectos/'
     | '/_authed/parametros/rubros/'
     | '/_authed/transacciones/factura/'
   fileRoutesById: FileRoutesById
@@ -429,13 +455,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthedReportesActualRouteImport
       parentRoute: typeof AuthedRouteRoute
     }
-    '/_authed/parametros/proyectos': {
-      id: '/_authed/parametros/proyectos'
-      path: '/parametros/proyectos'
-      fullPath: '/parametros/proyectos'
-      preLoaderRoute: typeof AuthedParametrosProyectosRouteImport
-      parentRoute: typeof AuthedRouteRoute
-    }
     '/_authed/parametros/proveedores': {
       id: '/_authed/parametros/proveedores'
       path: '/parametros/proveedores'
@@ -492,6 +511,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthedParametrosRubrosIndexRouteImport
       parentRoute: typeof AuthedRouteRoute
     }
+    '/_authed/parametros/proyectos/': {
+      id: '/_authed/parametros/proyectos/'
+      path: '/parametros/proyectos'
+      fullPath: '/parametros/proyectos/'
+      preLoaderRoute: typeof AuthedParametrosProyectosIndexRouteImport
+      parentRoute: typeof AuthedRouteRoute
+    }
     '/_authed/transacciones/factura/crear': {
       id: '/_authed/transacciones/factura/crear'
       path: '/transacciones/factura/crear'
@@ -520,6 +546,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthedParametrosRubrosRubroIdRouteImport
       parentRoute: typeof AuthedRouteRoute
     }
+    '/_authed/parametros/proyectos/crear': {
+      id: '/_authed/parametros/proyectos/crear'
+      path: '/parametros/proyectos/crear'
+      fullPath: '/parametros/proyectos/crear'
+      preLoaderRoute: typeof AuthedParametrosProyectosCrearRouteImport
+      parentRoute: typeof AuthedRouteRoute
+    }
+    '/_authed/parametros/proyectos/$proyectoId': {
+      id: '/_authed/parametros/proyectos/$proyectoId'
+      path: '/parametros/proyectos/$proyectoId'
+      fullPath: '/parametros/proyectos/$proyectoId'
+      preLoaderRoute: typeof AuthedParametrosProyectosProyectoIdRouteImport
+      parentRoute: typeof AuthedRouteRoute
+    }
   }
 }
 
@@ -531,7 +571,6 @@ interface AuthedRouteRouteChildren {
   AuthedParametrosMaterialesRoute: typeof AuthedParametrosMaterialesRoute
   AuthedParametrosPartidasRoute: typeof AuthedParametrosPartidasRoute
   AuthedParametrosProveedoresRoute: typeof AuthedParametrosProveedoresRoute
-  AuthedParametrosProyectosRoute: typeof AuthedParametrosProyectosRoute
   AuthedReportesActualRoute: typeof AuthedReportesActualRoute
   AuthedReportesCuadreRoute: typeof AuthedReportesCuadreRoute
   AuthedReportesGastadoPorPartidaRoute: typeof AuthedReportesGastadoPorPartidaRoute
@@ -540,10 +579,13 @@ interface AuthedRouteRouteChildren {
   AuthedTransaccionesPresupuestoRoute: typeof AuthedTransaccionesPresupuestoRoute
   AuthedUsuariosAdminRoute: typeof AuthedUsuariosAdminRoute
   AuthedUsuariosPerfilRoute: typeof AuthedUsuariosPerfilRoute
+  AuthedParametrosProyectosProyectoIdRoute: typeof AuthedParametrosProyectosProyectoIdRoute
+  AuthedParametrosProyectosCrearRoute: typeof AuthedParametrosProyectosCrearRoute
   AuthedParametrosRubrosRubroIdRoute: typeof AuthedParametrosRubrosRubroIdRoute
   AuthedParametrosRubrosCrearRoute: typeof AuthedParametrosRubrosCrearRoute
   AuthedTransaccionesFacturaFacturaIdRoute: typeof AuthedTransaccionesFacturaFacturaIdRoute
   AuthedTransaccionesFacturaCrearRoute: typeof AuthedTransaccionesFacturaCrearRoute
+  AuthedParametrosProyectosIndexRoute: typeof AuthedParametrosProyectosIndexRoute
   AuthedParametrosRubrosIndexRoute: typeof AuthedParametrosRubrosIndexRoute
   AuthedTransaccionesFacturaIndexRoute: typeof AuthedTransaccionesFacturaIndexRoute
 }
@@ -556,7 +598,6 @@ const AuthedRouteRouteChildren: AuthedRouteRouteChildren = {
   AuthedParametrosMaterialesRoute: AuthedParametrosMaterialesRoute,
   AuthedParametrosPartidasRoute: AuthedParametrosPartidasRoute,
   AuthedParametrosProveedoresRoute: AuthedParametrosProveedoresRoute,
-  AuthedParametrosProyectosRoute: AuthedParametrosProyectosRoute,
   AuthedReportesActualRoute: AuthedReportesActualRoute,
   AuthedReportesCuadreRoute: AuthedReportesCuadreRoute,
   AuthedReportesGastadoPorPartidaRoute: AuthedReportesGastadoPorPartidaRoute,
@@ -565,11 +606,15 @@ const AuthedRouteRouteChildren: AuthedRouteRouteChildren = {
   AuthedTransaccionesPresupuestoRoute: AuthedTransaccionesPresupuestoRoute,
   AuthedUsuariosAdminRoute: AuthedUsuariosAdminRoute,
   AuthedUsuariosPerfilRoute: AuthedUsuariosPerfilRoute,
+  AuthedParametrosProyectosProyectoIdRoute:
+    AuthedParametrosProyectosProyectoIdRoute,
+  AuthedParametrosProyectosCrearRoute: AuthedParametrosProyectosCrearRoute,
   AuthedParametrosRubrosRubroIdRoute: AuthedParametrosRubrosRubroIdRoute,
   AuthedParametrosRubrosCrearRoute: AuthedParametrosRubrosCrearRoute,
   AuthedTransaccionesFacturaFacturaIdRoute:
     AuthedTransaccionesFacturaFacturaIdRoute,
   AuthedTransaccionesFacturaCrearRoute: AuthedTransaccionesFacturaCrearRoute,
+  AuthedParametrosProyectosIndexRoute: AuthedParametrosProyectosIndexRoute,
   AuthedParametrosRubrosIndexRoute: AuthedParametrosRubrosIndexRoute,
   AuthedTransaccionesFacturaIndexRoute: AuthedTransaccionesFacturaIndexRoute,
 }
