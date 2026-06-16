@@ -1,16 +1,15 @@
 import { useQueryClient, useSuspenseQuery } from "@tanstack/react-query"
-import { createFileRoute } from "@tanstack/react-router"
+import { createFileRoute, useNavigate } from "@tanstack/react-router"
 import type { ColumnDef } from "@tanstack/react-table"
-import { CheckIcon, X } from "lucide-react"
+import { CheckIcon, EditIcon, PlusIcon, X } from "lucide-react"
 import { useEffect, useState } from "react"
 import PageTitle from "@/components/layout/page-title"
 import { DataTable } from "@/components/table/data-table"
 import { Input } from "@/components/ui/input"
 import { Spinner } from "@/components/ui/spinner"
-import { ProjectCreateDrawer } from "@/drawers/proyectos/crear-proyecto"
-import { ProjectEditDrawer } from "@/drawers/proyectos/editar-proyecto"
 import { GetAllProjects } from "@/queries/proyectos"
 import type { ProjectType } from "@/types/proyectos"
+import { Button } from "@/components/ui/button"
 
 export const Route = createFileRoute("/_authed/parametros/proyectos/")({
 	component: RouteComponent,
@@ -23,6 +22,7 @@ export const Route = createFileRoute("/_authed/parametros/proyectos/")({
 })
 
 function RouteComponent() {
+	const navigate = useNavigate()
 	const queryClient = useQueryClient()
 	const [query, setQuery] = useState<string>("")
 
@@ -95,7 +95,19 @@ function RouteComponent() {
 			cell: ({ row }) => {
 				const project = row.original
 
-				return <ProjectEditDrawer project={project} />
+				return (
+					<Button
+						variant='ghost'
+						onClick={() =>
+							navigate({
+								to: `/parametros/proyectos/${project.id}`,
+								params: { proyectoId: project.id },
+							})
+						}
+					>
+						<EditIcon size={16} className='cursor-pointer text-yellow-600' />
+					</Button>
+				)
 			},
 		},
 	]
@@ -105,8 +117,19 @@ function RouteComponent() {
 			<PageTitle title='Proyectos' />
 			{(isLoading || isFetching) && <Spinner />}
 
-			<div className='flex my-3 justify-start gap-4'>
-				<ProjectCreateDrawer />
+			<div className='flex my-3 items-center justify-start gap-4'>
+				<Button
+					variant='default'
+					className='flex my-3 justify-start gap-4'
+					onClick={() =>
+						navigate({
+							to: "/parametros/proyectos/crear",
+						})
+					}
+				>
+					<PlusIcon size={16} />
+					Crear Proyecto
+				</Button>
 				<Input
 					placeholder='Buscar'
 					value={query}
