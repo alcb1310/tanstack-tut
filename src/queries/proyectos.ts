@@ -46,7 +46,7 @@ export const GetOneProject = createServerFn({ method: "GET" })
 
 export const CreateProject = createServerFn({ method: "POST" })
 	.inputValidator((data: ProjectType) => data)
-	.handler(async ({ data }) => {
+	.handler(async ({ data }): Promise<ProjectType> => {
 		const token = getCookie(cookieName)
 
 		const response = await fetch(`${URL}/parametros/proyectos`, {
@@ -62,7 +62,7 @@ export const CreateProject = createServerFn({ method: "POST" })
 			throw new Error(data.error)
 		}
 
-		return
+		return await response.json()
 	})
 
 export const UpdateProject = createServerFn({ method: "POST" })
