@@ -12,7 +12,7 @@ import { ProjectEditDrawer } from "@/drawers/proyectos/editar-proyecto"
 import { GetAllProjects } from "@/queries/proyectos"
 import type { ProjectType } from "@/types/proyectos"
 
-export const Route = createFileRoute("/_authed/parametros/proyectos")({
+export const Route = createFileRoute("/_authed/parametros/proyectos/")({
 	component: RouteComponent,
 	loader: ({ context: { queryClient } }) => {
 		queryClient.ensureQueryData({
