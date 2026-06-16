@@ -62,12 +62,12 @@ export function SpentDetailsDrawer({
 			header: "Factura",
 		},
 		{
-			accessorKey: "invoice_total",
+			accessorKey: "total",
 			header: "Total",
 			cell: ({ row }) => {
 				return (
 					<span className='block w-full text-right'>
-						{row.original.invoice_total.toLocaleString("es-EC", {
+						{row.original.total.toLocaleString("es-EC", {
 							minimumFractionDigits: 2,
 							maximumFractionDigits: 2,
 						})}
