@@ -45,10 +45,12 @@ function RouteComponent() {
 		{
 			header: "Nombre",
 			accessorKey: "name",
+			size: 800,
 		},
 		{
 			accessorKey: "net_area",
 			header: "Area Neta (m2)",
+			size: 100,
 			cell: ({ row }) => {
 				const area = row.original.net_area ? row.original.net_area : 0
 				return (
@@ -60,6 +62,7 @@ function RouteComponent() {
 		},
 		{
 			accessorKey: "gross_area",
+			size: 100,
 			header: "Area Bruta (m2)",
 			cell: ({ row }) => {
 				const area = row.original.gross_area ? row.original.gross_area : 0
@@ -73,16 +76,22 @@ function RouteComponent() {
 		{
 			accessorKey: "is_active",
 			header: "Activo",
+			size: 20,
 			cell: ({ row }) => {
 				return (
-					<span className='block w-full text-right'>
-						{row.original.is_active ? <CheckIcon size={16} /> : <X size={16} />}
+					<span className=' w-full flex items-center'>
+						{row.original.is_active ? (
+							<CheckIcon className='w-full text-center' size={16} />
+						) : (
+							<X className='w-full text-center' size={16} />
+						)}
 					</span>
 				)
 			},
 		},
 		{
 			id: "actions",
+			size: 10,
 			cell: ({ row }) => {
 				const project = row.original
 
