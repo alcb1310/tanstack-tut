@@ -5,11 +5,11 @@ import { CheckIcon, EditIcon, PlusIcon, X } from "lucide-react"
 import { useEffect, useState } from "react"
 import PageTitle from "@/components/layout/page-title"
 import { DataTable } from "@/components/table/data-table"
+import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Spinner } from "@/components/ui/spinner"
 import { GetAllProjects } from "@/queries/proyectos"
 import type { ProjectType } from "@/types/proyectos"
-import { Button } from "@/components/ui/button"
 
 export const Route = createFileRoute("/_authed/parametros/proyectos/")({
 	component: RouteComponent,

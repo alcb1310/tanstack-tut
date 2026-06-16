@@ -1,3 +1,5 @@
+import { Link } from "@tanstack/react-router"
+import { ChevronRightIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
 	Collapsible,
@@ -5,8 +7,6 @@ import {
 	CollapsibleTrigger,
 } from "@/components/ui/collapsible"
 import type { FileType } from "@/types/proyectos"
-import { Link } from "@tanstack/react-router"
-import { ChevronRightIcon } from "lucide-react"
 
 type FilesCollapsibleProps = {
 	data: FileType
