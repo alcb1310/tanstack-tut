@@ -42,6 +42,11 @@ export function DataTable<TData, TValue>({
 		columns,
 		getCoreRowModel: getCoreRowModel(),
 		getPaginationRowModel: getPaginationRowModel(),
+		defaultColumn: {
+			minSize: 10,
+			maxSize: Number.MAX_SAFE_INTEGER,
+			size: 200,
+		},
 	})
 
 	return (
@@ -52,7 +57,10 @@ export function DataTable<TData, TValue>({
 						<TableRow key={headerGroup.id}>
 							{headerGroup.headers.map(header => {
 								return (
-									<TableHead key={header.id}>
+									<TableHead
+										key={header.id}
+										style={{ width: header.getSize() }}
+									>
 										{header.isPlaceholder
 											? null
 											: flexRender(
