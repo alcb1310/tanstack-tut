@@ -1,6 +1,6 @@
 import { createServerFn } from "@tanstack/react-start"
 import { getCookie } from "@tanstack/react-start/server"
-import type { ProjectType } from "@/types/proyectos"
+import type { FilesType, ProjectType } from "@/types/proyectos"
 
 const URL = import.meta.env.VITE_BACKEND_SERVER
 const cookieName = "BCA-TOKEN"
@@ -46,7 +46,7 @@ export const GetOneProject = createServerFn({ method: "GET" })
 
 export const CreateProject = createServerFn({ method: "POST" })
 	.inputValidator((data: ProjectType) => data)
-	.handler(async ({ data }) => {
+	.handler(async ({ data }): Promise<ProjectType> => {
 		const token = getCookie(cookieName)
 
 		const response = await fetch(`${URL}/parametros/proyectos`, {
@@ -62,7 +62,7 @@ export const CreateProject = createServerFn({ method: "POST" })
 			throw new Error(data.error)
 		}
 
-		return
+		return await response.json()
 	})
 
 export const UpdateProject = createServerFn({ method: "POST" })
@@ -85,4 +85,51 @@ export const UpdateProject = createServerFn({ method: "POST" })
 		}
 
 		return
+	})
+
+export const AddFile = createServerFn({ method: "POST" })
+	.inputValidator(
+		(data: { project_id: string; name: string; url: string }) => data,
+	)
+	.handler(async ({ data }) => {
+		const token = getCookie(cookieName)
+
+		const response = await fetch(
+			`${URL}/parametros/proyectos/${data.project_id}/archivos`,
+			{
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${token}`,
+				},
+				body: JSON.stringify(data),
+			},
+		)
+
+		if (!response.ok) {
+			const data = await response.json()
+			throw new Error(data.error)
+		}
+
+		return
+	})
+
+export const GetFiles = createServerFn({ method: "GET" })
+	.inputValidator((data: { id: string }) => data)
+	.handler(async ({ data: { id } }): Promise<FilesType> => {
+		const token = getCookie(cookieName)
+
+		const response = await fetch(`${URL}/parametros/proyectos/${id}/archivos`, {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		})
+		if (!response.ok) {
+			const data = await response.json()
+			throw new Error(data.error)
+		}
+
+		return response.json()
 	})

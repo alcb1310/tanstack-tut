@@ -1,3 +1,7 @@
+import { useQuery, useSuspenseQueries } from "@tanstack/react-query"
+import { createFileRoute } from "@tanstack/react-router"
+import type { ColumnDef } from "@tanstack/react-table"
+import { DownloadIcon, PlayIcon } from "lucide-react"
 import { FormBackground } from "@/components/layout/form-background"
 import PageTitle from "@/components/layout/page-title"
 import { ReportDataTable } from "@/components/table/report-data-table"
@@ -10,11 +14,7 @@ import { actualExcelExport } from "@/queries/excel"
 import { GetAllProjects } from "@/queries/proyectos"
 import { GetAllBugetsByProjectAndLevel, GetAllLevels } from "@/queries/reportes"
 import type { BudgetResponseType } from "@/types/presupuesto"
-import { actualReportSchema, type ActualReportTypes } from "@/types/reportes"
-import { useQuery, useSuspenseQueries } from "@tanstack/react-query"
-import { createFileRoute } from "@tanstack/react-router"
-import type { ColumnDef } from "@tanstack/react-table"
-import { DownloadIcon, PlayIcon } from "lucide-react"
+import { type ActualReportTypes, actualReportSchema } from "@/types/reportes"
 
 export const Route = createFileRoute("/_authed/reportes/actual")({
 	component: RouteComponent,

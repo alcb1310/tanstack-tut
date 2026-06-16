@@ -1,6 +1,6 @@
 import { z } from "zod"
-import { InvoiceResponseType } from "./facturas"
-import { BudgetItem } from "./partidas"
+import type { InvoiceResponseType } from "./facturas"
+import type { BudgetItem } from "./partidas"
 
 export type LevelType = {
 	key: string
