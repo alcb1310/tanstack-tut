@@ -17,6 +17,7 @@ import {
 	ShellIcon,
 	ShoppingBasketIcon,
 	ShoppingCartIcon,
+	WorkflowIcon,
 } from "lucide-react"
 import type {
 	ComponentProps,
@@ -70,6 +71,11 @@ const menuData: DataType[] = [
 				title: "Facturas",
 				url: "/transacciones/factura",
 				icon: ReceiptTextIcon,
+			},
+			{
+				title: "Flujo",
+				url: "/transacciones/flujo",
+				icon: WorkflowIcon,
 			},
 			{
 				title: "Cierre mensual",
