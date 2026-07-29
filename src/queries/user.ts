@@ -52,7 +52,7 @@ export const GetAllUsers = createServerFn({ method: "GET" }).handler(
 )
 
 export const CreateUser = createServerFn({ method: "POST" })
-	.inputValidator((data: UserCreate) => data)
+	.validator((data: UserCreate) => data)
 	.handler(async ({ data }) => {
 		const token = getCookie(cookieName)
 
@@ -66,8 +66,8 @@ export const CreateUser = createServerFn({ method: "POST" })
 		})
 
 		if (!response.ok) {
-			const data = await response.json()
-			throw new Error(data.error)
+			const data = (await response.json()) as ErrorResponseType
+			throw new Error(data.msg)
 		}
 
 		return
