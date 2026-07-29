@@ -1,5 +1,6 @@
 import { createServerFn } from "@tanstack/react-start"
 import { getCookie } from "@tanstack/react-start/server"
+import type { ErrorResponseType } from "@/types/error"
 import type { UserCreate, UserResponse } from "@/types/user"
 
 const URL = import.meta.env.VITE_BACKEND_SERVER
@@ -21,8 +22,8 @@ export const MeQuery = createServerFn({ method: "GET" }).handler(
 		})
 
 		if (!response.ok) {
-			const data = await response.json()
-			throw new Error(data.error)
+			const data = (await response.json()) as ErrorResponseType
+			throw new Error(data.msg)
 		}
 
 		return await response.json()
