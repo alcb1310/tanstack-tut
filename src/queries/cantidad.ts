@@ -76,7 +76,7 @@ export const UpdateCantidad = createServerFn({ method: "POST" })
 	})
 
 export const DeleteCantidad = createServerFn({ method: "POST" })
-	.inputValidator((data: { id: string }) => data)
+	.validator((data: { id: string }) => data)
 	.handler(async ({ data }) => {
 		const token = getCookie(cookieName)
 
@@ -89,9 +89,8 @@ export const DeleteCantidad = createServerFn({ method: "POST" })
 		})
 
 		if (!response.ok) {
-			const data = await response.json()
-
-			throw new Error(data.error)
+			const data = (await response.json()) as ErrorResponseType
+			throw new Error(data.msg)
 		}
 
 		return
