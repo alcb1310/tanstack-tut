@@ -86,7 +86,7 @@ export const UpdateRubroMaterial = createServerFn({ method: "POST" })
 	})
 
 export const DeleteRubroMaterial = createServerFn({ method: "POST" })
-	.inputValidator((data: { rubroId: string; materialId: string }) => data)
+	.validator((data: { rubroId: string; materialId: string }) => data)
 	.handler(async ({ data: { rubroId, materialId } }) => {
 		const token = getCookie(cookieName)
 
@@ -102,8 +102,8 @@ export const DeleteRubroMaterial = createServerFn({ method: "POST" })
 		)
 
 		if (!response.ok) {
-			const error = await response.json()
-			throw new Error(error)
+			const error = (await response.json()) as ErrorResponseType
+			throw new Error(error.msg)
 		}
 
 		return
