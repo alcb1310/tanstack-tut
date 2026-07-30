@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start"
 import { getCookie } from "@tanstack/react-start/server"
 import type { CategoryType } from "@/types/categorias"
+import type { ErrorResponseType } from "@/types/error"
 
 const URL = import.meta.env.VITE_BACKEND_SERVER
 const cookieName = "BCA-TOKEN"
@@ -18,7 +19,8 @@ export const GetAllCategories = createServerFn({ method: "GET" }).handler(
 		})
 
 		if (!response.ok) {
-			throw new Error("Network response was not ok")
+			const res = (await response.json()) as ErrorResponseType
+			throw new Error(res.msg)
 		}
 
 		return await response.json()
