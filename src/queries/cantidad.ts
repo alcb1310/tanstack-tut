@@ -5,6 +5,7 @@ import type {
 	QuantityEditType,
 	QuantityResponseType,
 } from "@/types/cantidad"
+import type { ErrorResponseType } from "@/types/error"
 
 const URL = import.meta.env.VITE_BACKEND_SERVER
 const cookieName = "BCA-TOKEN"
@@ -22,7 +23,8 @@ export const GetAllCantidades = createServerFn({ method: "GET" }).handler(
 		})
 
 		if (!response.ok) {
-			throw new Error("Network response was not ok")
+			const data = (await response.json()) as ErrorResponseType
+			throw new Error(data.msg)
 		}
 
 		return await response.json()
