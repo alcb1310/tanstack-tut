@@ -33,7 +33,7 @@ export const GetAllLevels = createServerFn({ method: "GET" }).handler(
 	},
 )
 export const GetAllBugetsByProjectAndLevel = createServerFn({ method: "GET" })
-	.inputValidator((data: { project_id: string; level: string }) => data)
+	.validator((data: { project_id: string; level: string }) => data)
 	.handler(
 		async ({ data: { project_id, level } }): Promise<BudgetResponseType[]> => {
 			const token = getCookie(cookieName)
@@ -48,6 +48,12 @@ export const GetAllBugetsByProjectAndLevel = createServerFn({ method: "GET" })
 					Authorization: `Bearer ${token}`,
 				},
 			})
+
+			if (!response.ok) {
+				const res = (await response.json()) as ErrorResponseType
+				throw new Error(res.msg)
+			}
+
 			return response.json()
 		},
 	)
