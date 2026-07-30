@@ -74,7 +74,7 @@ export const CreateUser = createServerFn({ method: "POST" })
 	})
 
 export const UpdateUser = createServerFn({ method: "POST" })
-	.inputValidator((data: UserResponse) => data)
+	.validator((data: UserResponse) => data)
 	.handler(async ({ data }) => {
 		const token = getCookie(cookieName)
 
@@ -88,8 +88,8 @@ export const UpdateUser = createServerFn({ method: "POST" })
 		})
 
 		if (!response.ok) {
-			const data = await response.json()
-			throw new Error(data.error)
+			const data = (await response.json()) as ErrorResponseType
+			throw new Error(data.msg)
 		}
 
 		return
