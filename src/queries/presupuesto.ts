@@ -57,7 +57,7 @@ export const CreateBudget = createServerFn({ method: "POST" })
 	})
 
 export const UpdateBudget = createServerFn({ method: "POST" })
-	.inputValidator((data: BudgetEditType) => data)
+	.validator((data: BudgetEditType) => data)
 	.handler(async ({ data }) => {
 		const token = getCookie(cookieName)
 
@@ -74,8 +74,8 @@ export const UpdateBudget = createServerFn({ method: "POST" })
 		)
 
 		if (!response.ok) {
-			const error = await response.json()
-			throw new Error(error.error)
+			const error = (await response.json()) as ErrorResponseType
+			throw new Error(error.msg)
 		}
 
 		return
