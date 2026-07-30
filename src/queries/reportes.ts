@@ -93,7 +93,7 @@ export const GetAllHistoric = createServerFn({ method: "GET" })
 	)
 
 export const GetBalanceReport = createServerFn({ method: "GET" })
-	.inputValidator((data: { project_id: string; date: string }) => data)
+	.validator((data: { project_id: string; date: string }) => data)
 	.handler(
 		async ({ data: { project_id, date } }): Promise<BalanceResponseType> => {
 			const token = getCookie(cookieName)
@@ -113,7 +113,8 @@ export const GetBalanceReport = createServerFn({ method: "GET" })
 			})
 
 			if (!response.ok) {
-				throw new Error("Network error")
+				const res = (await response.json()) as ErrorResponseType
+				throw new Error(res.msg)
 			}
 
 			return response.json()
