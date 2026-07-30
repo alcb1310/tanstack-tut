@@ -120,7 +120,7 @@ export const AddFile = createServerFn({ method: "POST" })
 	})
 
 export const GetFiles = createServerFn({ method: "GET" })
-	.inputValidator((data: { id: string }) => data)
+	.validator((data: { id: string }) => data)
 	.handler(async ({ data: { id } }): Promise<FilesType> => {
 		const token = getCookie(cookieName)
 
@@ -132,8 +132,8 @@ export const GetFiles = createServerFn({ method: "GET" })
 			},
 		})
 		if (!response.ok) {
-			const data = await response.json()
-			throw new Error(data.error)
+			const data = (await response.json()) as ErrorResponseType
+			throw new Error(data.msg)
 		}
 
 		return response.json()
