@@ -50,7 +50,7 @@ export const CreateCategory = createServerFn({ method: "POST" })
 	})
 
 export const UpdateCategory = createServerFn({ method: "POST" })
-	.inputValidator((data: CategoryType) => data)
+	.validator((data: CategoryType) => data)
 	.handler(async ({ data }) => {
 		const token = getCookie(cookieName)
 
@@ -64,9 +64,8 @@ export const UpdateCategory = createServerFn({ method: "POST" })
 		})
 
 		if (!response.ok) {
-			const data = await response.json()
-
-			throw new Error(data.error)
+			const data = (await response.json()) as ErrorResponseType
+			throw new Error(data.msg)
 		}
 
 		return
