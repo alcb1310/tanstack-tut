@@ -1,5 +1,6 @@
 import { createServerFn } from "@tanstack/react-start"
 import { getCookie } from "@tanstack/react-start/server"
+import type { ErrorResponseType } from "@/types/error"
 import type { BudgetResponseType } from "@/types/presupuesto"
 import type {
 	BalanceResponseType,
@@ -22,6 +23,12 @@ export const GetAllLevels = createServerFn({ method: "GET" }).handler(
 				Authorization: `Bearer ${token}`,
 			},
 		})
+
+		if (!response.ok) {
+			const res = (await response.json()) as ErrorResponseType
+			throw new Error(res.msg)
+		}
+
 		return await response.json()
 	},
 )
