@@ -61,7 +61,7 @@ export const CreateRubroMaterial = createServerFn({ method: "POST" })
 	})
 
 export const UpdateRubroMaterial = createServerFn({ method: "POST" })
-	.inputValidator((data: RubroMaterialType) => data)
+	.validator((data: RubroMaterialType) => data)
 	.handler(async ({ data }) => {
 		const token = getCookie(cookieName)
 
@@ -78,8 +78,8 @@ export const UpdateRubroMaterial = createServerFn({ method: "POST" })
 		)
 
 		if (!response.ok) {
-			const error = await response.json()
-			throw new Error(error)
+			const error = (await response.json()) as ErrorResponseType
+			throw new Error(error.msg)
 		}
 
 		return
