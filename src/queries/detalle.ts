@@ -59,7 +59,7 @@ export const CreateInvoiceDetail = createServerFn({ method: "POST" })
 	})
 
 export const DeleteInvoiceDetail = createServerFn({ method: "POST" })
-	.inputValidator((data: { invoiceId: string; detailId: string }) => data)
+	.validator((data: { invoiceId: string; detailId: string }) => data)
 	.handler(async ({ data: { invoiceId, detailId } }) => {
 		const token = getCookie(cookieName)
 		const response = await fetch(
@@ -74,8 +74,8 @@ export const DeleteInvoiceDetail = createServerFn({ method: "POST" })
 		)
 
 		if (!response.ok) {
-			const error = await response.json()
-			throw new Error(error.error)
+			const error = (await response.json()) as ErrorResponseType
+			throw new Error(error.msg)
 		}
 
 		return
