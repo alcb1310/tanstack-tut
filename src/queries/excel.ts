@@ -1,5 +1,6 @@
 import { createServerFn } from "@tanstack/react-start"
 import { getCookie } from "@tanstack/react-start/server"
+import type { ErrorResponseType } from "@/types/error"
 import type {
 	ActualReportTypes,
 	BalanceReportType,
@@ -9,7 +10,7 @@ import type {
 const URL = import.meta.env.VITE_BACKEND_SERVER
 
 export const actualExcelExport = createServerFn({ method: "GET" })
-	.inputValidator((data: ActualReportTypes) => data)
+	.validator((data: ActualReportTypes) => data)
 	.handler(async ({ data }): Promise<Response> => {
 		const token = getCookie("BCA-TOKEN")
 
@@ -23,8 +24,8 @@ export const actualExcelExport = createServerFn({ method: "GET" })
 			},
 		)
 		if (!res.ok) {
-			const error = await res.json()
-			throw new Error(error.error)
+			const error = (await res.json()) as ErrorResponseType
+			throw new Error(error.msg)
 		}
 
 		const blob = await res.blob()
