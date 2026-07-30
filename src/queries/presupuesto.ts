@@ -1,12 +1,13 @@
 import { createServerFn } from "@tanstack/react-start"
 import { getCookie } from "@tanstack/react-start/server"
+import type { ErrorResponseType } from "@/types/error"
 import type { BudgetEditType, BudgetResponseType } from "@/types/presupuesto"
 
 const URL = import.meta.env.VITE_BACKEND_SERVER
 const cookieName = "BCA-TOKEN"
 
 export const GetAllBudgets = createServerFn({ method: "GET" })
-	.inputValidator((data: { query?: string; project?: string }) => data)
+	.validator((data: { query?: string; project?: string }) => data)
 	.handler(
 		async ({ data: { query, project } }): Promise<BudgetResponseType[]> => {
 			const token = getCookie(cookieName)
@@ -23,6 +24,12 @@ export const GetAllBudgets = createServerFn({ method: "GET" })
 					},
 				},
 			)
+
+			if (!response.ok) {
+				const res = (await response.json()) as ErrorResponseType
+				throw new Error(res.msg)
+			}
+
 			return response.json()
 		},
 	)
