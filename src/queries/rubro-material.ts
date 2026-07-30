@@ -1,5 +1,6 @@
 import { createServerFn } from "@tanstack/react-start"
 import { getCookie } from "@tanstack/react-start/server"
+import type { ErrorResponseType } from "@/types/error"
 import type {
 	RubroMaterialResponseTye,
 	RubroMaterialType,
@@ -9,7 +10,7 @@ const URL = import.meta.env.VITE_BACKEND_SERVER
 const cookieName = "BCA-TOKEN"
 
 export const GetAllRubrosMaterials = createServerFn({ method: "GET" })
-	.inputValidator((data: { rubroId: string }) => data)
+	.validator((data: { rubroId: string }) => data)
 	.handler(
 		async ({ data: { rubroId } }): Promise<RubroMaterialResponseTye[]> => {
 			const token = getCookie(cookieName)
@@ -26,8 +27,8 @@ export const GetAllRubrosMaterials = createServerFn({ method: "GET" })
 			)
 
 			if (!response.ok) {
-				const error = await response.json()
-				throw new Error(error)
+				const error = (await response.json()) as ErrorResponseType
+				throw new Error(error.msg)
 			}
 
 			return response.json()
