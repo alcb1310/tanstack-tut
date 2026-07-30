@@ -75,7 +75,7 @@ export const balanceExcelExport = createServerFn({ method: "GET" })
 	})
 
 export const histroricExcelExport = createServerFn({ method: "GET" })
-	.inputValidator((data: ReportTypes) => data)
+	.validator((data: ReportTypes) => data)
 	.handler(async ({ data }) => {
 		const token = getCookie("BCA-TOKEN")
 		const date = new Date(data.date).toISOString()
@@ -89,6 +89,11 @@ export const histroricExcelExport = createServerFn({ method: "GET" })
 				},
 			},
 		)
+
+		if (!res.ok) {
+			const error = (await res.json()) as ErrorResponseType
+			throw new Error(error.msg)
+		}
 
 		const blob = await res.blob()
 
