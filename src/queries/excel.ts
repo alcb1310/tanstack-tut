@@ -23,6 +23,7 @@ export const actualExcelExport = createServerFn({ method: "GET" })
 				},
 			},
 		)
+
 		if (!res.ok) {
 			const error = (await res.json()) as ErrorResponseType
 			throw new Error(error.msg)
@@ -41,7 +42,7 @@ export const actualExcelExport = createServerFn({ method: "GET" })
 	})
 
 export const balanceExcelExport = createServerFn({ method: "GET" })
-	.inputValidator((data: BalanceReportType) => data)
+	.validator((data: BalanceReportType) => data)
 	.handler(async ({ data }): Promise<Response> => {
 		const token = getCookie("BCA-TOKEN")
 		const date = new Date(data.date).toISOString()
@@ -55,6 +56,11 @@ export const balanceExcelExport = createServerFn({ method: "GET" })
 				},
 			},
 		)
+
+		if (!res.ok) {
+			const error = (await res.json()) as ErrorResponseType
+			throw new Error(error.msg)
+		}
 
 		const blob = await res.blob()
 
