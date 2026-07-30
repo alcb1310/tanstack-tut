@@ -54,7 +54,7 @@ export const CreateCantidad = createServerFn({ method: "POST" })
 	})
 
 export const UpdateCantidad = createServerFn({ method: "POST" })
-	.inputValidator((data: QuantityEditType) => data)
+	.validator((data: QuantityEditType) => data)
 	.handler(async ({ data }) => {
 		const token = getCookie(cookieName)
 
@@ -68,9 +68,8 @@ export const UpdateCantidad = createServerFn({ method: "POST" })
 		})
 
 		if (!response.ok) {
-			const data = await response.json()
-
-			throw new Error(data.error)
+			const data = (await response.json()) as ErrorResponseType
+			throw new Error(data.msg)
 		}
 
 		return
