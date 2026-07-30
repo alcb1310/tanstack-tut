@@ -143,7 +143,7 @@ export const SetBalancedInvoice = createServerFn({ method: "POST" })
 	})
 
 export const GetSpentReport = createServerFn({ method: "GET" })
-	.inputValidator(
+	.validator(
 		(data: { project_id: string; level: string; date: string }) => data,
 	)
 	.handler(
@@ -164,6 +164,11 @@ export const GetSpentReport = createServerFn({ method: "GET" })
 					Authorization: `Bearer ${token}`,
 				},
 			})
+
+			if (!response.ok) {
+				const res = (await response.json()) as ErrorResponseType
+				throw new Error(res.msg)
+			}
 
 			return response.json()
 		},
