@@ -1,5 +1,6 @@
 import { createServerFn } from "@tanstack/react-start"
 import { getCookie } from "@tanstack/react-start/server"
+import type { ErrorResponseType } from "@/types/error"
 import type { MaterialCreateType, MaterialType } from "@/types/materiales"
 
 const URL = import.meta.env.VITE_BACKEND_SERVER
@@ -18,7 +19,8 @@ export const GetAllMaterials = createServerFn({ method: "GET" }).handler(
 		})
 
 		if (!response.ok) {
-			throw new Error("Network response was not ok")
+			const res = (await response.json()) as ErrorResponseType
+			throw new Error(res.msg)
 		}
 
 		return await response.json()
