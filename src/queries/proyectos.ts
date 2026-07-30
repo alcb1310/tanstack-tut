@@ -1,12 +1,13 @@
 import { createServerFn } from "@tanstack/react-start"
 import { getCookie } from "@tanstack/react-start/server"
+import type { ErrorResponseType } from "@/types/error"
 import type { FilesType, ProjectType } from "@/types/proyectos"
 
 const URL = import.meta.env.VITE_BACKEND_SERVER
 const cookieName = "BCA-TOKEN"
 
 export const GetAllProjects = createServerFn({ method: "GET" })
-	.inputValidator((data: { query?: string; active?: boolean }) => data)
+	.validator((data: { query?: string; active?: boolean }) => data)
 	.handler(async ({ data: { query, active } }): Promise<ProjectType[]> => {
 		const token = getCookie(cookieName)
 
@@ -21,6 +22,12 @@ export const GetAllProjects = createServerFn({ method: "GET" })
 				Authorization: `Bearer ${token}`,
 			},
 		})
+
+		if (!response.ok) {
+			const data = (await response.json()) as ErrorResponseType
+			throw new Error(data.msg)
+		}
+
 		return response.json()
 	})
 
