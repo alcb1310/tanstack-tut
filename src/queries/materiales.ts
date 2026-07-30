@@ -28,7 +28,7 @@ export const GetAllMaterials = createServerFn({ method: "GET" }).handler(
 )
 
 export const CreateMaterial = createServerFn({ method: "POST" })
-	.inputValidator((data: MaterialCreateType) => data)
+	.validator((data: MaterialCreateType) => data)
 	.handler(async ({ data }) => {
 		const token = getCookie(cookieName)
 
@@ -42,9 +42,8 @@ export const CreateMaterial = createServerFn({ method: "POST" })
 		})
 
 		if (!response.ok) {
-			const data = await response.json()
-
-			throw new Error(data.error)
+			const data = (await response.json()) as ErrorResponseType
+			throw new Error(data.msg)
 		}
 
 		return
