@@ -93,7 +93,7 @@ export const UpdateInvoice = createServerFn({ method: "POST" })
 	})
 
 export const DeleteInvoice = createServerFn({ method: "POST" })
-	.inputValidator((data: { id: string }) => data)
+	.validator((data: { id: string }) => data)
 	.handler(async ({ data: { id } }) => {
 		const token = getCookie(cookieName)
 		const response = await fetch(`${URL}/transacciones/facturas/${id}`, {
@@ -105,8 +105,8 @@ export const DeleteInvoice = createServerFn({ method: "POST" })
 		})
 
 		if (!response.ok) {
-			const error = await response.json()
-			throw new Error(error.error)
+			const error = (await response.json()) as ErrorResponseType
+			throw new Error(error.msg)
 		}
 
 		return
