@@ -50,7 +50,7 @@ export const CreateMaterial = createServerFn({ method: "POST" })
 	})
 
 export const UpdateMaterial = createServerFn({ method: "POST" })
-	.inputValidator((data: MaterialType) => data)
+	.validator((data: MaterialType) => data)
 	.handler(async ({ data }) => {
 		const token = getCookie(cookieName)
 
@@ -64,9 +64,8 @@ export const UpdateMaterial = createServerFn({ method: "POST" })
 		})
 
 		if (!response.ok) {
-			const data = await response.json()
-
-			throw new Error(data.error)
+			const data = (await response.json()) as ErrorResponseType
+			throw new Error(data.msg)
 		}
 
 		return
