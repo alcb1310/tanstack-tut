@@ -28,8 +28,8 @@ export const GetAllRubros = createServerFn({ method: "GET" }).handler(
 )
 
 export const GetOneRubro = createServerFn({ method: "GET" })
-	.inputValidator((data: { id: string }) => data)
-	.handler(async ({ data: { id } }) => {
+	.validator((data: { id: string }) => data)
+	.handler(async ({ data: { id } }): Promise<RubrosType> => {
 		const token = getCookie(cookieName)
 
 		const response = await fetch(`${URL}/parametros/rubros/${id}`, {
@@ -41,12 +41,11 @@ export const GetOneRubro = createServerFn({ method: "GET" })
 		})
 
 		if (!response.ok) {
-			const data = await response.json()
-
-			throw new Error(data.error)
+			const data = (await response.json()) as ErrorResponseType
+			throw new Error(data.msg)
 		}
 
-		return (await response.json()) as RubrosType
+		return await response.json()
 	})
 
 export const CreateRubro = createServerFn({ method: "GET" })
