@@ -52,7 +52,7 @@ export const GetOneProject = createServerFn({ method: "GET" })
 	})
 
 export const CreateProject = createServerFn({ method: "POST" })
-	.inputValidator((data: ProjectType) => data)
+	.validator((data: ProjectType) => data)
 	.handler(async ({ data }): Promise<ProjectType> => {
 		const token = getCookie(cookieName)
 
@@ -65,8 +65,8 @@ export const CreateProject = createServerFn({ method: "POST" })
 			body: JSON.stringify(data),
 		})
 		if (!response.ok) {
-			const data = await response.json()
-			throw new Error(data.error)
+			const data = (await response.json()) as ErrorResponseType
+			throw new Error(data.msg)
 		}
 
 		return await response.json()
