@@ -52,7 +52,7 @@ export const CreateSupplier = createServerFn({ method: "POST" })
 	})
 
 export const UpdateSupplier = createServerFn({ method: "POST" })
-	.inputValidator((data: { data: SupplierCreateType; id: string }) => data)
+	.validator((data: { data: SupplierCreateType; id: string }) => data)
 	.handler(async ({ data: { data, id } }) => {
 		const token = getCookie(cookieName)
 
@@ -66,9 +66,8 @@ export const UpdateSupplier = createServerFn({ method: "POST" })
 		})
 
 		if (!response.ok) {
-			const data = await response.json()
-
-			throw new Error(data.error)
+			const data = (await response.json()) as ErrorResponseType
+			throw new Error(data.msg)
 		}
 		return
 	})
