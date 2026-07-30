@@ -1,5 +1,6 @@
 import { createServerFn } from "@tanstack/react-start"
 import { getCookie } from "@tanstack/react-start/server"
+import type { ErrorResponseType } from "@/types/error"
 import type { InvoiceCreateType, InvoiceResponseType } from "@/types/facturas"
 
 const URL = import.meta.env.VITE_BACKEND_SERVER
@@ -18,10 +19,9 @@ export const GetAllInvoices = createServerFn({ method: "GET" }).handler(
 		})
 
 		if (!response.ok) {
-			console.log(await response.json())
-			throw new Error("Network response was not ok")
+			const res = (await response.json()) as ErrorResponseType
+			throw new Error(res.msg)
 		}
-		console.log(response)
 
 		return response.json()
 	},
