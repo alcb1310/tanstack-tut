@@ -122,7 +122,7 @@ export const GetBalanceReport = createServerFn({ method: "GET" })
 	)
 
 export const SetBalancedInvoice = createServerFn({ method: "POST" })
-	.inputValidator((data: { invoice_id: string }) => data)
+	.validator((data: { invoice_id: string }) => data)
 	.handler(async ({ data: { invoice_id } }) => {
 		const token = getCookie(cookieName)
 
@@ -135,8 +135,8 @@ export const SetBalancedInvoice = createServerFn({ method: "POST" })
 		})
 
 		if (!response.ok) {
-			const err = await response.json()
-			throw new Error(err.error)
+			const res = (await response.json()) as ErrorResponseType
+			throw new Error(res.msg)
 		}
 
 		return
