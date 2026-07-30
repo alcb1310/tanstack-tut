@@ -59,7 +59,7 @@ export const GetAllBugetsByProjectAndLevel = createServerFn({ method: "GET" })
 	)
 
 export const GetAllHistoric = createServerFn({ method: "GET" })
-	.inputValidator(
+	.validator(
 		(data: { project_id: string; level: string; date: string }) => data,
 	)
 	.handler(
@@ -82,7 +82,8 @@ export const GetAllHistoric = createServerFn({ method: "GET" })
 			})
 
 			if (!response.ok) {
-				throw new Error("Network error")
+				const res = (await response.json()) as ErrorResponseType
+				throw new Error(res.msg)
 			}
 
 			if (response.status === 204) return [] as BudgetResponseType[]
