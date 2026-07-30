@@ -1,12 +1,13 @@
 import { createServerFn } from "@tanstack/react-start"
 import { getCookie } from "@tanstack/react-start/server"
 import type { CierreTypes } from "@/types/cierre"
+import type { ErrorResponseType } from "@/types/error"
 
 const URL = import.meta.env.VITE_BACKEND_SERVER
 const cookieName = "BCA-TOKEN"
 
 export const CreateClosure = createServerFn({ method: "POST" })
-	.inputValidator((data: CierreTypes) => data)
+	.validator((data: CierreTypes) => data)
 	.handler(async ({ data }) => {
 		const token = getCookie(cookieName)
 
@@ -20,8 +21,8 @@ export const CreateClosure = createServerFn({ method: "POST" })
 		})
 
 		if (!response.ok) {
-			const error = await response.json()
-			throw new Error(error.error)
+			const error = (await response.json()) as ErrorResponseType
+			throw new Error(error.msg)
 		}
 
 		return
