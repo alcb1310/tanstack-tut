@@ -69,7 +69,7 @@ export const CreateInvoice = createServerFn({ method: "POST" })
 	})
 
 export const UpdateInvoice = createServerFn({ method: "POST" })
-	.inputValidator((data: InvoiceCreateType) => data)
+	.validator((data: InvoiceCreateType) => data)
 	.handler(async ({ data }) => {
 		const token = getCookie(cookieName)
 
@@ -85,8 +85,8 @@ export const UpdateInvoice = createServerFn({ method: "POST" })
 		})
 
 		if (!response.ok) {
-			const error = await response.json()
-			throw new Error(error.error)
+			const error = (await response.json()) as ErrorResponseType
+			throw new Error(error.msg)
 		}
 
 		return
