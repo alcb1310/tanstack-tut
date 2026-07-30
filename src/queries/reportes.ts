@@ -175,7 +175,7 @@ export const GetSpentReport = createServerFn({ method: "GET" })
 	)
 
 export const GetSpentDetails = createServerFn({ method: "GET" })
-	.inputValidator(
+	.validator(
 		(data: { project_id: string; budget_item_id: string; date: string }) =>
 			data,
 	)
@@ -195,6 +195,11 @@ export const GetSpentDetails = createServerFn({ method: "GET" })
 					},
 				},
 			)
+
+			if (!response.ok) {
+				const res = (await response.json()) as ErrorResponseType
+				throw new Error(res.msg)
+			}
 
 			return response.json()
 		},
