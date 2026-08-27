@@ -9,7 +9,7 @@ const URL = import.meta.env.VITE_BACKEND_SERVER
 const cookieName = "BCA-TOKEN"
 
 export const GetAllRubrosMaterials = createServerFn({ method: "GET" })
-	.inputValidator((data: { rubroId: string }) => data)
+	.validator((data: { rubroId: string }) => data)
 	.handler(
 		async ({ data: { rubroId } }): Promise<RubroMaterialResponseTye[]> => {
 			const token = getCookie(cookieName)
@@ -35,7 +35,7 @@ export const GetAllRubrosMaterials = createServerFn({ method: "GET" })
 	)
 
 export const CreateRubroMaterial = createServerFn({ method: "POST" })
-	.inputValidator((data: RubroMaterialType) => data)
+	.validator((data: RubroMaterialType) => data)
 	.handler(async ({ data }) => {
 		const token = getCookie(cookieName)
 
@@ -60,7 +60,7 @@ export const CreateRubroMaterial = createServerFn({ method: "POST" })
 	})
 
 export const UpdateRubroMaterial = createServerFn({ method: "POST" })
-	.inputValidator((data: RubroMaterialType) => data)
+	.validator((data: RubroMaterialType) => data)
 	.handler(async ({ data }) => {
 		const token = getCookie(cookieName)
 
@@ -85,7 +85,7 @@ export const UpdateRubroMaterial = createServerFn({ method: "POST" })
 	})
 
 export const DeleteRubroMaterial = createServerFn({ method: "POST" })
-	.inputValidator((data: { rubroId: string; materialId: string }) => data)
+	.validator((data: { rubroId: string; materialId: string }) => data)
 	.handler(async ({ data: { rubroId, materialId } }) => {
 		const token = getCookie(cookieName)
 

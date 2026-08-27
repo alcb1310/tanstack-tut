@@ -6,7 +6,7 @@ const URL = import.meta.env.VITE_BACKEND_SERVER
 const cookieName = "BCA-TOKEN"
 
 export const GetAllSuppliers = createServerFn({ method: "GET" })
-	.inputValidator((data: { search?: string }) => data)
+	.validator((data: { search?: string }) => data)
 	.handler(async ({ data: { search } }): Promise<SupplierType[]> => {
 		const token = getCookie(cookieName)
 
@@ -28,7 +28,7 @@ export const GetAllSuppliers = createServerFn({ method: "GET" })
 	})
 
 export const CreateSupplier = createServerFn({ method: "POST" })
-	.inputValidator((data: SupplierCreateType) => data)
+	.validator((data: SupplierCreateType) => data)
 	.handler(async ({ data }) => {
 		const token = getCookie(cookieName)
 
@@ -51,7 +51,7 @@ export const CreateSupplier = createServerFn({ method: "POST" })
 	})
 
 export const UpdateSupplier = createServerFn({ method: "POST" })
-	.inputValidator((data: { data: SupplierCreateType; id: string }) => data)
+	.validator((data: { data: SupplierCreateType; id: string }) => data)
 	.handler(async ({ data: { data, id } }) => {
 		const token = getCookie(cookieName)
 

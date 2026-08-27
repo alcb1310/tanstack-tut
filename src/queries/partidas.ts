@@ -10,7 +10,7 @@ const URL = import.meta.env.VITE_BACKEND_SERVER
 const cookieName = "BCA-TOKEN"
 
 export const GetAllPartidas = createServerFn({ method: "GET" })
-	.inputValidator((data: { query?: string; accum?: boolean }) => {
+	.validator((data: { query?: string; accum?: boolean }) => {
 		return data
 	})
 	.handler(
@@ -38,7 +38,7 @@ export const GetAllPartidas = createServerFn({ method: "GET" })
 	)
 
 export const CreatePartida = createServerFn({ method: "POST" })
-	.inputValidator((data: BudgetItem) => data)
+	.validator((data: BudgetItem) => data)
 	.handler(async ({ data }) => {
 		const token = getCookie(cookieName)
 
@@ -60,7 +60,7 @@ export const CreatePartida = createServerFn({ method: "POST" })
 	})
 
 export const UpdatePartida = createServerFn({ method: "POST" })
-	.inputValidator((data: BudgetItemUpdate) => data)
+	.validator((data: BudgetItemUpdate) => data)
 	.handler(async ({ data }) => {
 		const token = getCookie(cookieName)
 

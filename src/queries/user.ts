@@ -51,7 +51,7 @@ export const GetAllUsers = createServerFn({ method: "GET" }).handler(
 )
 
 export const CreateUser = createServerFn({ method: "POST" })
-	.inputValidator((data: UserCreate) => data)
+	.validator((data: UserCreate) => data)
 	.handler(async ({ data }) => {
 		const token = getCookie(cookieName)
 
@@ -73,7 +73,7 @@ export const CreateUser = createServerFn({ method: "POST" })
 	})
 
 export const UpdateUser = createServerFn({ method: "POST" })
-	.inputValidator((data: UserResponse) => data)
+	.validator((data: UserResponse) => data)
 	.handler(async ({ data }) => {
 		const token = getCookie(cookieName)
 
@@ -95,7 +95,7 @@ export const UpdateUser = createServerFn({ method: "POST" })
 	})
 
 export const UpdatePassword = createServerFn({ method: "POST" })
-	.inputValidator((data: { password: string }) => data)
+	.validator((data: { password: string }) => data)
 	.handler(async ({ data }) => {
 		const token = getCookie(cookieName)
 
@@ -117,7 +117,7 @@ export const UpdatePassword = createServerFn({ method: "POST" })
 	})
 
 export const DeleteUser = createServerFn({ method: "POST" })
-	.inputValidator((data: { id: string }) => data)
+	.validator((data: { id: string }) => data)
 	.handler(async ({ data: { id } }) => {
 		const token = getCookie(cookieName)
 		console.log("DeleteUser", token)

@@ -6,7 +6,7 @@ const URL = import.meta.env.VITE_BACKEND_SERVER
 const cookieName = "BCA-TOKEN"
 
 export const CreateClosure = createServerFn({ method: "POST" })
-	.inputValidator((data: CierreTypes) => data)
+	.validator((data: CierreTypes) => data)
 	.handler(async ({ data }) => {
 		const token = getCookie(cookieName)
 

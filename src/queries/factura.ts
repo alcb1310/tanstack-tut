@@ -28,7 +28,7 @@ export const GetAllInvoices = createServerFn({ method: "GET" }).handler(
 )
 
 export const GetOneInvoice = createServerFn({ method: "GET" })
-	.inputValidator((data: { id: string }) => data)
+	.validator((data: { id: string }) => data)
 	.handler(async ({ data: { id } }): Promise<InvoiceCreateType> => {
 		const token = getCookie(cookieName)
 		const response = await fetch(`${URL}/transacciones/facturas/${id}`, {
@@ -47,7 +47,7 @@ export const GetOneInvoice = createServerFn({ method: "GET" })
 	})
 
 export const CreateInvoice = createServerFn({ method: "POST" })
-	.inputValidator((data: InvoiceCreateType) => data)
+	.validator((data: InvoiceCreateType) => data)
 	.handler(async ({ data }) => {
 		const token = getCookie(cookieName)
 		const response = await fetch(`${URL}/transacciones/facturas`, {
@@ -68,7 +68,7 @@ export const CreateInvoice = createServerFn({ method: "POST" })
 	})
 
 export const UpdateInvoice = createServerFn({ method: "POST" })
-	.inputValidator((data: InvoiceCreateType) => data)
+	.validator((data: InvoiceCreateType) => data)
 	.handler(async ({ data }) => {
 		const token = getCookie(cookieName)
 
@@ -92,7 +92,7 @@ export const UpdateInvoice = createServerFn({ method: "POST" })
 	})
 
 export const DeleteInvoice = createServerFn({ method: "POST" })
-	.inputValidator((data: { id: string }) => data)
+	.validator((data: { id: string }) => data)
 	.handler(async ({ data: { id } }) => {
 		const token = getCookie(cookieName)
 		const response = await fetch(`${URL}/transacciones/facturas/${id}`, {

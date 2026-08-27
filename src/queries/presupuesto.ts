@@ -6,7 +6,7 @@ const URL = import.meta.env.VITE_BACKEND_SERVER
 const cookieName = "BCA-TOKEN"
 
 export const GetAllBudgets = createServerFn({ method: "GET" })
-	.inputValidator((data: { query?: string; project?: string }) => data)
+	.validator((data: { query?: string; project?: string }) => data)
 	.handler(
 		async ({ data: { query, project } }): Promise<BudgetResponseType[]> => {
 			const token = getCookie(cookieName)
@@ -28,7 +28,7 @@ export const GetAllBudgets = createServerFn({ method: "GET" })
 	)
 
 export const CreateBudget = createServerFn({ method: "POST" })
-	.inputValidator((data: BudgetEditType) => data)
+	.validator((data: BudgetEditType) => data)
 	.handler(async ({ data }) => {
 		const token = getCookie(cookieName)
 
@@ -50,7 +50,7 @@ export const CreateBudget = createServerFn({ method: "POST" })
 	})
 
 export const UpdateBudget = createServerFn({ method: "POST" })
-	.inputValidator((data: BudgetEditType) => data)
+	.validator((data: BudgetEditType) => data)
 	.handler(async ({ data }) => {
 		const token = getCookie(cookieName)
 

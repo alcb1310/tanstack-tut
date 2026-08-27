@@ -28,7 +28,7 @@ export const GetAllRubros = createServerFn({ method: "GET" }).handler(
 )
 
 export const GetOneRubro = createServerFn({ method: "GET" })
-	.inputValidator((data: { id: string }) => data)
+	.validator((data: { id: string }) => data)
 	.handler(async ({ data: { id } }) => {
 		const token = getCookie(cookieName)
 
@@ -50,7 +50,7 @@ export const GetOneRubro = createServerFn({ method: "GET" })
 	})
 
 export const CreateRubro = createServerFn({ method: "GET" })
-	.inputValidator((data: RubrosType) => data)
+	.validator((data: RubrosType) => data)
 	.handler(async ({ data }) => {
 		const token = getCookie(cookieName)
 
@@ -73,7 +73,7 @@ export const CreateRubro = createServerFn({ method: "GET" })
 	})
 
 export const UpdateRubro = createServerFn({ method: "GET" })
-	.inputValidator((data: RubrosType) => data)
+	.validator((data: RubrosType) => data)
 	.handler(async ({ data }) => {
 		const token = getCookie(cookieName)
 

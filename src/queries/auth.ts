@@ -15,7 +15,7 @@ type LoginResponse = {
 }
 
 export const LoginMutation = createServerFn({ method: "POST" })
-	.inputValidator((data: { email: string; password: string }) => data)
+	.validator((data: { email: string; password: string }) => data)
 	.handler(async ({ data: { email, password } }) => {
 		const response = await fetch(`${URL}/login`, {
 			method: "POST",

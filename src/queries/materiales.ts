@@ -26,7 +26,7 @@ export const GetAllMaterials = createServerFn({ method: "GET" }).handler(
 )
 
 export const CreateMaterial = createServerFn({ method: "POST" })
-	.inputValidator((data: MaterialCreateType) => data)
+	.validator((data: MaterialCreateType) => data)
 	.handler(async ({ data }) => {
 		const token = getCookie(cookieName)
 
@@ -49,7 +49,7 @@ export const CreateMaterial = createServerFn({ method: "POST" })
 	})
 
 export const UpdateMaterial = createServerFn({ method: "POST" })
-	.inputValidator((data: MaterialType) => data)
+	.validator((data: MaterialType) => data)
 	.handler(async ({ data }) => {
 		const token = getCookie(cookieName)
 

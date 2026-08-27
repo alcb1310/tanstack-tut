@@ -30,7 +30,7 @@ export const GetAllCantidades = createServerFn({ method: "GET" }).handler(
 )
 
 export const CreateCantidad = createServerFn({ method: "POST" })
-	.inputValidator((data: QuantityCreateType) => data)
+	.validator((data: QuantityCreateType) => data)
 	.handler(async ({ data }) => {
 		const token = getCookie(cookieName)
 
@@ -53,7 +53,7 @@ export const CreateCantidad = createServerFn({ method: "POST" })
 	})
 
 export const UpdateCantidad = createServerFn({ method: "POST" })
-	.inputValidator((data: QuantityEditType) => data)
+	.validator((data: QuantityEditType) => data)
 	.handler(async ({ data }) => {
 		const token = getCookie(cookieName)
 
@@ -76,7 +76,7 @@ export const UpdateCantidad = createServerFn({ method: "POST" })
 	})
 
 export const DeleteCantidad = createServerFn({ method: "POST" })
-	.inputValidator((data: { id: string }) => data)
+	.validator((data: { id: string }) => data)
 	.handler(async ({ data }) => {
 		const token = getCookie(cookieName)
 

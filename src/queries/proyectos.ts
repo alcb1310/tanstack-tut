@@ -6,7 +6,7 @@ const URL = import.meta.env.VITE_BACKEND_SERVER
 const cookieName = "BCA-TOKEN"
 
 export const GetAllProjects = createServerFn({ method: "GET" })
-	.inputValidator((data: { query?: string; active?: boolean }) => data)
+	.validator((data: { query?: string; active?: boolean }) => data)
 	.handler(async ({ data: { query, active } }): Promise<ProjectType[]> => {
 		const token = getCookie(cookieName)
 
@@ -25,7 +25,7 @@ export const GetAllProjects = createServerFn({ method: "GET" })
 	})
 
 export const GetOneProject = createServerFn({ method: "GET" })
-	.inputValidator((data: { id: string }) => data)
+	.validator((data: { id: string }) => data)
 	.handler(async ({ data: { id } }): Promise<ProjectType> => {
 		const token = getCookie(cookieName)
 
@@ -45,7 +45,7 @@ export const GetOneProject = createServerFn({ method: "GET" })
 	})
 
 export const CreateProject = createServerFn({ method: "POST" })
-	.inputValidator((data: ProjectType) => data)
+	.validator((data: ProjectType) => data)
 	.handler(async ({ data }): Promise<ProjectType> => {
 		const token = getCookie(cookieName)
 
@@ -66,7 +66,7 @@ export const CreateProject = createServerFn({ method: "POST" })
 	})
 
 export const UpdateProject = createServerFn({ method: "POST" })
-	.inputValidator((data: ProjectType) => data)
+	.validator((data: ProjectType) => data)
 	.handler(async ({ data }) => {
 		const token = getCookie(cookieName)
 
@@ -88,9 +88,7 @@ export const UpdateProject = createServerFn({ method: "POST" })
 	})
 
 export const AddFile = createServerFn({ method: "POST" })
-	.inputValidator(
-		(data: { project_id: string; name: string; url: string }) => data,
-	)
+	.validator((data: { project_id: string; name: string; url: string }) => data)
 	.handler(async ({ data }) => {
 		const token = getCookie(cookieName)
 
@@ -115,7 +113,7 @@ export const AddFile = createServerFn({ method: "POST" })
 	})
 
 export const GetFiles = createServerFn({ method: "GET" })
-	.inputValidator((data: { id: string }) => data)
+	.validator((data: { id: string }) => data)
 	.handler(async ({ data: { id } }): Promise<FilesType> => {
 		const token = getCookie(cookieName)
 

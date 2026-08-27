@@ -9,7 +9,7 @@ import type {
 const URL = import.meta.env.VITE_BACKEND_SERVER
 
 export const actualExcelExport = createServerFn({ method: "GET" })
-	.inputValidator((data: ActualReportTypes) => data)
+	.validator((data: ActualReportTypes) => data)
 	.handler(async ({ data }): Promise<Response> => {
 		const token = getCookie("BCA-TOKEN")
 
@@ -40,7 +40,7 @@ export const actualExcelExport = createServerFn({ method: "GET" })
 	})
 
 export const balanceExcelExport = createServerFn({ method: "GET" })
-	.inputValidator((data: BalanceReportType) => data)
+	.validator((data: BalanceReportType) => data)
 	.handler(async ({ data }): Promise<Response> => {
 		const token = getCookie("BCA-TOKEN")
 		const date = new Date(data.date).toISOString()
@@ -68,7 +68,7 @@ export const balanceExcelExport = createServerFn({ method: "GET" })
 	})
 
 export const histroricExcelExport = createServerFn({ method: "GET" })
-	.inputValidator((data: ReportTypes) => data)
+	.validator((data: ReportTypes) => data)
 	.handler(async ({ data }) => {
 		const token = getCookie("BCA-TOKEN")
 		const date = new Date(data.date).toISOString()
@@ -96,7 +96,7 @@ export const histroricExcelExport = createServerFn({ method: "GET" })
 	})
 
 export const spentExcelExport = createServerFn({ method: "GET" })
-	.inputValidator((data: ReportTypes) => data)
+	.validator((data: ReportTypes) => data)
 	.handler(async ({ data }) => {
 		const token = getCookie("BCA-TOKEN")
 		const date = new Date(data.date).toISOString()

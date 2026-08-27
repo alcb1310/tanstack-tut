@@ -26,7 +26,7 @@ export const GetAllLevels = createServerFn({ method: "GET" }).handler(
 	},
 )
 export const GetAllBugetsByProjectAndLevel = createServerFn({ method: "GET" })
-	.inputValidator((data: { project_id: string; level: string }) => data)
+	.validator((data: { project_id: string; level: string }) => data)
 	.handler(
 		async ({ data: { project_id, level } }): Promise<BudgetResponseType[]> => {
 			const token = getCookie(cookieName)
@@ -46,7 +46,7 @@ export const GetAllBugetsByProjectAndLevel = createServerFn({ method: "GET" })
 	)
 
 export const GetAllHistoric = createServerFn({ method: "GET" })
-	.inputValidator(
+	.validator(
 		(data: { project_id: string; level: string; date: string }) => data,
 	)
 	.handler(
@@ -79,7 +79,7 @@ export const GetAllHistoric = createServerFn({ method: "GET" })
 	)
 
 export const GetBalanceReport = createServerFn({ method: "GET" })
-	.inputValidator((data: { project_id: string; date: string }) => data)
+	.validator((data: { project_id: string; date: string }) => data)
 	.handler(
 		async ({ data: { project_id, date } }): Promise<BalanceResponseType> => {
 			const token = getCookie(cookieName)
@@ -107,7 +107,7 @@ export const GetBalanceReport = createServerFn({ method: "GET" })
 	)
 
 export const SetBalancedInvoice = createServerFn({ method: "POST" })
-	.inputValidator((data: { invoice_id: string }) => data)
+	.validator((data: { invoice_id: string }) => data)
 	.handler(async ({ data: { invoice_id } }) => {
 		const token = getCookie(cookieName)
 
@@ -128,7 +128,7 @@ export const SetBalancedInvoice = createServerFn({ method: "POST" })
 	})
 
 export const GetSpentReport = createServerFn({ method: "GET" })
-	.inputValidator(
+	.validator(
 		(data: { project_id: string; level: string; date: string }) => data,
 	)
 	.handler(
@@ -155,7 +155,7 @@ export const GetSpentReport = createServerFn({ method: "GET" })
 	)
 
 export const GetSpentDetails = createServerFn({ method: "GET" })
-	.inputValidator(
+	.validator(
 		(data: { project_id: string; budget_item_id: string; date: string }) =>
 			data,
 	)

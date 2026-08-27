@@ -26,7 +26,7 @@ export const GetAllCategories = createServerFn({ method: "GET" }).handler(
 )
 
 export const CreateCategory = createServerFn({ method: "POST" })
-	.inputValidator((data: CategoryType) => data)
+	.validator((data: CategoryType) => data)
 	.handler(async ({ data }) => {
 		const token = getCookie(cookieName)
 
@@ -49,7 +49,7 @@ export const CreateCategory = createServerFn({ method: "POST" })
 	})
 
 export const UpdateCategory = createServerFn({ method: "POST" })
-	.inputValidator((data: CategoryType) => data)
+	.validator((data: CategoryType) => data)
 	.handler(async ({ data }) => {
 		const token = getCookie(cookieName)
 
