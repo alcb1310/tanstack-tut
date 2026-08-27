@@ -20,11 +20,11 @@ export const Route = createFileRoute("/_authed/reportes/gastado-por-partida")({
 	component: RouteComponent,
 	loader: async ({ context: { queryClient } }) => {
 		Promise.all([
-			queryClient.ensureQueryData({
+			queryClient.query({
 				queryKey: ["proyectos", "active"],
 				queryFn: () => GetAllProjects({ data: { active: true } }),
 			}),
-			queryClient.ensureQueryData({
+			queryClient.query({
 				queryKey: ["niveles"],
 				queryFn: () => GetAllLevels(),
 			}),

@@ -7,7 +7,7 @@ import { MeQuery } from "@/queries/user"
 export const Route = createFileRoute("/_authed/usuarios/perfil")({
 	component: RouteComponent,
 	beforeLoad: ({ context: { queryClient } }) => {
-		queryClient.ensureQueryData({ queryKey: ["me"], queryFn: () => MeQuery() })
+		queryClient.query({ queryKey: ["me"], queryFn: () => MeQuery() })
 	},
 })
 

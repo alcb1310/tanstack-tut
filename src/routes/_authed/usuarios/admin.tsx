@@ -13,7 +13,7 @@ import type { UserResponse } from "@/types/user"
 export const Route = createFileRoute("/_authed/usuarios/admin")({
 	component: RouteComponent,
 	beforeLoad: ({ context: { queryClient } }) => {
-		queryClient.ensureQueryData({
+		queryClient.query({
 			queryKey: ["usuarios"],
 			queryFn: () => GetAllUsers(),
 		})

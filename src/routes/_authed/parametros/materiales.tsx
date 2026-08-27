@@ -12,7 +12,7 @@ import type { MaterialType } from "@/types/materiales"
 export const Route = createFileRoute("/_authed/parametros/materiales")({
 	component: RouteComponent,
 	loader: ({ context: { queryClient } }) => {
-		queryClient.ensureQueryData({
+		queryClient.query({
 			queryKey: ["materiales"],
 			queryFn: () => GetAllMaterials(),
 		})

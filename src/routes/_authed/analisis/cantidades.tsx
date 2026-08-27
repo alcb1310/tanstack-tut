@@ -13,7 +13,7 @@ import type { QuantityResponseType } from "@/types/cantidad"
 export const Route = createFileRoute("/_authed/analisis/cantidades")({
 	component: RouteComponent,
 	loader: ({ context: { queryClient } }) => {
-		queryClient.prefetchQuery({
+		queryClient.query({
 			queryKey: ["cantidades"],
 			queryFn: () => GetAllCantidades(),
 		})

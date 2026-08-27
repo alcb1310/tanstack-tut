@@ -29,7 +29,7 @@ import type { InvoiceResponseType } from "@/types/facturas"
 export const Route = createFileRoute("/_authed/transacciones/factura/")({
 	component: RouteComponent,
 	loader: ({ context: { queryClient } }) => {
-		queryClient.prefetchQuery({
+		queryClient.query({
 			queryKey: ["facturas"],
 			queryFn: () => GetAllInvoices(),
 		})

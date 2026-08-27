@@ -30,14 +30,16 @@ export const Route = createFileRoute(
 		context: { queryClient },
 		params: { proyectoId: facturaId },
 	}) => {
-		await queryClient.ensureQueryData({
-			queryKey: ["proyectos", facturaId],
-			queryFn: () => GetOneProject({ data: { id: facturaId } }),
-		})
-		await queryClient.ensureQueryData({
-			queryKey: ["files", facturaId],
-			queryFn: () => GetFiles({ data: { id: facturaId } }),
-		})
+		Promise.all([
+			await queryClient.query({
+				queryKey: ["proyectos", facturaId],
+				queryFn: () => GetOneProject({ data: { id: facturaId } }),
+			}),
+			await queryClient.query({
+				queryKey: ["files", facturaId],
+				queryFn: () => GetFiles({ data: { id: facturaId } }),
+			}),
+		])
 	},
 })
 

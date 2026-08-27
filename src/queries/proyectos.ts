@@ -114,7 +114,7 @@ export const AddFile = createServerFn({ method: "POST" })
 
 export const GetFiles = createServerFn({ method: "GET" })
 	.validator((data: { id: string }) => data)
-	.handler(async ({ data: { id } }): Promise<FilesType> => {
+	.handler(async ({ data: { id } }): Promise<FilesType[]> => {
 		const token = getCookie(cookieName)
 
 		const response = await fetch(`${URL}/parametros/proyectos/${id}/archivos`, {

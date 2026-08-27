@@ -12,7 +12,7 @@ import type { RubrosType } from "@/types/rubros"
 export const Route = createFileRoute("/_authed/parametros/rubros/")({
 	component: RouteComponent,
 	loader: ({ context: { queryClient } }) => {
-		queryClient.prefetchQuery({
+		queryClient.query({
 			queryKey: ["rubros"],
 			queryFn: () => GetAllRubros(),
 		})

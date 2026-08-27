@@ -29,19 +29,19 @@ export const Route = createFileRoute(
 	component: RouteComponent,
 	loader: async ({ context: { queryClient }, params }) => {
 		await Promise.all([
-			queryClient.prefetchQuery({
+			queryClient.query({
 				queryKey: ["proyectos", "active"],
 				queryFn: () => GetAllProjects({ data: { active: true } }),
 			}),
-			queryClient.prefetchQuery({
+			queryClient.query({
 				queryKey: ["proveedores"],
 				queryFn: () => GetAllSuppliers({ data: {} }),
 			}),
-			queryClient.prefetchQuery({
+			queryClient.query({
 				queryKey: ["facturas", params.facturaId],
 				queryFn: () => GetOneInvoice({ data: { id: params.facturaId } }),
 			}),
-			queryClient.prefetchQuery({
+			queryClient.query({
 				queryKey: ["facturas-detalle"],
 				queryFn: () => GetAllInvoiceDetails({ data: { id: params.facturaId } }),
 			}),

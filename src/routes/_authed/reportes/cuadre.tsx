@@ -21,7 +21,7 @@ import { type BalanceReportType, balanceReportSchema } from "@/types/reportes"
 export const Route = createFileRoute("/_authed/reportes/cuadre")({
 	component: RouteComponent,
 	loader: async ({ context: { queryClient } }) => {
-		queryClient.ensureQueryData({
+		queryClient.query({
 			queryKey: ["proyectos", "active"],
 			queryFn: () => GetAllProjects({ data: { active: true } }),
 		})

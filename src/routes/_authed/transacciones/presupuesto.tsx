@@ -17,11 +17,11 @@ export const Route = createFileRoute("/_authed/transacciones/presupuesto")({
 	component: RouteComponent,
 	loader: ({ context: { queryClient } }) => {
 		Promise.all([
-			queryClient.prefetchQuery({
+			queryClient.query({
 				queryKey: ["proyectos"],
 				queryFn: () => GetAllProjects({ data: { active: true } }),
 			}),
-			queryClient.prefetchQuery({
+			queryClient.query({
 				queryKey: ["presupuesto"],
 				queryFn: () => GetAllBudgets({ data: {} }),
 			}),
@@ -84,9 +84,9 @@ function RouteComponent() {
 					<span className='block w-full text-right'>
 						{q.Valid
 							? q.Float64.toLocaleString("es-EC", {
-									minimumFractionDigits: 2,
-									maximumFractionDigits: 2,
-								})
+								minimumFractionDigits: 2,
+								maximumFractionDigits: 2,
+							})
 							: ""}
 					</span>
 				)
@@ -102,9 +102,9 @@ function RouteComponent() {
 					<span className='block w-full text-right'>
 						{q.Valid
 							? q.Float64.toLocaleString("es-EC", {
-									minimumFractionDigits: 2,
-									maximumFractionDigits: 2,
-								})
+								minimumFractionDigits: 2,
+								maximumFractionDigits: 2,
+							})
 							: ""}
 					</span>
 				)

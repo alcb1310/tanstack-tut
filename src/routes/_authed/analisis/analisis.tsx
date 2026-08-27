@@ -15,7 +15,7 @@ import { GetAllProjects } from "@/queries/proyectos"
 export const Route = createFileRoute("/_authed/analisis/analisis")({
 	component: RouteComponent,
 	loader: ({ context: { queryClient } }) => {
-		queryClient.prefetchQuery({
+		queryClient.query({
 			queryKey: ["proyectos"],
 			queryFn: () => GetAllProjects({ data: { active: true } }),
 		})

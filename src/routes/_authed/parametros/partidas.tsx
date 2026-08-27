@@ -15,7 +15,7 @@ import type { BudgetItemResponse } from "@/types/partidas"
 export const Route = createFileRoute("/_authed/parametros/partidas")({
 	component: RouteComponent,
 	loader: ({ context: { queryClient } }) => {
-		queryClient.ensureQueryData({
+		queryClient.query({
 			queryKey: ["partidas"],
 			queryFn: () => GetAllPartidas({ data: {} }),
 		})

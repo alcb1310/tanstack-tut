@@ -14,7 +14,7 @@ import type { ProjectType } from "@/types/proyectos"
 export const Route = createFileRoute("/_authed/parametros/proyectos/")({
 	component: RouteComponent,
 	loader: ({ context: { queryClient } }) => {
-		queryClient.ensureQueryData({
+		queryClient.query({
 			queryKey: ["projectos"],
 			queryFn: () => GetAllProjects({ data: {} }),
 		})

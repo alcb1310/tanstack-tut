@@ -5,7 +5,7 @@ import { MeQuery } from "@/queries/user"
 export const Route = createFileRoute("/_authed/")({
 	component: RouteComponent,
 	loader: ({ context: { queryClient } }) => {
-		queryClient.prefetchQuery({
+		queryClient.query({
 			queryKey: ["me"],
 			queryFn: () => MeQuery(),
 		})

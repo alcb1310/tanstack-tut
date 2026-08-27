@@ -20,11 +20,11 @@ export const Route = createFileRoute("/_authed/reportes/actual")({
 	component: RouteComponent,
 	loader: async ({ context: { queryClient } }) => {
 		Promise.all([
-			queryClient.ensureQueryData({
+			queryClient.query({
 				queryKey: ["proyectos", "active"],
 				queryFn: () => GetAllProjects({ data: { active: true } }),
 			}),
-			queryClient.ensureQueryData({
+			queryClient.query({
 				queryKey: ["niveles"],
 				queryFn: () => GetAllLevels(),
 			}),
@@ -110,9 +110,9 @@ function RouteComponent() {
 							<span className='block w-full text-right'>
 								{q.Valid
 									? q.Float64.toLocaleString("es-EC", {
-											minimumFractionDigits: 2,
-											maximumFractionDigits: 2,
-										})
+										minimumFractionDigits: 2,
+										maximumFractionDigits: 2,
+									})
 									: ""}
 							</span>
 						)
@@ -150,9 +150,9 @@ function RouteComponent() {
 							<span className='block w-full text-right'>
 								{q.Valid
 									? q.Float64.toLocaleString("es-EC", {
-											minimumFractionDigits: 2,
-											maximumFractionDigits: 2,
-										})
+										minimumFractionDigits: 2,
+										maximumFractionDigits: 2,
+									})
 									: ""}
 							</span>
 						)
@@ -168,9 +168,9 @@ function RouteComponent() {
 							<span className='block w-full text-right'>
 								{q.Valid
 									? q.Float64.toLocaleString("es-EC", {
-											minimumFractionDigits: 2,
-											maximumFractionDigits: 2,
-										})
+										minimumFractionDigits: 2,
+										maximumFractionDigits: 2,
+									})
 									: ""}
 							</span>
 						)

@@ -14,7 +14,7 @@ import type { SupplierType } from "@/types/proveedor"
 export const Route = createFileRoute("/_authed/parametros/proveedores")({
 	component: RouteComponent,
 	loader: ({ context: { queryClient } }) => {
-		queryClient.ensureQueryData({
+		queryClient.query({
 			queryKey: ["proveedores"],
 			queryFn: () => GetAllSuppliers({ data: {} }),
 		})

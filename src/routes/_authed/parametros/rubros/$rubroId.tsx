@@ -25,12 +25,12 @@ export const Route = createFileRoute("/_authed/parametros/rubros/$rubroId")({
 	component: RouteComponent,
 	loader: ({ context: { queryClient }, params }) => {
 		Promise.all([
-			queryClient.prefetchQuery({
+			queryClient.query({
 				queryKey: ["rubros", params.rubroId],
 				queryFn: () => GetOneRubro({ data: { id: params.rubroId } }),
 			}),
 
-			queryClient.prefetchQuery({
+			queryClient.query({
 				queryKey: ["rubros-material"],
 				queryFn: () =>
 					GetAllRubrosMaterials({ data: { rubroId: params.rubroId } }),

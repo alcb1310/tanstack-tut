@@ -20,11 +20,11 @@ export const Route = createFileRoute("/_authed/transacciones/factura/crear")({
 	component: RouteComponent,
 	loader: ({ context: { queryClient } }) => {
 		Promise.all([
-			queryClient.ensureQueryData({
+			queryClient.query({
 				queryKey: ["proyectos", "active"],
 				queryFn: () => GetAllProjects({ data: { active: true } }),
 			}),
-			queryClient.ensureQueryData({
+			queryClient.query({
 				queryKey: ["proveedores"],
 				queryFn: () => GetAllSuppliers({ data: {} }),
 			}),

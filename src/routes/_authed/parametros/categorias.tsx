@@ -12,7 +12,7 @@ import type { CategoryType } from "@/types/categorias"
 export const Route = createFileRoute("/_authed/parametros/categorias")({
 	component: RouteComponent,
 	loader: ({ context: { queryClient } }) => {
-		queryClient.ensureQueryData({
+		queryClient.query({
 			queryKey: ["categorias"],
 			queryFn: () => GetAllCategories(),
 		})
