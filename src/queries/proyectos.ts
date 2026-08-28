@@ -1,24 +1,24 @@
-import { createServerFn } from "@tanstack/react-start"
-import { getCookie } from "@tanstack/react-start/server"
-import type { ErrorResponseType } from "@/types/error"
-import type { FilesType, ProjectType } from "@/types/proyectos"
+import { createServerFn } from '@tanstack/react-start'
+import { getCookie } from '@tanstack/react-start/server'
+import type { ErrorResponseType } from '@/types/error'
+import type { FilesType, ProjectType } from '@/types/proyectos'
 
 const URL = import.meta.env.VITE_BACKEND_SERVER
-const cookieName = "BCA-TOKEN"
+const cookieName = 'BCA-TOKEN'
 
-export const GetAllProjects = createServerFn({ method: "GET" })
+export const GetAllProjects = createServerFn({ method: 'GET' })
 	.validator((data: { query?: string; active?: boolean }) => data)
 	.handler(async ({ data: { query, active } }): Promise<ProjectType[]> => {
 		const token = getCookie(cookieName)
 
 		const params = new URLSearchParams()
-		if (query) params.append("query", query)
-		if (active) params.append("active", active.toString())
+		if (query) params.append('query', query)
+		if (active) params.append('active', active.toString())
 
 		const response = await fetch(`${URL}/parametros/proyectos?${params}`, {
-			method: "GET",
+			method: 'GET',
 			headers: {
-				"Content-Type": "application/json",
+				'Content-Type': 'application/json',
 				Authorization: `Bearer ${token}`,
 			},
 		})
@@ -31,15 +31,15 @@ export const GetAllProjects = createServerFn({ method: "GET" })
 		return response.json()
 	})
 
-export const GetOneProject = createServerFn({ method: "GET" })
+export const GetOneProject = createServerFn({ method: 'GET' })
 	.validator((data: { id: string }) => data)
 	.handler(async ({ data: { id } }): Promise<ProjectType> => {
 		const token = getCookie(cookieName)
 
 		const response = await fetch(`${URL}/parametros/proyectos/${id}`, {
-			method: "GET",
+			method: 'GET',
 			headers: {
-				"Content-Type": "application/json",
+				'Content-Type': 'application/json',
 				Authorization: `Bearer ${token}`,
 			},
 		})
@@ -51,15 +51,15 @@ export const GetOneProject = createServerFn({ method: "GET" })
 		return response.json()
 	})
 
-export const CreateProject = createServerFn({ method: "POST" })
+export const CreateProject = createServerFn({ method: 'POST' })
 	.validator((data: ProjectType) => data)
 	.handler(async ({ data }): Promise<ProjectType> => {
 		const token = getCookie(cookieName)
 
 		const response = await fetch(`${URL}/parametros/proyectos`, {
-			method: "POST",
+			method: 'POST',
 			headers: {
-				"Content-Type": "application/json",
+				'Content-Type': 'application/json',
 				Authorization: `Bearer ${token}`,
 			},
 			body: JSON.stringify(data),
@@ -72,15 +72,15 @@ export const CreateProject = createServerFn({ method: "POST" })
 		return await response.json()
 	})
 
-export const UpdateProject = createServerFn({ method: "POST" })
+export const UpdateProject = createServerFn({ method: 'POST' })
 	.validator((data: ProjectType) => data)
 	.handler(async ({ data }) => {
 		const token = getCookie(cookieName)
 
 		const response = await fetch(`${URL}/parametros/proyectos/${data.id}`, {
-			method: "PUT",
+			method: 'PUT',
 			headers: {
-				"Content-Type": "application/json",
+				'Content-Type': 'application/json',
 				Authorization: `Bearer ${token}`,
 			},
 			body: JSON.stringify(data),
@@ -94,7 +94,7 @@ export const UpdateProject = createServerFn({ method: "POST" })
 		return
 	})
 
-export const AddFile = createServerFn({ method: "POST" })
+export const AddFile = createServerFn({ method: 'POST' })
 	.validator((data: { project_id: string; name: string; url: string }) => data)
 	.handler(async ({ data }) => {
 		const token = getCookie(cookieName)
@@ -102,9 +102,9 @@ export const AddFile = createServerFn({ method: "POST" })
 		const response = await fetch(
 			`${URL}/parametros/proyectos/${data.project_id}/archivos`,
 			{
-				method: "POST",
+				method: 'POST',
 				headers: {
-					"Content-Type": "application/json",
+					'Content-Type': 'application/json',
 					Authorization: `Bearer ${token}`,
 				},
 				body: JSON.stringify(data),
@@ -119,15 +119,15 @@ export const AddFile = createServerFn({ method: "POST" })
 		return
 	})
 
-export const GetFiles = createServerFn({ method: "GET" })
+export const GetFiles = createServerFn({ method: 'GET' })
 	.validator((data: { id: string }) => data)
 	.handler(async ({ data: { id } }): Promise<FilesType[]> => {
 		const token = getCookie(cookieName)
 
 		const response = await fetch(`${URL}/parametros/proyectos/${id}/archivos`, {
-			method: "GET",
+			method: 'GET',
 			headers: {
-				"Content-Type": "application/json",
+				'Content-Type': 'application/json',
 				Authorization: `Bearer ${token}`,
 			},
 		})

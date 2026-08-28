@@ -1,19 +1,19 @@
-import { createServerFn } from "@tanstack/react-start"
-import { getCookie } from "@tanstack/react-start/server"
-import type { ErrorResponseType } from "@/types/error"
-import type { RubrosType } from "@/types/rubros"
+import { createServerFn } from '@tanstack/react-start'
+import { getCookie } from '@tanstack/react-start/server'
+import type { ErrorResponseType } from '@/types/error'
+import type { RubrosType } from '@/types/rubros'
 
 const URL = import.meta.env.VITE_BACKEND_SERVER
-const cookieName = "BCA-TOKEN"
+const cookieName = 'BCA-TOKEN'
 
-export const GetAllRubros = createServerFn({ method: "GET" }).handler(
+export const GetAllRubros = createServerFn({ method: 'GET' }).handler(
 	async (): Promise<RubrosType[]> => {
 		const token = getCookie(cookieName)
 
 		const response = await fetch(`${URL}/parametros/rubros`, {
-			method: "GET",
+			method: 'GET',
 			headers: {
-				"Content-Type": "application/json",
+				'Content-Type': 'application/json',
 				Authorization: `Bearer ${token}`,
 			},
 		})
@@ -27,15 +27,15 @@ export const GetAllRubros = createServerFn({ method: "GET" }).handler(
 	},
 )
 
-export const GetOneRubro = createServerFn({ method: "GET" })
+export const GetOneRubro = createServerFn({ method: 'GET' })
 	.validator((data: { id: string }) => data)
 	.handler(async ({ data: { id } }) => {
 		const token = getCookie(cookieName)
 
 		const response = await fetch(`${URL}/parametros/rubros/${id}`, {
-			method: "GET",
+			method: 'GET',
 			headers: {
-				"Content-Type": "application/json",
+				'Content-Type': 'application/json',
 				Authorization: `Bearer ${token}`,
 			},
 		})
@@ -48,15 +48,15 @@ export const GetOneRubro = createServerFn({ method: "GET" })
 		return await response.json()
 	})
 
-export const CreateRubro = createServerFn({ method: "GET" })
+export const CreateRubro = createServerFn({ method: 'GET' })
 	.validator((data: RubrosType) => data)
 	.handler(async ({ data }) => {
 		const token = getCookie(cookieName)
 
 		const response = await fetch(`${URL}/parametros/rubros`, {
-			method: "POST",
+			method: 'POST',
 			headers: {
-				"Content-Type": "application/json",
+				'Content-Type': 'application/json',
 				Authorization: `Bearer ${token}`,
 			},
 			body: JSON.stringify(data),
@@ -70,15 +70,15 @@ export const CreateRubro = createServerFn({ method: "GET" })
 		return (await response.json()) as RubrosType
 	})
 
-export const UpdateRubro = createServerFn({ method: "GET" })
+export const UpdateRubro = createServerFn({ method: 'GET' })
 	.validator((data: RubrosType) => data)
 	.handler(async ({ data }) => {
 		const token = getCookie(cookieName)
 
 		const response = await fetch(`${URL}/parametros/rubros/${data.id}`, {
-			method: "PUT",
+			method: 'PUT',
 			headers: {
-				"Content-Type": "application/json",
+				'Content-Type': 'application/json',
 				Authorization: `Bearer ${token}`,
 			},
 			body: JSON.stringify(data),

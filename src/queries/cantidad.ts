@@ -1,23 +1,23 @@
-import { createServerFn } from "@tanstack/react-start"
-import { getCookie } from "@tanstack/react-start/server"
+import { createServerFn } from '@tanstack/react-start'
+import { getCookie } from '@tanstack/react-start/server'
 import type {
 	QuantityCreateType,
 	QuantityEditType,
 	QuantityResponseType,
-} from "@/types/cantidad"
-import type { ErrorResponseType } from "@/types/error"
+} from '@/types/cantidad'
+import type { ErrorResponseType } from '@/types/error'
 
 const URL = import.meta.env.VITE_BACKEND_SERVER
-const cookieName = "BCA-TOKEN"
+const cookieName = 'BCA-TOKEN'
 
-export const GetAllCantidades = createServerFn({ method: "GET" }).handler(
+export const GetAllCantidades = createServerFn({ method: 'GET' }).handler(
 	async (): Promise<QuantityResponseType[]> => {
 		const token = getCookie(cookieName)
 
 		const response = await fetch(`${URL}/analisis/cantidades`, {
-			method: "GET",
+			method: 'GET',
 			headers: {
-				"Content-Type": "application/json",
+				'Content-Type': 'application/json',
 				Authorization: `Bearer ${token}`,
 			},
 		})
@@ -31,15 +31,15 @@ export const GetAllCantidades = createServerFn({ method: "GET" }).handler(
 	},
 )
 
-export const CreateCantidad = createServerFn({ method: "POST" })
+export const CreateCantidad = createServerFn({ method: 'POST' })
 	.validator((data: QuantityCreateType) => data)
 	.handler(async ({ data }) => {
 		const token = getCookie(cookieName)
 
 		const response = await fetch(`${URL}/analisis/cantidades`, {
-			method: "POST",
+			method: 'POST',
 			headers: {
-				"Content-Type": "application/json",
+				'Content-Type': 'application/json',
 				Authorization: `Bearer ${token}`,
 			},
 			body: JSON.stringify(data),
@@ -53,15 +53,15 @@ export const CreateCantidad = createServerFn({ method: "POST" })
 		return
 	})
 
-export const UpdateCantidad = createServerFn({ method: "POST" })
+export const UpdateCantidad = createServerFn({ method: 'POST' })
 	.validator((data: QuantityEditType) => data)
 	.handler(async ({ data }) => {
 		const token = getCookie(cookieName)
 
 		const response = await fetch(`${URL}/analisis/cantidades/${data.id}`, {
-			method: "PUT",
+			method: 'PUT',
 			headers: {
-				"Content-Type": "application/json",
+				'Content-Type': 'application/json',
 				Authorization: `Bearer ${token}`,
 			},
 			body: JSON.stringify(data),
@@ -75,15 +75,15 @@ export const UpdateCantidad = createServerFn({ method: "POST" })
 		return
 	})
 
-export const DeleteCantidad = createServerFn({ method: "POST" })
+export const DeleteCantidad = createServerFn({ method: 'POST' })
 	.validator((data: { id: string }) => data)
 	.handler(async ({ data }) => {
 		const token = getCookie(cookieName)
 
 		const response = await fetch(`${URL}/analisis/cantidades/${data.id}`, {
-			method: "DELETE",
+			method: 'DELETE',
 			headers: {
-				"Content-Type": "application/json",
+				'Content-Type': 'application/json',
 				Authorization: `Bearer ${token}`,
 			},
 		})

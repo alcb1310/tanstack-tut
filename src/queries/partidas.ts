@@ -1,7 +1,7 @@
-import { createServerFn } from "@tanstack/react-start"
-import { getCookie } from "@tanstack/react-start/server"
-import type { ErrorResponseType } from "@/types/error"
-||||||| 5f63fb0
+import { createServerFn } from '@tanstack/react-start'
+import { getCookie } from '@tanstack/react-start/server'
+import type { ErrorResponseType } from '@/types/error'
+
 import type {
 	BudgetItem,
 	BudgetItemResponse,
@@ -38,7 +38,7 @@ export const GetAllPartidas = createServerFn({ method: 'GET' })
 				throw new Error(res.msg)
 			}
 
-return response.json()
+			return response.json()
 		},
 	)
 
@@ -67,21 +67,21 @@ export const CreatePartida = createServerFn({ method: 'POST' })
 export const UpdatePartida = createServerFn({ method: 'POST' })
 	.validator((data: BudgetItemUpdate) => data)
 	.handler(async ({ data }) => {
-	const token = getCookie(cookieName)
+		const token = getCookie(cookieName)
 
-	const response = await fetch(`${URL}/parametros/partidas/${data.id}`, {
-		method: 'PUT',
-		headers: {
-			'Content-Type': 'application/json',
-			Authorization: `Bearer ${token}`,
-		},
-		body: JSON.stringify(data),
+		const response = await fetch(`${URL}/parametros/partidas/${data.id}`, {
+			method: 'PUT',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${token}`,
+			},
+			body: JSON.stringify(data),
+		})
+
+		if (!response.ok) {
+			const data = (await response.json()) as ErrorResponseType
+			throw new Error(data.msg)
+		}
+
+		return
 	})
-
-	if (!response.ok) {
-		const data = (await response.json()) as ErrorResponseType
-		throw new Error(data.msg)
-	}
-
-	return
-})

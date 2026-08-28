@@ -1,20 +1,20 @@
-import { createServerFn } from "@tanstack/react-start"
-import { getCookie } from "@tanstack/react-start/server"
-import type { ErrorResponseType } from "@/types/error"
-import type { BudgetEditType, BudgetResponseType } from "@/types/presupuesto"
+import { createServerFn } from '@tanstack/react-start'
+import { getCookie } from '@tanstack/react-start/server'
+import type { ErrorResponseType } from '@/types/error'
+import type { BudgetEditType, BudgetResponseType } from '@/types/presupuesto'
 
 const URL = import.meta.env.VITE_BACKEND_SERVER
-const cookieName = "BCA-TOKEN"
+const cookieName = 'BCA-TOKEN'
 
-export const GetAllBudgets = createServerFn({ method: "GET" })
+export const GetAllBudgets = createServerFn({ method: 'GET' })
 	.validator((data: { query?: string; project?: string }) => data)
 	.handler(
 		async ({ data: { query, project } }): Promise<BudgetResponseType[]> => {
 			const token = getCookie(cookieName)
 
 			const params = new URLSearchParams()
-			if (query) params.append("query", query)
-			if (project) params.append("project", project)
+			if (query) params.append('query', query)
+			if (project) params.append('project', project)
 
 			const response = await fetch(
 				`${URL}/transacciones/presupuestos?${params}`,
@@ -34,15 +34,15 @@ export const GetAllBudgets = createServerFn({ method: "GET" })
 		},
 	)
 
-export const CreateBudget = createServerFn({ method: "POST" })
+export const CreateBudget = createServerFn({ method: 'POST' })
 	.validator((data: BudgetEditType) => data)
 	.handler(async ({ data }) => {
 		const token = getCookie(cookieName)
 
 		const response = await fetch(`${URL}/transacciones/presupuestos`, {
-			method: "POST",
+			method: 'POST',
 			headers: {
-				"Content-Type": "application/json",
+				'Content-Type': 'application/json',
 				Authorization: `Bearer ${token}`,
 			},
 			body: JSON.stringify(data),
@@ -56,7 +56,7 @@ export const CreateBudget = createServerFn({ method: "POST" })
 		return
 	})
 
-export const UpdateBudget = createServerFn({ method: "POST" })
+export const UpdateBudget = createServerFn({ method: 'POST' })
 	.validator((data: BudgetEditType) => data)
 	.handler(async ({ data }) => {
 		const token = getCookie(cookieName)
@@ -64,9 +64,9 @@ export const UpdateBudget = createServerFn({ method: "POST" })
 		const response = await fetch(
 			`${URL}/transacciones/presupuestos/${data.project_id}/${data.budget_item_id}`,
 			{
-				method: "PUT",
+				method: 'PUT',
 				headers: {
-					"Content-Type": "application/json",
+					'Content-Type': 'application/json',
 					Authorization: `Bearer ${token}`,
 				},
 				body: JSON.stringify(data),

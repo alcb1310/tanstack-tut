@@ -1,19 +1,19 @@
-import { createServerFn } from "@tanstack/react-start"
-import { getCookie } from "@tanstack/react-start/server"
-import type { ErrorResponseType } from "@/types/error"
-import type { InvoiceCreateType, InvoiceResponseType } from "@/types/facturas"
+import { createServerFn } from '@tanstack/react-start'
+import { getCookie } from '@tanstack/react-start/server'
+import type { ErrorResponseType } from '@/types/error'
+import type { InvoiceCreateType, InvoiceResponseType } from '@/types/facturas'
 
 const URL = import.meta.env.VITE_BACKEND_SERVER
-const cookieName = "BCA-TOKEN"
+const cookieName = 'BCA-TOKEN'
 
-export const GetAllInvoices = createServerFn({ method: "GET" }).handler(
+export const GetAllInvoices = createServerFn({ method: 'GET' }).handler(
 	async (): Promise<InvoiceResponseType[]> => {
 		const token = getCookie(cookieName)
 
 		const response = await fetch(`${URL}/transacciones/facturas`, {
-			method: "GET",
+			method: 'GET',
 			headers: {
-				"Content-Type": "application/json",
+				'Content-Type': 'application/json',
 				Authorization: `Bearer ${token}`,
 			},
 		})
@@ -27,14 +27,14 @@ export const GetAllInvoices = createServerFn({ method: "GET" }).handler(
 	},
 )
 
-export const GetOneInvoice = createServerFn({ method: "GET" })
+export const GetOneInvoice = createServerFn({ method: 'GET' })
 	.validator((data: { id: string }) => data)
 	.handler(async ({ data: { id } }): Promise<InvoiceCreateType> => {
 		const token = getCookie(cookieName)
 		const response = await fetch(`${URL}/transacciones/facturas/${id}`, {
-			method: "GET",
+			method: 'GET',
 			headers: {
-				"Content-Type": "application/json",
+				'Content-Type': 'application/json',
 				Authorization: `Bearer ${token}`,
 			},
 		})
@@ -47,14 +47,14 @@ export const GetOneInvoice = createServerFn({ method: "GET" })
 		return await response.json()
 	})
 
-export const CreateInvoice = createServerFn({ method: "POST" })
+export const CreateInvoice = createServerFn({ method: 'POST' })
 	.validator((data: InvoiceCreateType) => data)
 	.handler(async ({ data }) => {
 		const token = getCookie(cookieName)
 		const response = await fetch(`${URL}/transacciones/facturas`, {
-			method: "POST",
+			method: 'POST',
 			headers: {
-				"Content-Type": "application/json",
+				'Content-Type': 'application/json',
 				Authorization: `Bearer ${token}`,
 			},
 			body: JSON.stringify(data),
@@ -68,7 +68,7 @@ export const CreateInvoice = createServerFn({ method: "POST" })
 		return response.json() as Promise<InvoiceResponseType>
 	})
 
-export const UpdateInvoice = createServerFn({ method: "POST" })
+export const UpdateInvoice = createServerFn({ method: 'POST' })
 	.validator((data: InvoiceCreateType) => data)
 	.handler(async ({ data }) => {
 		const token = getCookie(cookieName)
@@ -76,9 +76,9 @@ export const UpdateInvoice = createServerFn({ method: "POST" })
 		const invoice = { ...data, invoice_date: new Date(data.invoice_date) }
 
 		const response = await fetch(`${URL}/transacciones/facturas/${data.id}`, {
-			method: "PUT",
+			method: 'PUT',
 			headers: {
-				"Content-Type": "application/json",
+				'Content-Type': 'application/json',
 				Authorization: `Bearer ${token}`,
 			},
 			body: JSON.stringify(invoice),
@@ -92,14 +92,14 @@ export const UpdateInvoice = createServerFn({ method: "POST" })
 		return
 	})
 
-export const DeleteInvoice = createServerFn({ method: "POST" })
+export const DeleteInvoice = createServerFn({ method: 'POST' })
 	.validator((data: { id: string }) => data)
 	.handler(async ({ data: { id } }) => {
 		const token = getCookie(cookieName)
 		const response = await fetch(`${URL}/transacciones/facturas/${id}`, {
-			method: "DELETE",
+			method: 'DELETE',
 			headers: {
-				"Content-Type": "application/json",
+				'Content-Type': 'application/json',
 				Authorization: `Bearer ${token}`,
 			},
 		})

@@ -1,6 +1,6 @@
-import type { ErrorResponseType } from "@/types/error"
-import { createServerFn } from "@tanstack/react-start"
-import { setCookie } from "@tanstack/react-start/server"
+import { createServerFn } from '@tanstack/react-start'
+import { setCookie } from '@tanstack/react-start/server'
+import type { ErrorResponseType } from '@/types/error'
 
 const URL = import.meta.env.VITE_BACKEND_SERVER
 
@@ -15,13 +15,13 @@ type LoginResponse = {
 	}
 }
 
-export const LoginMutation = createServerFn({ method: "POST" })
+export const LoginMutation = createServerFn({ method: 'POST' })
 	.validator((data: { email: string; password: string }) => data)
 	.handler(async ({ data: { email, password } }) => {
 		const response = await fetch(`${URL}/login`, {
-			method: "POST",
+			method: 'POST',
 			headers: {
-				"Content-Type": "application/json",
+				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify({ email, password }),
 		})
@@ -32,7 +32,7 @@ export const LoginMutation = createServerFn({ method: "POST" })
 		}
 
 		const auth = (await response.json()) as LoginResponse
-		setCookie("BCA-TOKEN", auth.token, { httpOnly: true })
+		setCookie('BCA-TOKEN', auth.token, { httpOnly: true })
 
 		return auth
 	})

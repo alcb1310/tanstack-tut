@@ -1,19 +1,19 @@
-import type { ErrorResponseType } from "@/types/error"
-import { createServerFn } from "@tanstack/react-start"
-import { getCookie } from "@tanstack/react-start/server"
-import type { CategoryType } from "@/types/categorias"
+import { createServerFn } from '@tanstack/react-start'
+import { getCookie } from '@tanstack/react-start/server'
+import type { CategoryType } from '@/types/categorias'
+import type { ErrorResponseType } from '@/types/error'
 
 const URL = import.meta.env.VITE_BACKEND_SERVER
-const cookieName = "BCA-TOKEN"
+const cookieName = 'BCA-TOKEN'
 
-export const GetAllCategories = createServerFn({ method: "GET" }).handler(
+export const GetAllCategories = createServerFn({ method: 'GET' }).handler(
 	async (): Promise<CategoryType[]> => {
 		const token = getCookie(cookieName)
 
 		const response = await fetch(`${URL}/parametros/categorias`, {
-			method: "GET",
+			method: 'GET',
 			headers: {
-				"Content-Type": "application/json",
+				'Content-Type': 'application/json',
 				Authorization: `Bearer ${token}`,
 			},
 		})
@@ -27,15 +27,15 @@ export const GetAllCategories = createServerFn({ method: "GET" }).handler(
 	},
 )
 
-export const CreateCategory = createServerFn({ method: "POST" })
+export const CreateCategory = createServerFn({ method: 'POST' })
 	.validator((data: CategoryType) => data)
 	.handler(async ({ data }) => {
 		const token = getCookie(cookieName)
 
 		const response = await fetch(`${URL}/parametros/categorias`, {
-			method: "POST",
+			method: 'POST',
 			headers: {
-				"Content-Type": "application/json",
+				'Content-Type': 'application/json',
 				Authorization: `Bearer ${token}`,
 			},
 			body: JSON.stringify(data),
@@ -49,15 +49,15 @@ export const CreateCategory = createServerFn({ method: "POST" })
 		return
 	})
 
-export const UpdateCategory = createServerFn({ method: "POST" })
+export const UpdateCategory = createServerFn({ method: 'POST' })
 	.validator((data: CategoryType) => data)
 	.handler(async ({ data }) => {
 		const token = getCookie(cookieName)
 
 		const response = await fetch(`${URL}/parametros/categorias/${data.id}`, {
-			method: "PUT",
+			method: 'PUT',
 			headers: {
-				"Content-Type": "application/json",
+				'Content-Type': 'application/json',
 				Authorization: `Bearer ${token}`,
 			},
 			body: JSON.stringify(data),
