@@ -1,21 +1,21 @@
-import { useQueryClient, useSuspenseQuery } from "@tanstack/react-query"
-import { createFileRoute } from "@tanstack/react-router"
-import type { ColumnDef } from "@tanstack/react-table"
-import { useEffect, useState } from "react"
-import PageTitle from "@/components/layout/page-title"
-import { DataTable } from "@/components/table/data-table"
-import { Input } from "@/components/ui/input"
-import { Spinner } from "@/components/ui/spinner"
-import { SupplierCreateDrawer } from "@/drawers/proveedores/crear-proveedor"
-import { SupplierEditDrawer } from "@/drawers/proveedores/editar-proveedor"
-import { GetAllSuppliers } from "@/queries/proveedor"
-import type { SupplierType } from "@/types/proveedor"
+import { useQueryClient, useSuspenseQuery } from '@tanstack/react-query'
+import { createFileRoute } from '@tanstack/react-router'
+import type { ColumnDef } from '@tanstack/react-table'
+import { useEffect, useState } from 'react'
+import PageTitle from '@/components/layout/page-title'
+import { DataTable } from '@/components/table/data-table'
+import { Input } from '@/components/ui/input'
+import { Spinner } from '@/components/ui/spinner'
+import { SupplierCreateDrawer } from '@/drawers/proveedores/crear-proveedor'
+import { SupplierEditDrawer } from '@/drawers/proveedores/editar-proveedor'
+import { GetAllSuppliers } from '@/queries/proveedor'
+import type { SupplierType } from '@/types/proveedor'
 
-export const Route = createFileRoute("/_authed/parametros/proveedores")({
+export const Route = createFileRoute('/_authed/parametros/proveedores')({
 	component: RouteComponent,
 	loader: ({ context: { queryClient } }) => {
 		queryClient.query({
-			queryKey: ["proveedores"],
+			queryKey: ['proveedores'],
 			queryFn: () => GetAllSuppliers({ data: {} }),
 		})
 	},
@@ -23,37 +23,37 @@ export const Route = createFileRoute("/_authed/parametros/proveedores")({
 
 function RouteComponent() {
 	const queryClient = useQueryClient()
-	const [search, setSearch] = useState<string>("")
+	const [search, setSearch] = useState<string>('')
 	const [debounced, setDebounced] = useState<string>(search)
 
 	const { data, isLoading, isFetching } = useSuspenseQuery({
-		queryKey: ["proveedores"],
+		queryKey: ['proveedores'],
 		queryFn: () => GetAllSuppliers({ data: { search } }),
 	})
 
 	const columns: ColumnDef<SupplierType>[] = [
 		{
-			accessorKey: "supplier_id",
-			header: "RUC",
+			accessorKey: 'supplier_id',
+			header: 'RUC',
 		},
 		{
-			accessorKey: "name",
-			header: "Nombre",
+			accessorKey: 'name',
+			header: 'Nombre',
 		},
 		{
-			accessorKey: "contact_name.String",
-			header: "Nombre Contacto",
+			accessorKey: 'contact_name.String',
+			header: 'Nombre Contacto',
 		},
 		{
-			accessorKey: "contact_email.String",
-			header: "Email Contacto",
+			accessorKey: 'contact_email.String',
+			header: 'Email Contacto',
 		},
 		{
-			accessorKey: "contact_phone.String",
-			header: "Telefono Contacto",
+			accessorKey: 'contact_phone.String',
+			header: 'Telefono Contacto',
 		},
 		{
-			id: "actions",
+			id: 'actions',
 			cell: ({ row }) => {
 				const supplier = row.original
 
@@ -68,7 +68,7 @@ function RouteComponent() {
 	}, [search])
 
 	useEffect(() => {
-		queryClient.invalidateQueries({ queryKey: ["proveedores"] })
+		queryClient.invalidateQueries({ queryKey: ['proveedores'] })
 	}, [debounced, queryClient])
 
 	return (

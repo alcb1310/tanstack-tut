@@ -1,8 +1,8 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { CircleXIcon, EditIcon, SaveIcon } from "lucide-react"
-import { useEffect, useState } from "react"
-import { toast } from "sonner"
-import { Button } from "@/components/ui/button"
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { CircleXIcon, EditIcon, SaveIcon } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { toast } from 'sonner'
+import { Button } from '@/components/ui/button'
 import {
 	Drawer,
 	DrawerClose,
@@ -11,16 +11,16 @@ import {
 	DrawerHeader,
 	DrawerTitle,
 	DrawerTrigger,
-} from "@/components/ui/drawer"
-import { FieldGroup, FieldLabel, FieldSet } from "@/components/ui/field"
-import { Input } from "@/components/ui/input"
-import { useAppForm } from "@/hooks/app-form"
-import { UpdateCantidad } from "@/queries/cantidad"
+} from '@/components/ui/drawer'
+import { FieldGroup, FieldLabel, FieldSet } from '@/components/ui/field'
+import { Input } from '@/components/ui/input'
+import { useAppForm } from '@/hooks/app-form'
+import { UpdateCantidad } from '@/queries/cantidad'
 import {
 	type QuantityEditType,
 	type QuantityResponseType,
 	quantityEditSchema,
-} from "@/types/cantidad"
+} from '@/types/cantidad'
 
 type CantidadesEditDrawerProps = {
 	cantidad: QuantityResponseType
@@ -33,15 +33,15 @@ export function CantidadesEditDrawer({ cantidad }: CantidadesEditDrawerProps) {
 	const useUpdateCantidadesMutation = useMutation({
 		mutationFn: UpdateCantidad,
 		onSuccess: () => {
-			toast.success("Cantidad actualizada exitosamente")
+			toast.success('Cantidad actualizada exitosamente')
 			setOpen(false)
-			queryClient.invalidateQueries({ queryKey: ["cantidades"] })
+			queryClient.invalidateQueries({ queryKey: ['cantidades'] })
 		},
 		onError: error => {
 			toast.error(error.message, {
-				position: "top-center",
+				position: 'top-center',
 				style: {
-					color: "red",
+					color: 'red',
 				},
 			})
 		},

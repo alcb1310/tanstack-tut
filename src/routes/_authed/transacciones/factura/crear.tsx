@@ -2,30 +2,30 @@ import {
 	useMutation,
 	useQueryClient,
 	useSuspenseQueries,
-} from "@tanstack/react-query"
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router"
-import { CircleXIcon, SaveIcon } from "lucide-react"
-import { toast } from "sonner"
-import { FormBackground } from "@/components/layout/form-background"
-import PageTitle from "@/components/layout/page-title"
-import { Button, buttonVariants } from "@/components/ui/button"
-import { FieldGroup, FieldSet } from "@/components/ui/field"
-import { useAppForm } from "@/hooks/app-form"
-import { CreateInvoice } from "@/queries/factura"
-import { GetAllSuppliers } from "@/queries/proveedor"
-import { GetAllProjects } from "@/queries/proyectos"
-import { type InvoiceCreateType, invoiceCreateSchema } from "@/types/facturas"
+} from '@tanstack/react-query'
+import { createFileRoute, Link, useNavigate } from '@tanstack/react-router'
+import { CircleXIcon, SaveIcon } from 'lucide-react'
+import { toast } from 'sonner'
+import { FormBackground } from '@/components/layout/form-background'
+import PageTitle from '@/components/layout/page-title'
+import { Button, buttonVariants } from '@/components/ui/button'
+import { FieldGroup, FieldSet } from '@/components/ui/field'
+import { useAppForm } from '@/hooks/app-form'
+import { CreateInvoice } from '@/queries/factura'
+import { GetAllSuppliers } from '@/queries/proveedor'
+import { GetAllProjects } from '@/queries/proyectos'
+import { type InvoiceCreateType, invoiceCreateSchema } from '@/types/facturas'
 
-export const Route = createFileRoute("/_authed/transacciones/factura/crear")({
+export const Route = createFileRoute('/_authed/transacciones/factura/crear')({
 	component: RouteComponent,
 	loader: ({ context: { queryClient } }) => {
 		Promise.all([
 			queryClient.query({
-				queryKey: ["proyectos", "active"],
+				queryKey: ['proyectos', 'active'],
 				queryFn: () => GetAllProjects({ data: { active: true } }),
 			}),
 			queryClient.query({
-				queryKey: ["proveedores"],
+				queryKey: ['proveedores'],
 				queryFn: () => GetAllSuppliers({ data: {} }),
 			}),
 		])
@@ -39,18 +39,18 @@ function RouteComponent() {
 	const useCreateInvoiceMutation = useMutation({
 		mutationFn: CreateInvoice,
 		onSuccess: data => {
-			toast.success("Factura creada exitosamente")
-			queryClient.invalidateQueries({ queryKey: ["facturas"] })
+			toast.success('Factura creada exitosamente')
+			queryClient.invalidateQueries({ queryKey: ['facturas'] })
 			navigate({
-				to: "/transacciones/factura/$facturaId",
+				to: '/transacciones/factura/$facturaId',
 				params: { facturaId: data.id },
 			})
 		},
 		onError: error => {
 			toast.error(error.message, {
-				position: "top-center",
+				position: 'top-center',
 				style: {
-					color: "red",
+					color: 'red',
 				},
 			})
 		},
@@ -59,11 +59,11 @@ function RouteComponent() {
 	const result = useSuspenseQueries({
 		queries: [
 			{
-				queryKey: ["proyectos", "active"],
+				queryKey: ['proyectos', 'active'],
 				queryFn: () => GetAllProjects({ data: { active: true } }),
 			},
 			{
-				queryKey: ["proveedores"],
+				queryKey: ['proveedores'],
 				queryFn: () => GetAllSuppliers({ data: {} }),
 			},
 		],
@@ -74,10 +74,10 @@ function RouteComponent() {
 
 	const form = useAppForm({
 		defaultValues: {
-			project_id: "",
-			supplier_id: "",
-			invoice_date: "",
-			invoice_number: "",
+			project_id: '',
+			supplier_id: '',
+			invoice_date: '',
+			invoice_number: '',
 			invoice_total: 0,
 		} satisfies InvoiceCreateType,
 		validators: {
@@ -94,8 +94,8 @@ function RouteComponent() {
 			value: item.id as string,
 		})) || []
 	proyValues.unshift({
-		label: "Seleccione un proyecto",
-		value: "",
+		label: 'Seleccione un proyecto',
+		value: '',
 	})
 
 	const provValues =
@@ -104,8 +104,8 @@ function RouteComponent() {
 			value: item.id as string,
 		})) || []
 	provValues.unshift({
-		label: "Seleccione un proveedor",
-		value: "",
+		label: 'Seleccione un proveedor',
+		value: '',
 	})
 
 	return (
@@ -187,7 +187,7 @@ function RouteComponent() {
 
 						<Link
 							to='/transacciones/factura'
-							className={buttonVariants({ variant: "secondary" })}
+							className={buttonVariants({ variant: 'secondary' })}
 						>
 							<CircleXIcon size={10} />
 							Cancelar

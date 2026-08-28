@@ -2,47 +2,47 @@ import {
 	useMutation,
 	useQueryClient,
 	useSuspenseQueries,
-} from "@tanstack/react-query"
-import { createFileRoute, Link } from "@tanstack/react-router"
-import type { ColumnDef } from "@tanstack/react-table"
-import { CircleXIcon, SaveIcon } from "lucide-react"
-import { toast } from "sonner"
-import { FormBackground } from "@/components/layout/form-background"
-import PageTitle from "@/components/layout/page-title"
-import { DataTable } from "@/components/table/data-table"
-import { Button, buttonVariants } from "@/components/ui/button"
-import { FieldGroup, FieldSet } from "@/components/ui/field"
-import { Spinner } from "@/components/ui/spinner"
-import { DetalleDeleteDialog } from "@/drawers/detalles/borrar-detalle"
-import { DetalleCreateDrawer } from "@/drawers/detalles/crear-detalle"
-import { useAppForm } from "@/hooks/app-form"
-import { GetAllInvoiceDetails } from "@/queries/detalle"
-import { GetOneInvoice, UpdateInvoice } from "@/queries/factura"
-import { GetAllSuppliers } from "@/queries/proveedor"
-import { GetAllProjects } from "@/queries/proyectos"
-import type { InvoiceDetailsResponseType } from "@/types/detalle"
-import { invoiceCreateSchema } from "@/types/facturas"
+} from '@tanstack/react-query'
+import { createFileRoute, Link } from '@tanstack/react-router'
+import type { ColumnDef } from '@tanstack/react-table'
+import { CircleXIcon, SaveIcon } from 'lucide-react'
+import { toast } from 'sonner'
+import { FormBackground } from '@/components/layout/form-background'
+import PageTitle from '@/components/layout/page-title'
+import { DataTable } from '@/components/table/data-table'
+import { Button, buttonVariants } from '@/components/ui/button'
+import { FieldGroup, FieldSet } from '@/components/ui/field'
+import { Spinner } from '@/components/ui/spinner'
+import { DetalleDeleteDialog } from '@/drawers/detalles/borrar-detalle'
+import { DetalleCreateDrawer } from '@/drawers/detalles/crear-detalle'
+import { useAppForm } from '@/hooks/app-form'
+import { GetAllInvoiceDetails } from '@/queries/detalle'
+import { GetOneInvoice, UpdateInvoice } from '@/queries/factura'
+import { GetAllSuppliers } from '@/queries/proveedor'
+import { GetAllProjects } from '@/queries/proyectos'
+import type { InvoiceDetailsResponseType } from '@/types/detalle'
+import { invoiceCreateSchema } from '@/types/facturas'
 
 export const Route = createFileRoute(
-	"/_authed/transacciones/factura/$facturaId",
+	'/_authed/transacciones/factura/$facturaId',
 )({
 	component: RouteComponent,
 	loader: async ({ context: { queryClient }, params }) => {
 		await Promise.all([
 			queryClient.query({
-				queryKey: ["proyectos", "active"],
+				queryKey: ['proyectos', 'active'],
 				queryFn: () => GetAllProjects({ data: { active: true } }),
 			}),
 			queryClient.query({
-				queryKey: ["proveedores"],
+				queryKey: ['proveedores'],
 				queryFn: () => GetAllSuppliers({ data: {} }),
 			}),
 			queryClient.query({
-				queryKey: ["facturas", params.facturaId],
+				queryKey: ['facturas', params.facturaId],
 				queryFn: () => GetOneInvoice({ data: { id: params.facturaId } }),
 			}),
 			queryClient.query({
-				queryKey: ["facturas-detalle"],
+				queryKey: ['facturas-detalle'],
 				queryFn: () => GetAllInvoiceDetails({ data: { id: params.facturaId } }),
 			}),
 		])
@@ -56,14 +56,14 @@ function RouteComponent() {
 	const useUpdateInvoiceMutation = useMutation({
 		mutationFn: UpdateInvoice,
 		onSuccess: () => {
-			toast.success("Factura actualizada exitosamente")
-			queryClient.invalidateQueries({ queryKey: ["facturas"] })
+			toast.success('Factura actualizada exitosamente')
+			queryClient.invalidateQueries({ queryKey: ['facturas'] })
 		},
 		onError: error => {
 			toast.error(error.message, {
-				position: "top-center",
+				position: 'top-center',
 				style: {
-					color: "red",
+					color: 'red',
 				},
 			})
 		},
@@ -72,19 +72,19 @@ function RouteComponent() {
 	const result = useSuspenseQueries({
 		queries: [
 			{
-				queryKey: ["proyectos", "active"],
+				queryKey: ['proyectos', 'active'],
 				queryFn: () => GetAllProjects({ data: { active: true } }),
 			},
 			{
-				queryKey: ["proveedores"],
+				queryKey: ['proveedores'],
 				queryFn: () => GetAllSuppliers({ data: {} }),
 			},
 			{
-				queryKey: ["facturas-detalle"],
+				queryKey: ['facturas-detalle'],
 				queryFn: () => GetAllInvoiceDetails({ data: { id: facturaId } }),
 			},
 			{
-				queryKey: ["facturas", facturaId],
+				queryKey: ['facturas', facturaId],
 				queryFn: () => GetOneInvoice({ data: { id: facturaId } }),
 			},
 		],
@@ -97,20 +97,20 @@ function RouteComponent() {
 
 	const columns: ColumnDef<InvoiceDetailsResponseType>[] = [
 		{
-			accessorKey: "budget_item_code",
-			header: "Codigo",
+			accessorKey: 'budget_item_code',
+			header: 'Codigo',
 		},
 		{
-			accessorKey: "budget_item_name",
-			header: "Nombre",
+			accessorKey: 'budget_item_name',
+			header: 'Nombre',
 		},
 		{
-			accessorKey: "quantity",
-			header: "Cantidad",
+			accessorKey: 'quantity',
+			header: 'Cantidad',
 			cell: ({ row }) => {
 				return (
 					<span className='block w-full text-right'>
-						{row.original.quantity.toLocaleString("es-EC", {
+						{row.original.quantity.toLocaleString('es-EC', {
 							minimumFractionDigits: 2,
 						})}
 					</span>
@@ -118,12 +118,12 @@ function RouteComponent() {
 			},
 		},
 		{
-			accessorKey: "cost",
-			header: "Costo",
+			accessorKey: 'cost',
+			header: 'Costo',
 			cell: ({ row }) => {
 				return (
 					<span className='block w-full text-right'>
-						{row.original.cost.toLocaleString("es-EC", {
+						{row.original.cost.toLocaleString('es-EC', {
 							minimumFractionDigits: 2,
 						})}
 					</span>
@@ -131,12 +131,12 @@ function RouteComponent() {
 			},
 		},
 		{
-			accessorKey: "total",
-			header: "Total",
+			accessorKey: 'total',
+			header: 'Total',
 			cell: ({ row }) => {
 				return (
 					<span className='block w-full text-right'>
-						{row.original.total.toLocaleString("es-EC", {
+						{row.original.total.toLocaleString('es-EC', {
 							minimumFractionDigits: 2,
 						})}
 					</span>
@@ -144,7 +144,7 @@ function RouteComponent() {
 			},
 		},
 		{
-			id: "actions",
+			id: 'actions',
 			cell: ({ row }) => {
 				const detalle = row.original
 				return <DetalleDeleteDialog invoice_detail={detalle} />
@@ -168,8 +168,8 @@ function RouteComponent() {
 			value: item.id as string,
 		})) || []
 	proyValues.unshift({
-		label: "Seleccione un proyecto",
-		value: "",
+		label: 'Seleccione un proyecto',
+		value: '',
 	})
 
 	const provValues =
@@ -178,8 +178,8 @@ function RouteComponent() {
 			value: item.id as string,
 		})) || []
 	provValues.unshift({
-		label: "Seleccione un proveedor",
-		value: "",
+		label: 'Seleccione un proveedor',
+		value: '',
 	})
 
 	return (
@@ -238,7 +238,7 @@ function RouteComponent() {
 											value={
 												new Date(form.state.values.invoice_date)
 													.toISOString()
-													.split("T")[0]
+													.split('T')[0]
 											}
 										/>
 									)}
@@ -268,7 +268,7 @@ function RouteComponent() {
 
 						<Link
 							to='/transacciones/factura'
-							className={buttonVariants({ variant: "secondary" })}
+							className={buttonVariants({ variant: 'secondary' })}
 						>
 							<CircleXIcon size={10} />
 							Cancelar

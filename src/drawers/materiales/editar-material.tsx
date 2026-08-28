@@ -1,8 +1,8 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { CircleXIcon, EditIcon, SaveIcon } from "lucide-react"
-import { useEffect, useState } from "react"
-import { toast } from "sonner"
-import { Button } from "@/components/ui/button"
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { CircleXIcon, EditIcon, SaveIcon } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { toast } from 'sonner'
+import { Button } from '@/components/ui/button'
 import {
 	Drawer,
 	DrawerClose,
@@ -12,11 +12,11 @@ import {
 	DrawerHeader,
 	DrawerTitle,
 	DrawerTrigger,
-} from "@/components/ui/drawer"
-import { FieldGroup, FieldSet } from "@/components/ui/field"
-import { useAppForm } from "@/hooks/app-form"
-import { UpdateMaterial } from "@/queries/materiales"
-import { type MaterialType, materialSchema } from "@/types/materiales"
+} from '@/components/ui/drawer'
+import { FieldGroup, FieldSet } from '@/components/ui/field'
+import { useAppForm } from '@/hooks/app-form'
+import { UpdateMaterial } from '@/queries/materiales'
+import { type MaterialType, materialSchema } from '@/types/materiales'
 
 type MaterialEditDrawerProps = {
 	material: MaterialType
@@ -30,14 +30,14 @@ export function MaterialEditDrawer({ material }: MaterialEditDrawerProps) {
 		mutationFn: UpdateMaterial,
 		onSuccess: () => {
 			setOpen(false)
-			toast.success("Material creado exitosamente")
-			queryClient.invalidateQueries({ queryKey: ["materiales"] })
+			toast.success('Material creado exitosamente')
+			queryClient.invalidateQueries({ queryKey: ['materiales'] })
 		},
 		onError: error => {
 			toast.error(error.message, {
-				position: "top-center",
+				position: 'top-center',
 				style: {
-					color: "red",
+					color: 'red',
 				},
 			})
 		},

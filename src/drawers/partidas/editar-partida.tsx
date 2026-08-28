@@ -1,8 +1,8 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { CircleXIcon, EditIcon, SaveIcon } from "lucide-react"
-import { useEffect, useState } from "react"
-import { toast } from "sonner"
-import { Button } from "@/components/ui/button"
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { CircleXIcon, EditIcon, SaveIcon } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { toast } from 'sonner'
+import { Button } from '@/components/ui/button'
 import {
 	Drawer,
 	DrawerClose,
@@ -12,16 +12,16 @@ import {
 	DrawerHeader,
 	DrawerTitle,
 	DrawerTrigger,
-} from "@/components/ui/drawer"
-import { Field, FieldGroup, FieldLabel, FieldSet } from "@/components/ui/field"
-import { Input } from "@/components/ui/input"
-import { Switch } from "@/components/ui/switch"
-import { useAppForm } from "@/hooks/app-form"
-import { UpdatePartida } from "@/queries/partidas"
+} from '@/components/ui/drawer'
+import { Field, FieldGroup, FieldLabel, FieldSet } from '@/components/ui/field'
+import { Input } from '@/components/ui/input'
+import { Switch } from '@/components/ui/switch'
+import { useAppForm } from '@/hooks/app-form'
+import { UpdatePartida } from '@/queries/partidas'
 import {
 	type BudgetItemResponse,
 	budgetItemUpdateSchema,
-} from "@/types/partidas"
+} from '@/types/partidas'
 
 type PartidaEditDrawerProps = {
 	partida: BudgetItemResponse
@@ -35,14 +35,14 @@ export function PartidaEditDrawer({ partida }: PartidaEditDrawerProps) {
 		mutationFn: UpdatePartida,
 		onSuccess: () => {
 			setOpen(false)
-			toast.success("Partida actualizada exitosamente")
-			queryClient.invalidateQueries({ queryKey: ["partidas"] })
+			toast.success('Partida actualizada exitosamente')
+			queryClient.invalidateQueries({ queryKey: ['partidas'] })
 		},
 		onError: error => {
 			toast.error(error.message, {
-				position: "top-center",
+				position: 'top-center',
 				style: {
-					color: "red",
+					color: 'red',
 				},
 			})
 		},

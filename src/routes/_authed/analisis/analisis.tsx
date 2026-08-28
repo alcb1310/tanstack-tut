@@ -1,22 +1,22 @@
-import { useQuery, useSuspenseQuery } from "@tanstack/react-query"
-import { createFileRoute } from "@tanstack/react-router"
-import { PlayIcon } from "lucide-react"
-import { useState } from "react"
-import { toast } from "sonner"
-import { AnalisisCollapsible } from "@/collapsibles/analisis"
-import { FormBackground } from "@/components/layout/form-background"
-import PageTitle from "@/components/layout/page-title"
-import { Button } from "@/components/ui/button"
-import { NativeSelect, NativeSelectOption } from "@/components/ui/native-select"
-import { Spinner } from "@/components/ui/spinner"
-import { GetAnalisis } from "@/queries/analisis"
-import { GetAllProjects } from "@/queries/proyectos"
+import { useQuery, useSuspenseQuery } from '@tanstack/react-query'
+import { createFileRoute } from '@tanstack/react-router'
+import { PlayIcon } from 'lucide-react'
+import { useState } from 'react'
+import { toast } from 'sonner'
+import { AnalisisCollapsible } from '@/collapsibles/analisis'
+import { FormBackground } from '@/components/layout/form-background'
+import PageTitle from '@/components/layout/page-title'
+import { Button } from '@/components/ui/button'
+import { NativeSelect, NativeSelectOption } from '@/components/ui/native-select'
+import { Spinner } from '@/components/ui/spinner'
+import { GetAnalisis } from '@/queries/analisis'
+import { GetAllProjects } from '@/queries/proyectos'
 
-export const Route = createFileRoute("/_authed/analisis/analisis")({
+export const Route = createFileRoute('/_authed/analisis/analisis')({
 	component: RouteComponent,
 	loader: ({ context: { queryClient } }) => {
 		queryClient.query({
-			queryKey: ["proyectos"],
+			queryKey: ['proyectos'],
 			queryFn: () => GetAllProjects({ data: { active: true } }),
 		})
 	},
@@ -26,14 +26,14 @@ export const Route = createFileRoute("/_authed/analisis/analisis")({
 })
 
 function RouteComponent() {
-	const [project, setProject] = useState<string>("")
+	const [project, setProject] = useState<string>('')
 	const { data: projects } = useSuspenseQuery({
-		queryKey: ["proyectos"],
+		queryKey: ['proyectos'],
 		queryFn: () => GetAllProjects({ data: { active: true } }),
 	})
 
 	const { data, isLoading, isFetching, refetch } = useQuery({
-		queryKey: ["analisis"],
+		queryKey: ['analisis'],
 		queryFn: () => GetAnalisis({ data: { id: project } }),
 		enabled: false,
 	})
@@ -44,8 +44,8 @@ function RouteComponent() {
 			value: item.id as string,
 		})) || []
 	proyValues.unshift({
-		label: "Seleccione un proyecto",
-		value: "",
+		label: 'Seleccione un proyecto',
+		value: '',
 	})
 
 	const show = data?.map(item => (
@@ -57,7 +57,7 @@ function RouteComponent() {
 			<PageTitle title='Analisis' />
 			<FormBackground>
 				<NativeSelect
-					name={"proyectos"}
+					name={'proyectos'}
 					className='w-full'
 					size='default'
 					value={project}
@@ -78,10 +78,10 @@ function RouteComponent() {
 							e.stopPropagation()
 
 							if (!project) {
-								toast.error("Seleccione un proyecto", {
-									position: "top-center",
+								toast.error('Seleccione un proyecto', {
+									position: 'top-center',
 									style: {
-										color: "red",
+										color: 'red',
 									},
 								})
 							}

@@ -1,8 +1,8 @@
-import { useMutation, useQueries, useQueryClient } from "@tanstack/react-query"
-import { CircleXIcon, PlusIcon, SaveIcon } from "lucide-react"
-import { useEffect, useState } from "react"
-import { toast } from "sonner"
-import { Button } from "@/components/ui/button"
+import { useMutation, useQueries, useQueryClient } from '@tanstack/react-query'
+import { CircleXIcon, PlusIcon, SaveIcon } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { toast } from 'sonner'
+import { Button } from '@/components/ui/button'
 import {
 	Drawer,
 	DrawerClose,
@@ -12,13 +12,13 @@ import {
 	DrawerHeader,
 	DrawerTitle,
 	DrawerTrigger,
-} from "@/components/ui/drawer"
-import { FieldGroup, FieldSet } from "@/components/ui/field"
-import { useAppForm } from "@/hooks/app-form"
-import { CreateCantidad } from "@/queries/cantidad"
-import { GetAllProjects } from "@/queries/proyectos"
-import { GetAllRubros } from "@/queries/rubros"
-import { type QuantityCreateType, quantityCreateSchema } from "@/types/cantidad"
+} from '@/components/ui/drawer'
+import { FieldGroup, FieldSet } from '@/components/ui/field'
+import { useAppForm } from '@/hooks/app-form'
+import { CreateCantidad } from '@/queries/cantidad'
+import { GetAllProjects } from '@/queries/proyectos'
+import { GetAllRubros } from '@/queries/rubros'
+import { type QuantityCreateType, quantityCreateSchema } from '@/types/cantidad'
 
 export function CantidadesCreateDrawer() {
 	const queryClient = useQueryClient()
@@ -27,15 +27,15 @@ export function CantidadesCreateDrawer() {
 	const useCreateCantidadesMutation = useMutation({
 		mutationFn: CreateCantidad,
 		onSuccess: () => {
-			toast.success("Cantidad creada exitosamente")
+			toast.success('Cantidad creada exitosamente')
 			setOpen(false)
-			queryClient.invalidateQueries({ queryKey: ["cantidades"] })
+			queryClient.invalidateQueries({ queryKey: ['cantidades'] })
 		},
 		onError: error => {
 			toast.error(error.message, {
-				position: "top-center",
+				position: 'top-center',
 				style: {
-					color: "red",
+					color: 'red',
 				},
 			})
 		},
@@ -43,8 +43,8 @@ export function CantidadesCreateDrawer() {
 
 	const form = useAppForm({
 		defaultValues: {
-			project_id: "",
-			rubro_id: "",
+			project_id: '',
+			rubro_id: '',
 			quantity: 0,
 		} as QuantityCreateType,
 		validators: {
@@ -64,11 +64,11 @@ export function CantidadesCreateDrawer() {
 	const queries = useQueries({
 		queries: [
 			{
-				queryKey: ["proyectos", "active"],
+				queryKey: ['proyectos', 'active'],
 				queryFn: () => GetAllProjects({ data: { active: true } }),
 			},
 			{
-				queryKey: ["rubros"],
+				queryKey: ['rubros'],
 				queryFn: () => GetAllRubros(),
 			},
 		],
@@ -86,8 +86,8 @@ export function CantidadesCreateDrawer() {
 			value: item.id as string,
 		})) || []
 	proyValues.unshift({
-		label: "Seleccione un proyecto",
-		value: "",
+		label: 'Seleccione un proyecto',
+		value: '',
 	})
 
 	const itemValues =
@@ -96,8 +96,8 @@ export function CantidadesCreateDrawer() {
 			value: item.id as string,
 		})) || []
 	itemValues.unshift({
-		label: "Seleccione un rubro",
-		value: "",
+		label: 'Seleccione un rubro',
+		value: '',
 	})
 
 	return (

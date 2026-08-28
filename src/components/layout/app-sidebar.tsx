@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router"
+import { Link } from '@tanstack/react-router'
 import {
 	BanknoteArrowDownIcon,
 	BrickWallIcon,
@@ -17,18 +17,18 @@ import {
 	ShellIcon,
 	ShoppingBasketIcon,
 	ShoppingCartIcon,
-} from "lucide-react"
+} from 'lucide-react'
 import type {
 	ComponentProps,
 	ForwardRefExoticComponent,
 	RefAttributes,
-} from "react"
-import type { FileRoutesByTo } from "@/routeTree.gen"
+} from 'react'
+import type { FileRoutesByTo } from '@/routeTree.gen'
 import {
 	Collapsible,
 	CollapsibleContent,
 	CollapsibleTrigger,
-} from "../ui/collapsible"
+} from '../ui/collapsible'
 import {
 	Sidebar,
 	SidebarContent,
@@ -41,14 +41,14 @@ import {
 	SidebarMenuSub,
 	SidebarMenuSubButton,
 	SidebarMenuSubItem,
-} from "../ui/sidebar"
-import { UserNav } from "./user-nav"
+} from '../ui/sidebar'
+import { UserNav } from './user-nav'
 
 type ItemsType = {
 	title: string
 	url: keyof FileRoutesByTo
 	icon?: ForwardRefExoticComponent<
-		Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>
+		Omit<LucideProps, 'ref'> & RefAttributes<SVGSVGElement>
 	>
 }
 
@@ -59,96 +59,96 @@ export type DataType = {
 
 const menuData: DataType[] = [
 	{
-		title: "Transacciones",
+		title: 'Transacciones',
 		items: [
 			{
-				title: "Presupuesto",
-				url: "/transacciones/presupuesto",
+				title: 'Presupuesto',
+				url: '/transacciones/presupuesto',
 				icon: ShoppingCartIcon,
 			},
 			{
-				title: "Facturas",
-				url: "/transacciones/factura",
+				title: 'Facturas',
+				url: '/transacciones/factura',
 				icon: ReceiptTextIcon,
 			},
 			{
-				title: "Cierre mensual",
-				url: "/transacciones/cierre",
+				title: 'Cierre mensual',
+				url: '/transacciones/cierre',
 				icon: ChartCandlestickIcon,
 			},
 		],
 	},
 	{
-		title: "Reportes",
+		title: 'Reportes',
 		items: [
 			{
-				title: "Actual",
-				url: "/reportes/actual",
+				title: 'Actual',
+				url: '/reportes/actual',
 				icon: FolderOpenIcon,
 			},
 			{
-				title: "Cuadre",
-				url: "/reportes/cuadre",
+				title: 'Cuadre',
+				url: '/reportes/cuadre',
 				icon: ScaleIcon,
 			},
 			{
-				title: "Gastado por Partida",
-				url: "/reportes/gastado-por-partida",
+				title: 'Gastado por Partida',
+				url: '/reportes/gastado-por-partida',
 				icon: BanknoteArrowDownIcon,
 			},
 			{
-				title: "Histórico",
-				url: "/reportes/historico",
+				title: 'Histórico',
+				url: '/reportes/historico',
 				icon: ClipboardClockIcon,
 			},
 		],
 	},
 	{
-		title: "Parámetros",
+		title: 'Parámetros',
 		items: [
 			{
-				title: "Categorias",
-				url: "/parametros/categorias",
+				title: 'Categorias',
+				url: '/parametros/categorias',
 				icon: ChartBarStackedIcon,
 			},
 			{
-				title: "Materiales",
-				url: "/parametros/materiales",
+				title: 'Materiales',
+				url: '/parametros/materiales',
 				icon: BrickWallIcon,
 			},
 			{
-				title: "Partidas",
-				url: "/parametros/partidas",
+				title: 'Partidas',
+				url: '/parametros/partidas',
 				icon: LayoutListIcon,
 			},
 			{
-				title: "Proveedores",
-				url: "/parametros/proveedores",
+				title: 'Proveedores',
+				url: '/parametros/proveedores',
 				icon: CableIcon,
 			},
 			{
-				title: "Proyectos",
-				url: "/parametros/proyectos",
+				title: 'Proyectos',
+				url: '/parametros/proyectos',
 				icon: FolderKanbanIcon,
 			},
 			{
-				title: "Rubros",
-				url: "/parametros/rubros",
+				title: 'Rubros',
+				url: '/parametros/rubros',
 				icon: ShoppingBasketIcon,
 			},
 		],
 	},
 	{
-		title: "Analisis",
+		title: 'Analisis',
 		items: [
 			{
-				title: "Cantidades",
-				url: "/analisis/cantidades",
+				title: 'Cantidades',
+				url: '/analisis/cantidades',
 				icon: ShellIcon,
 			},
 			{
-				title: "Analisis",
-				url: "/analisis/analisis",
+				title: 'Analisis',
+				url: '/analisis/analisis',
 				icon: ChartSplineIcon,
 			},
 		],

@@ -1,13 +1,13 @@
-import type { ColumnDef } from "@tanstack/react-table"
-import { ChevronRightIcon } from "lucide-react"
-import { ReportDataTable } from "@/components/table/report-data-table"
-import { Button } from "@/components/ui/button"
+import type { ColumnDef } from '@tanstack/react-table'
+import { ChevronRightIcon } from 'lucide-react'
+import { ReportDataTable } from '@/components/table/report-data-table'
+import { Button } from '@/components/ui/button'
 import {
 	Collapsible,
 	CollapsibleContent,
 	CollapsibleTrigger,
-} from "@/components/ui/collapsible"
-import type { AnalisisType, AnalisysDataType } from "@/types/analisis"
+} from '@/components/ui/collapsible'
+import type { AnalisisType, AnalisysDataType } from '@/types/analisis'
 
 type AnalisisCollapsibleProps = {
 	data: AnalisisType
@@ -16,16 +16,16 @@ type AnalisisCollapsibleProps = {
 export function AnalisisCollapsible({ data }: AnalisisCollapsibleProps) {
 	const columns: ColumnDef<AnalisysDataType>[] = [
 		{
-			accessorKey: "material_name",
-			header: "Rubro",
+			accessorKey: 'material_name',
+			header: 'Rubro',
 		},
 		{
-			accessorKey: "unit",
-			header: "Unidad",
+			accessorKey: 'unit',
+			header: 'Unidad',
 		},
 		{
-			accessorKey: "quantity",
-			header: "Cantidad",
+			accessorKey: 'quantity',
+			header: 'Cantidad',
 		},
 	]
 

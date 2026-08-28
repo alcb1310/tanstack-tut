@@ -1,8 +1,8 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { CircleXIcon, EditIcon, SaveIcon } from "lucide-react"
-import { useEffect, useState } from "react"
-import { toast } from "sonner"
-import { Button } from "@/components/ui/button"
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { CircleXIcon, EditIcon, SaveIcon } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { toast } from 'sonner'
+import { Button } from '@/components/ui/button'
 import {
 	Drawer,
 	DrawerClose,
@@ -12,11 +12,11 @@ import {
 	DrawerHeader,
 	DrawerTitle,
 	DrawerTrigger,
-} from "@/components/ui/drawer"
-import { FieldGroup, FieldSet } from "@/components/ui/field"
-import { useAppForm } from "@/hooks/app-form"
-import { UpdateUser } from "@/queries/user"
-import { type UserResponse, userResponseSchema } from "@/types/user"
+} from '@/components/ui/drawer'
+import { FieldGroup, FieldSet } from '@/components/ui/field'
+import { useAppForm } from '@/hooks/app-form'
+import { UpdateUser } from '@/queries/user'
+import { type UserResponse, userResponseSchema } from '@/types/user'
 
 type EditUserDrawerProps = {
 	user: UserResponse
@@ -31,14 +31,14 @@ export function UserEditDrawer({ user }: EditUserDrawerProps) {
 		mutationFn: UpdateUser,
 		onSuccess: () => {
 			setOpen(false)
-			toast.success("Usuario actualizado exitosamente")
-			queryClient.invalidateQueries({ queryKey: ["usuarios"] })
+			toast.success('Usuario actualizado exitosamente')
+			queryClient.invalidateQueries({ queryKey: ['usuarios'] })
 		},
 		onError: error => {
 			toast.error(error.message, {
-				position: "top-center",
+				position: 'top-center',
 				style: {
-					color: "red",
+					color: 'red',
 				},
 			})
 		},

@@ -1,21 +1,21 @@
-import { useQueryClient, useSuspenseQuery } from "@tanstack/react-query"
-import { createFileRoute, useNavigate } from "@tanstack/react-router"
-import type { ColumnDef } from "@tanstack/react-table"
-import { CheckIcon, EditIcon, PlusIcon, X } from "lucide-react"
-import { useEffect, useState } from "react"
-import PageTitle from "@/components/layout/page-title"
-import { DataTable } from "@/components/table/data-table"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Spinner } from "@/components/ui/spinner"
-import { GetAllProjects } from "@/queries/proyectos"
-import type { ProjectType } from "@/types/proyectos"
+import { useQueryClient, useSuspenseQuery } from '@tanstack/react-query'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import type { ColumnDef } from '@tanstack/react-table'
+import { CheckIcon, EditIcon, PlusIcon, X } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import PageTitle from '@/components/layout/page-title'
+import { DataTable } from '@/components/table/data-table'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Spinner } from '@/components/ui/spinner'
+import { GetAllProjects } from '@/queries/proyectos'
+import type { ProjectType } from '@/types/proyectos'
 
-export const Route = createFileRoute("/_authed/parametros/proyectos/")({
+export const Route = createFileRoute('/_authed/parametros/proyectos/')({
 	component: RouteComponent,
 	loader: ({ context: { queryClient } }) => {
 		queryClient.query({
-			queryKey: ["projectos"],
+			queryKey: ['projectos'],
 			queryFn: () => GetAllProjects({ data: {} }),
 		})
 	},
@@ -24,11 +24,11 @@ export const Route = createFileRoute("/_authed/parametros/proyectos/")({
 function RouteComponent() {
 	const navigate = useNavigate()
 	const queryClient = useQueryClient()
-	const [query, setQuery] = useState<string>("")
+	const [query, setQuery] = useState<string>('')
 
 	const [debounced, setDebounced] = useState<string>(query)
 	const { data, isLoading, isFetching } = useSuspenseQuery({
-		queryKey: ["proyectos"],
+		queryKey: ['proyectos'],
 		queryFn: () => GetAllProjects({ data: { query } }),
 	})
 
@@ -38,44 +38,44 @@ function RouteComponent() {
 	}, [query])
 
 	useEffect(() => {
-		queryClient.invalidateQueries({ queryKey: ["proyectos"] })
+		queryClient.invalidateQueries({ queryKey: ['proyectos'] })
 	}, [debounced, queryClient])
 
 	const columns: ColumnDef<ProjectType>[] = [
 		{
-			header: "Nombre",
-			accessorKey: "name",
+			header: 'Nombre',
+			accessorKey: 'name',
 			size: 800,
 		},
 		{
-			accessorKey: "net_area",
-			header: "Area Neta (m2)",
+			accessorKey: 'net_area',
+			header: 'Area Neta (m2)',
 			size: 100,
 			cell: ({ row }) => {
 				const area = row.original.net_area ? row.original.net_area : 0
 				return (
 					<span className='block w-full text-right'>
-						{area.toLocaleString("es-EC", { minimumFractionDigits: 2 })}
+						{area.toLocaleString('es-EC', { minimumFractionDigits: 2 })}
 					</span>
 				)
 			},
 		},
 		{
-			accessorKey: "gross_area",
+			accessorKey: 'gross_area',
 			size: 100,
-			header: "Area Bruta (m2)",
+			header: 'Area Bruta (m2)',
 			cell: ({ row }) => {
 				const area = row.original.gross_area ? row.original.gross_area : 0
 				return (
 					<span className='block w-full text-right'>
-						{area.toLocaleString("es-EC", { minimumFractionDigits: 2 })}
+						{area.toLocaleString('es-EC', { minimumFractionDigits: 2 })}
 					</span>
 				)
 			},
 		},
 		{
-			accessorKey: "is_active",
-			header: "Activo",
+			accessorKey: 'is_active',
+			header: 'Activo',
 			size: 20,
 			cell: ({ row }) => {
 				return (
@@ -90,7 +90,7 @@ function RouteComponent() {
 			},
 		},
 		{
-			id: "actions",
+			id: 'actions',
 			size: 10,
 			cell: ({ row }) => {
 				const project = row.original
@@ -123,7 +123,7 @@ function RouteComponent() {
 					className='flex my-3 justify-start gap-4'
 					onClick={() =>
 						navigate({
-							to: "/parametros/proyectos/crear",
+							to: '/parametros/proyectos/crear',
 						})
 					}
 				>

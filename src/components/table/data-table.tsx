@@ -4,21 +4,21 @@ import {
 	getCoreRowModel,
 	getPaginationRowModel,
 	useReactTable,
-} from "@tanstack/react-table"
+} from '@tanstack/react-table'
 import {
 	ChevronLeft,
 	ChevronRight,
 	ChevronsLeft,
 	ChevronsRight,
-} from "lucide-react"
-import { Button } from "../ui/button"
+} from 'lucide-react'
+import { Button } from '../ui/button'
 import {
 	Select,
 	SelectContent,
 	SelectItem,
 	SelectTrigger,
 	SelectValue,
-} from "../ui/select"
+} from '../ui/select'
 import {
 	Table,
 	TableBody,
@@ -26,7 +26,7 @@ import {
 	TableHead,
 	TableHeader,
 	TableRow,
-} from "../ui/table"
+} from '../ui/table'
 
 interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[]
@@ -78,7 +78,7 @@ export function DataTable<TData, TValue>({
 						table.getRowModel().rows.map(row => (
 							<TableRow
 								key={row.id}
-								data-state={row.getIsSelected() && "selected"}
+								data-state={row.getIsSelected() && 'selected'}
 							>
 								{row.getVisibleCells().map(cell => (
 									<TableCell key={cell.id}>
@@ -138,7 +138,7 @@ export function DataTable<TData, TValue>({
 						disabled={!table.getCanPreviousPage()}
 					>
 						<span className='sr-only'>Go to previous page</span>
-						<ChevronLeft />{" "}
+						<ChevronLeft />{' '}
 					</Button>
 					<Button
 						variant='outline'

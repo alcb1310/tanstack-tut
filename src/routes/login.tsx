@@ -1,29 +1,29 @@
-import { useMutation } from "@tanstack/react-query"
-import { createFileRoute, useNavigate } from "@tanstack/react-router"
-import { toast } from "sonner"
-import z from "zod"
+import { useMutation } from '@tanstack/react-query'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import { toast } from 'sonner'
+import z from 'zod'
 import {
 	Card,
 	CardContent,
 	CardDescription,
 	CardHeader,
 	CardTitle,
-} from "@/components/ui/card"
-import { Field, FieldGroup, FieldSet } from "@/components/ui/field"
-import { useAppForm } from "@/hooks/app-form"
-import { LoginMutation } from "@/queries/auth"
+} from '@/components/ui/card'
+import { Field, FieldGroup, FieldSet } from '@/components/ui/field'
+import { useAppForm } from '@/hooks/app-form'
+import { LoginMutation } from '@/queries/auth'
 
-export const Route = createFileRoute("/login")({
+export const Route = createFileRoute('/login')({
 	component: RouteComponent,
 })
 
 const inputSchema = z.object({
 	email: z
-		.string({ message: "Ingrese un correo" })
-		.min(1, { message: "Ingrese un correo" }),
+		.string({ message: 'Ingrese un correo' })
+		.min(1, { message: 'Ingrese un correo' }),
 	password: z
-		.string({ message: "Ingrese una contraseña" })
-		.min(3, { message: "La contraseña debe tener al menos 3 caracteres" }),
+		.string({ message: 'Ingrese una contraseña' })
+		.min(3, { message: 'La contraseña debe tener al menos 3 caracteres' }),
 })
 
 function RouteComponent() {
@@ -32,13 +32,13 @@ function RouteComponent() {
 	const loginMutation = useMutation({
 		mutationFn: LoginMutation,
 		onSuccess: () => {
-			navigation({ to: "/" })
+			navigation({ to: '/' })
 		},
 		onError: error => {
 			toast.error(error.message, {
-				position: "top-center",
+				position: 'top-center',
 				style: {
-					color: "red",
+					color: 'red',
 				},
 			})
 		},
@@ -46,8 +46,8 @@ function RouteComponent() {
 
 	const form = useAppForm({
 		defaultValues: {
-			email: "",
-			password: "",
+			email: '',
+			password: '',
 		} satisfies z.infer<typeof inputSchema>,
 		validators: {
 			onSubmit: inputSchema,

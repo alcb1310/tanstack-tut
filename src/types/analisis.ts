@@ -1,4 +1,4 @@
-import { z } from "zod"
+import { z } from 'zod'
 
 const analisysDataSchema = z.object({
 	project_name: z.string(),

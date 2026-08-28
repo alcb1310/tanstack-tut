@@ -1,8 +1,8 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { CircleXIcon, EditIcon, SaveIcon } from "lucide-react"
-import { useEffect, useState } from "react"
-import { toast } from "sonner"
-import { Button } from "@/components/ui/button"
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { CircleXIcon, EditIcon, SaveIcon } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { toast } from 'sonner'
+import { Button } from '@/components/ui/button'
 import {
 	Drawer,
 	DrawerClose,
@@ -12,15 +12,15 @@ import {
 	DrawerHeader,
 	DrawerTitle,
 	DrawerTrigger,
-} from "@/components/ui/drawer"
-import { Field, FieldGroup, FieldLabel, FieldSet } from "@/components/ui/field"
-import { Input } from "@/components/ui/input"
-import { useAppForm } from "@/hooks/app-form"
-import { UpdateRubroMaterial } from "@/queries/rubro-material"
+} from '@/components/ui/drawer'
+import { Field, FieldGroup, FieldLabel, FieldSet } from '@/components/ui/field'
+import { Input } from '@/components/ui/input'
+import { useAppForm } from '@/hooks/app-form'
+import { UpdateRubroMaterial } from '@/queries/rubro-material'
 import {
 	type RubroMaterialType,
 	rubroMaterialSchema,
-} from "@/types/rubro-material"
+} from '@/types/rubro-material'
 
 type RubroMaterialEditDrawerProps = {
 	material_name: string
@@ -38,14 +38,14 @@ export function RubroMaterialEditDrawer({
 		mutationFn: UpdateRubroMaterial,
 		onSuccess: () => {
 			setOpen(false)
-			queryClient.invalidateQueries({ queryKey: ["rubros-material"] })
-			toast.success("Material actualizado exitosamente")
+			queryClient.invalidateQueries({ queryKey: ['rubros-material'] })
+			toast.success('Material actualizado exitosamente')
 		},
 		onError: error => {
 			toast.error(error.message, {
-				position: "top-center",
+				position: 'top-center',
 				style: {
-					color: "red",
+					color: 'red',
 				},
 			})
 		},
@@ -97,8 +97,8 @@ export function RubroMaterialEditDrawer({
 					<FieldGroup className='my-2 px-4'>
 						<FieldSet>
 							<Field>
-								<FieldLabel htmlFor={"name"}>Material</FieldLabel>
-								<Input name={"name"} value={material_name} disabled />
+								<FieldLabel htmlFor={'name'}>Material</FieldLabel>
+								<Input name={'name'} value={material_name} disabled />
 							</Field>
 
 							<form.AppField name='quantity'>

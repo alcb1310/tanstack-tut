@@ -1,8 +1,8 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { CircleXIcon, PlusIcon, SaveIcon } from "lucide-react"
-import { useEffect, useState } from "react"
-import { toast } from "sonner"
-import { Button } from "@/components/ui/button"
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { CircleXIcon, PlusIcon, SaveIcon } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { toast } from 'sonner'
+import { Button } from '@/components/ui/button'
 import {
 	Drawer,
 	DrawerClose,
@@ -12,17 +12,17 @@ import {
 	DrawerHeader,
 	DrawerTitle,
 	DrawerTrigger,
-} from "@/components/ui/drawer"
-import { FieldGroup, FieldSet } from "@/components/ui/field"
-import { useAppForm } from "@/hooks/app-form"
-import { CreatePartida, GetAllPartidas } from "@/queries/partidas"
-import { type BudgetItem, budgetItemSchema } from "@/types/partidas"
+} from '@/components/ui/drawer'
+import { FieldGroup, FieldSet } from '@/components/ui/field'
+import { useAppForm } from '@/hooks/app-form'
+import { CreatePartida, GetAllPartidas } from '@/queries/partidas'
+import { type BudgetItem, budgetItemSchema } from '@/types/partidas'
 
 export function PartidaCreateDrawer() {
 	const queryClient = useQueryClient()
 	const [open, setOpen] = useState(false)
 	const { data: partidas } = useQuery({
-		queryKey: ["partidas", "accum"],
+		queryKey: ['partidas', 'accum'],
 		queryFn: () =>
 			GetAllPartidas({
 				data: {
@@ -35,14 +35,14 @@ export function PartidaCreateDrawer() {
 		mutationFn: CreatePartida,
 		onSuccess: () => {
 			setOpen(false)
-			toast.success("Partida creada exitosamente")
-			queryClient.invalidateQueries({ queryKey: ["partidas"] })
+			toast.success('Partida creada exitosamente')
+			queryClient.invalidateQueries({ queryKey: ['partidas'] })
 		},
 		onError: error => {
 			toast.error(error.message, {
-				position: "top-center",
+				position: 'top-center',
 				style: {
-					color: "red",
+					color: 'red',
 				},
 			})
 		},
@@ -50,10 +50,10 @@ export function PartidaCreateDrawer() {
 
 	const form = useAppForm({
 		defaultValues: {
-			name: "",
-			code: "",
+			name: '',
+			code: '',
 			accumulate: false,
-			parent_id: "",
+			parent_id: '',
 		} as BudgetItem,
 		validators: {
 			onSubmit: budgetItemSchema,
@@ -69,8 +69,8 @@ export function PartidaCreateDrawer() {
 			value: item.id as string,
 		})) || []
 	budgetItemValues.unshift({
-		label: "Seleccione una partida",
-		value: "",
+		label: 'Seleccione una partida',
+		value: '',
 	})
 
 	useEffect(() => {

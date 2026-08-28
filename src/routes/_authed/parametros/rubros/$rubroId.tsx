@@ -1,37 +1,37 @@
-import { useMutation, useSuspenseQueries } from "@tanstack/react-query"
-import { createFileRoute, Link } from "@tanstack/react-router"
-import type { ColumnDef } from "@tanstack/react-table"
-import { CircleXIcon, SaveIcon } from "lucide-react"
-import { toast } from "sonner"
-import { FormBackground } from "@/components/layout/form-background"
-import PageTitle from "@/components/layout/page-title"
-import { DataTable } from "@/components/table/data-table"
-import { Button, buttonVariants } from "@/components/ui/button"
-import { FieldGroup, FieldSet } from "@/components/ui/field"
-import { Spinner } from "@/components/ui/spinner"
-import { RubroMaterialDeleteDialog } from "@/drawers/rubro-material/borrar-rubro-material"
-import { RubroMaterialCreateDrawer } from "@/drawers/rubro-material/crear-rubro-material"
-import { RubroMaterialEditDrawer } from "@/drawers/rubro-material/editar-rubro-material"
-import { useAppForm } from "@/hooks/app-form"
-import { GetAllRubrosMaterials } from "@/queries/rubro-material"
-import { GetOneRubro, UpdateRubro } from "@/queries/rubros"
+import { useMutation, useSuspenseQueries } from '@tanstack/react-query'
+import { createFileRoute, Link } from '@tanstack/react-router'
+import type { ColumnDef } from '@tanstack/react-table'
+import { CircleXIcon, SaveIcon } from 'lucide-react'
+import { toast } from 'sonner'
+import { FormBackground } from '@/components/layout/form-background'
+import PageTitle from '@/components/layout/page-title'
+import { DataTable } from '@/components/table/data-table'
+import { Button, buttonVariants } from '@/components/ui/button'
+import { FieldGroup, FieldSet } from '@/components/ui/field'
+import { Spinner } from '@/components/ui/spinner'
+import { RubroMaterialDeleteDialog } from '@/drawers/rubro-material/borrar-rubro-material'
+import { RubroMaterialCreateDrawer } from '@/drawers/rubro-material/crear-rubro-material'
+import { RubroMaterialEditDrawer } from '@/drawers/rubro-material/editar-rubro-material'
+import { useAppForm } from '@/hooks/app-form'
+import { GetAllRubrosMaterials } from '@/queries/rubro-material'
+import { GetOneRubro, UpdateRubro } from '@/queries/rubros'
 import type {
 	RubroMaterialResponseTye,
 	RubroMaterialType,
-} from "@/types/rubro-material"
-import { type RubrosType, rubrosSchema } from "@/types/rubros"
+} from '@/types/rubro-material'
+import { type RubrosType, rubrosSchema } from '@/types/rubros'
 
-export const Route = createFileRoute("/_authed/parametros/rubros/$rubroId")({
+export const Route = createFileRoute('/_authed/parametros/rubros/$rubroId')({
 	component: RouteComponent,
 	loader: ({ context: { queryClient }, params }) => {
 		Promise.all([
 			queryClient.query({
-				queryKey: ["rubros", params.rubroId],
+				queryKey: ['rubros', params.rubroId],
 				queryFn: () => GetOneRubro({ data: { id: params.rubroId } }),
 			}),
 
 			queryClient.query({
-				queryKey: ["rubros-material"],
+				queryKey: ['rubros-material'],
 				queryFn: () =>
 					GetAllRubrosMaterials({ data: { rubroId: params.rubroId } }),
 			}),
@@ -44,11 +44,11 @@ function RouteComponent() {
 	const result = useSuspenseQueries({
 		queries: [
 			{
-				queryKey: ["rubros-material"],
+				queryKey: ['rubros-material'],
 				queryFn: () => GetAllRubrosMaterials({ data: { rubroId } }),
 			},
 			{
-				queryKey: ["rubros", rubroId],
+				queryKey: ['rubros', rubroId],
 				queryFn: () => GetOneRubro({ data: { id: rubroId } }),
 			},
 		],
@@ -59,24 +59,24 @@ function RouteComponent() {
 
 	const columns: ColumnDef<RubroMaterialResponseTye>[] = [
 		{
-			accessorKey: "material.code",
-			header: "Codigo",
+			accessorKey: 'material.code',
+			header: 'Codigo',
 		},
 		{
-			accessorKey: "material.name",
-			header: "Codigo",
+			accessorKey: 'material.name',
+			header: 'Codigo',
 		},
 		{
-			accessorKey: "material.unit",
-			header: "Unidad",
+			accessorKey: 'material.unit',
+			header: 'Unidad',
 		},
 		{
-			accessorKey: "quantity",
-			header: "Cantidad",
+			accessorKey: 'quantity',
+			header: 'Cantidad',
 			cell: ({ row }) => {
 				return (
 					<span className='block w-full text-right'>
-						{row.original.quantity.toLocaleString("es-EC", {
+						{row.original.quantity.toLocaleString('es-EC', {
 							minimumFractionDigits: 2,
 							maximumFractionDigits: 2,
 						})}
@@ -85,8 +85,8 @@ function RouteComponent() {
 			},
 		},
 		{
-			id: "actions",
-			header: "Acciones",
+			id: 'actions',
+			header: 'Acciones',
 			cell: ({ row }) => {
 				const material: RubroMaterialType = {
 					item_id: row.original.item.id as string,
@@ -112,13 +112,13 @@ function RouteComponent() {
 	const useUpdateRubroMutation = useMutation({
 		mutationFn: UpdateRubro,
 		onSuccess: () => {
-			toast.success("Rubro actualizado exitosamente")
+			toast.success('Rubro actualizado exitosamente')
 		},
 		onError: error => {
 			toast.error(error.message, {
-				position: "top-center",
+				position: 'top-center',
 				style: {
-					color: "red",
+					color: 'red',
 				},
 			})
 		},
@@ -188,7 +188,7 @@ function RouteComponent() {
 
 						<Link
 							to='/parametros/rubros'
-							className={buttonVariants({ variant: "outline" })}
+							className={buttonVariants({ variant: 'outline' })}
 						>
 							<CircleXIcon size={10} />
 							Cancelar

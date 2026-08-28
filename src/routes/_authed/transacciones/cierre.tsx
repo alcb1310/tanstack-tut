@@ -1,28 +1,28 @@
-import { useSuspenseQuery } from "@tanstack/react-query"
-import { createFileRoute } from "@tanstack/react-router"
-import { useState } from "react"
-import PageTitle from "@/components/layout/page-title"
-import { FieldGroup, FieldSet } from "@/components/ui/field"
-import { Input } from "@/components/ui/input"
-import { NativeSelect, NativeSelectOption } from "@/components/ui/native-select"
-import { CierreDialog } from "@/drawers/cierre/cierre-dialog"
-import { GetAllProjects } from "@/queries/proyectos"
+import { useSuspenseQuery } from '@tanstack/react-query'
+import { createFileRoute } from '@tanstack/react-router'
+import { useState } from 'react'
+import PageTitle from '@/components/layout/page-title'
+import { FieldGroup, FieldSet } from '@/components/ui/field'
+import { Input } from '@/components/ui/input'
+import { NativeSelect, NativeSelectOption } from '@/components/ui/native-select'
+import { CierreDialog } from '@/drawers/cierre/cierre-dialog'
+import { GetAllProjects } from '@/queries/proyectos'
 
-export const Route = createFileRoute("/_authed/transacciones/cierre")({
+export const Route = createFileRoute('/_authed/transacciones/cierre')({
 	component: RouteComponent,
 	loader: ({ context: { queryClient } }) => {
 		queryClient.query({
-			queryKey: ["proyectos", "active"],
+			queryKey: ['proyectos', 'active'],
 			queryFn: () => GetAllProjects({ data: { active: true } }),
 		})
 	},
 })
 
 function RouteComponent() {
-	const [project, setProject] = useState("")
-	const [fecha, setFecha] = useState("")
+	const [project, setProject] = useState('')
+	const [fecha, setFecha] = useState('')
 	const { data: projects } = useSuspenseQuery({
-		queryKey: ["proyectos", "active"],
+		queryKey: ['proyectos', 'active'],
 		queryFn: () => GetAllProjects({ data: { active: true } }),
 	})
 
@@ -32,8 +32,8 @@ function RouteComponent() {
 			value: item.id as string,
 		})) || []
 	proyValues.unshift({
-		label: "Seleccione un proyecto",
-		value: "",
+		label: 'Seleccione un proyecto',
+		value: '',
 	})
 
 	return (
@@ -45,7 +45,7 @@ function RouteComponent() {
 					<FieldSet>
 						<NativeSelect
 							className='w-full'
-							name={"proyectos"}
+							name={'proyectos'}
 							size='default'
 							value={project}
 							onChange={e => {

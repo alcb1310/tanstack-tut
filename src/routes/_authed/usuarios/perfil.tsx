@@ -1,19 +1,19 @@
-import { useSuspenseQuery } from "@tanstack/react-query"
-import { createFileRoute } from "@tanstack/react-router"
-import PageTitle from "@/components/layout/page-title"
-import { Spinner } from "@/components/ui/spinner"
-import { MeQuery } from "@/queries/user"
+import { useSuspenseQuery } from '@tanstack/react-query'
+import { createFileRoute } from '@tanstack/react-router'
+import PageTitle from '@/components/layout/page-title'
+import { Spinner } from '@/components/ui/spinner'
+import { MeQuery } from '@/queries/user'
 
-export const Route = createFileRoute("/_authed/usuarios/perfil")({
+export const Route = createFileRoute('/_authed/usuarios/perfil')({
 	component: RouteComponent,
 	beforeLoad: ({ context: { queryClient } }) => {
-		queryClient.query({ queryKey: ["me"], queryFn: () => MeQuery() })
+		queryClient.query({ queryKey: ['me'], queryFn: () => MeQuery() })
 	},
 })
 
 function RouteComponent() {
 	const { data, isLoading } = useSuspenseQuery({
-		queryKey: ["me"],
+		queryKey: ['me'],
 		queryFn: () => MeQuery(),
 	})
 

@@ -1,21 +1,21 @@
-import { createServerFn } from "@tanstack/react-start"
-import { getCookie } from "@tanstack/react-start/server"
-import type { UserCreate, UserResponse } from "@/types/user"
+import { createServerFn } from '@tanstack/react-start'
+import { getCookie } from '@tanstack/react-start/server'
+import type { UserCreate, UserResponse } from '@/types/user'
 
 const URL = import.meta.env.VITE_BACKEND_SERVER
-const cookieName = "BCA-TOKEN"
+const cookieName = 'BCA-TOKEN'
 
-export const MeQuery = createServerFn({ method: "GET" }).handler(
+export const MeQuery = createServerFn({ method: 'GET' }).handler(
 	async (): Promise<UserResponse> => {
 		const token = getCookie(cookieName)
 		if (!token) {
-			throw new Error("Usuario no autenticado")
+			throw new Error('Usuario no autenticado')
 		}
 
 		const response = await fetch(`${URL}/users/me`, {
-			method: "GET",
+			method: 'GET',
 			headers: {
-				"Content-Type": "application/json",
+				'Content-Type': 'application/json',
 				Authorization: `Bearer ${token}`,
 			},
 		})
@@ -29,14 +29,14 @@ export const MeQuery = createServerFn({ method: "GET" }).handler(
 	},
 )
 
-export const GetAllUsers = createServerFn({ method: "GET" }).handler(
+export const GetAllUsers = createServerFn({ method: 'GET' }).handler(
 	async (): Promise<UserResponse[]> => {
 		const token = getCookie(cookieName)
 
 		const response = await fetch(`${URL}/users`, {
-			method: "GET",
+			method: 'GET',
 			headers: {
-				"Content-Type": "application/json",
+				'Content-Type': 'application/json',
 				Authorization: `Bearer ${token}`,
 			},
 		})
@@ -50,15 +50,15 @@ export const GetAllUsers = createServerFn({ method: "GET" }).handler(
 	},
 )
 
-export const CreateUser = createServerFn({ method: "POST" })
+export const CreateUser = createServerFn({ method: 'POST' })
 	.validator((data: UserCreate) => data)
 	.handler(async ({ data }) => {
 		const token = getCookie(cookieName)
 
 		const response = await fetch(`${URL}/users`, {
-			method: "POST",
+			method: 'POST',
 			headers: {
-				"Content-Type": "application/json",
+				'Content-Type': 'application/json',
 				Authorization: `Bearer ${token}`,
 			},
 			body: JSON.stringify(data),
@@ -72,15 +72,15 @@ export const CreateUser = createServerFn({ method: "POST" })
 		return
 	})
 
-export const UpdateUser = createServerFn({ method: "POST" })
+export const UpdateUser = createServerFn({ method: 'POST' })
 	.validator((data: UserResponse) => data)
 	.handler(async ({ data }) => {
 		const token = getCookie(cookieName)
 
 		const response = await fetch(`${URL}/users/${data.id}`, {
-			method: "PUT",
+			method: 'PUT',
 			headers: {
-				"Content-Type": "application/json",
+				'Content-Type': 'application/json',
 				Authorization: `Bearer ${token}`,
 			},
 			body: JSON.stringify(data),
@@ -94,15 +94,15 @@ export const UpdateUser = createServerFn({ method: "POST" })
 		return
 	})
 
-export const UpdatePassword = createServerFn({ method: "POST" })
+export const UpdatePassword = createServerFn({ method: 'POST' })
 	.validator((data: { password: string }) => data)
 	.handler(async ({ data }) => {
 		const token = getCookie(cookieName)
 
 		const response = await fetch(`${URL}/users`, {
-			method: "PUT",
+			method: 'PUT',
 			headers: {
-				"Content-Type": "application/json",
+				'Content-Type': 'application/json',
 				Authorization: `Bearer ${token}`,
 			},
 			body: JSON.stringify(data),
@@ -116,23 +116,23 @@ export const UpdatePassword = createServerFn({ method: "POST" })
 		return
 	})
 
-export const DeleteUser = createServerFn({ method: "POST" })
+export const DeleteUser = createServerFn({ method: 'POST' })
 	.validator((data: { id: string }) => data)
 	.handler(async ({ data: { id } }) => {
 		const token = getCookie(cookieName)
-		console.log("DeleteUser", token)
+		console.log('DeleteUser', token)
 
 		const response = await fetch(`${URL}/users/${id}`, {
-			method: "DELETE",
+			method: 'DELETE',
 			headers: {
-				"Content-Type": "application/json",
+				'Content-Type': 'application/json',
 				Authorization: `Bearer ${token}`,
 			},
 		})
 
 		if (!response.ok) {
 			if (response.status === 403) {
-				throw new Error("No tienes permiso para realizar esta acción")
+				throw new Error('No tienes permiso para realizar esta acción')
 			}
 
 			const data = await response.json()

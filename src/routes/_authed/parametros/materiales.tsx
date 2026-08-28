@@ -1,19 +1,19 @@
-import { useSuspenseQuery } from "@tanstack/react-query"
-import { createFileRoute } from "@tanstack/react-router"
-import type { ColumnDef } from "@tanstack/react-table"
-import PageTitle from "@/components/layout/page-title"
-import { DataTable } from "@/components/table/data-table"
-import { Spinner } from "@/components/ui/spinner"
-import { MaterialCreateDrawer } from "@/drawers/materiales/crear-material"
-import { MaterialEditDrawer } from "@/drawers/materiales/editar-material"
-import { GetAllMaterials } from "@/queries/materiales"
-import type { MaterialType } from "@/types/materiales"
+import { useSuspenseQuery } from '@tanstack/react-query'
+import { createFileRoute } from '@tanstack/react-router'
+import type { ColumnDef } from '@tanstack/react-table'
+import PageTitle from '@/components/layout/page-title'
+import { DataTable } from '@/components/table/data-table'
+import { Spinner } from '@/components/ui/spinner'
+import { MaterialCreateDrawer } from '@/drawers/materiales/crear-material'
+import { MaterialEditDrawer } from '@/drawers/materiales/editar-material'
+import { GetAllMaterials } from '@/queries/materiales'
+import type { MaterialType } from '@/types/materiales'
 
-export const Route = createFileRoute("/_authed/parametros/materiales")({
+export const Route = createFileRoute('/_authed/parametros/materiales')({
 	component: RouteComponent,
 	loader: ({ context: { queryClient } }) => {
 		queryClient.query({
-			queryKey: ["materiales"],
+			queryKey: ['materiales'],
 			queryFn: () => GetAllMaterials(),
 		})
 	},
@@ -21,29 +21,29 @@ export const Route = createFileRoute("/_authed/parametros/materiales")({
 
 function RouteComponent() {
 	const { data, isLoading } = useSuspenseQuery({
-		queryKey: ["materiales"],
+		queryKey: ['materiales'],
 		queryFn: () => GetAllMaterials(),
 	})
 
 	const columns: ColumnDef<MaterialType>[] = [
 		{
-			accessorKey: "code",
-			header: "Código",
+			accessorKey: 'code',
+			header: 'Código',
 		},
 		{
-			accessorKey: "name",
-			header: "Nombre",
+			accessorKey: 'name',
+			header: 'Nombre',
 		},
 		{
-			accessorKey: "unit",
-			header: "Unidad",
+			accessorKey: 'unit',
+			header: 'Unidad',
 		},
 		{
-			accessorKey: "category.name",
-			header: "Categoria",
+			accessorKey: 'category.name',
+			header: 'Categoria',
 		},
 		{
-			id: "actions",
+			id: 'actions',
 			cell: ({ row }) => {
 				const material = row.original
 				if (!material.id) return null

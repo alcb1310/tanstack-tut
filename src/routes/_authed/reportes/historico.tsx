@@ -1,31 +1,31 @@
-import { useQuery, useSuspenseQueries } from "@tanstack/react-query"
-import { createFileRoute } from "@tanstack/react-router"
-import type { ColumnDef } from "@tanstack/react-table"
-import { DownloadIcon, PlayIcon } from "lucide-react"
-import { FormBackground } from "@/components/layout/form-background"
-import PageTitle from "@/components/layout/page-title"
-import { ReportDataTable } from "@/components/table/report-data-table"
-import { Button } from "@/components/ui/button"
-import { FieldGroup, FieldSet } from "@/components/ui/field"
-import { Spinner } from "@/components/ui/spinner"
-import { useAppForm } from "@/hooks/app-form"
-import { downloadExcelFile } from "@/lib/excel-download"
-import { histroricExcelExport } from "@/queries/excel"
-import { GetAllProjects } from "@/queries/proyectos"
-import { GetAllHistoric, GetAllLevels } from "@/queries/reportes"
-import type { BudgetResponseType } from "@/types/presupuesto"
-import { type ReportTypes, reportSchema } from "@/types/reportes"
+import { useQuery, useSuspenseQueries } from '@tanstack/react-query'
+import { createFileRoute } from '@tanstack/react-router'
+import type { ColumnDef } from '@tanstack/react-table'
+import { DownloadIcon, PlayIcon } from 'lucide-react'
+import { FormBackground } from '@/components/layout/form-background'
+import PageTitle from '@/components/layout/page-title'
+import { ReportDataTable } from '@/components/table/report-data-table'
+import { Button } from '@/components/ui/button'
+import { FieldGroup, FieldSet } from '@/components/ui/field'
+import { Spinner } from '@/components/ui/spinner'
+import { useAppForm } from '@/hooks/app-form'
+import { downloadExcelFile } from '@/lib/excel-download'
+import { histroricExcelExport } from '@/queries/excel'
+import { GetAllProjects } from '@/queries/proyectos'
+import { GetAllHistoric, GetAllLevels } from '@/queries/reportes'
+import type { BudgetResponseType } from '@/types/presupuesto'
+import { type ReportTypes, reportSchema } from '@/types/reportes'
 
-export const Route = createFileRoute("/_authed/reportes/historico")({
+export const Route = createFileRoute('/_authed/reportes/historico')({
 	component: RouteComponent,
 	loader: async ({ context: { queryClient } }) => {
 		Promise.all([
 			queryClient.query({
-				queryKey: ["proyectos", "active"],
+				queryKey: ['proyectos', 'active'],
 				queryFn: () => GetAllProjects({ data: { active: true } }),
 			}),
 			queryClient.query({
-				queryKey: ["niveles"],
+				queryKey: ['niveles'],
 				queryFn: () => GetAllLevels(),
 			}),
 		])
@@ -35,9 +35,9 @@ export const Route = createFileRoute("/_authed/reportes/historico")({
 function RouteComponent() {
 	const form = useAppForm({
 		defaultValues: {
-			project_id: "",
-			level: "",
-			date: "",
+			project_id: '',
+			level: '',
+			date: '',
 		} as ReportTypes,
 		validators: {
 			onSubmit: reportSchema,
@@ -48,32 +48,32 @@ function RouteComponent() {
 	})
 
 	const { data, isLoading, isFetching, refetch } = useQuery({
-		queryKey: ["historico", form.state.values],
+		queryKey: ['historico', form.state.values],
 		queryFn: () => GetAllHistoric({ data: form.state.values }),
 		enabled:
-			form.state.values.project_id !== "" &&
-			form.state.values.level !== "" &&
-			form.state.values.date !== "",
+			form.state.values.project_id !== '' &&
+			form.state.values.level !== '' &&
+			form.state.values.date !== '',
 	})
 
 	const columns: ColumnDef<BudgetResponseType>[] = [
 		{
-			accessorKey: "budget_item.code",
-			header: "Código",
+			accessorKey: 'budget_item.code',
+			header: 'Código',
 		},
 		{
-			accessorKey: "budget_item.name",
-			header: "Partida",
+			accessorKey: 'budget_item.name',
+			header: 'Partida',
 		},
 		{
-			accessorKey: "updated_budget",
-			header: "Presupuesto",
+			accessorKey: 'updated_budget',
+			header: 'Presupuesto',
 			cell: ({ row }) => {
 				const q = row.original.updated_budget
 
 				return (
 					<span className='block w-full text-right'>
-						{q.toLocaleString("es-EC", {
+						{q.toLocaleString('es-EC', {
 							minimumFractionDigits: 2,
 							maximumFractionDigits: 2,
 						})}
@@ -82,36 +82,36 @@ function RouteComponent() {
 			},
 		},
 		{
-			id: "gastado",
+			id: 'gastado',
 			header: () => <span className='block text-center'>Gastado</span>,
 			columns: [
 				{
-					accessorKey: "spent_quantity",
-					header: "Cantidad",
+					accessorKey: 'spent_quantity',
+					header: 'Cantidad',
 					cell: ({ row }) => {
 						const q = row.original.spent_quantity
 
 						return (
 							<span className='block w-full text-right'>
 								{q.Valid
-									? q.Float64.toLocaleString("es-EC", {
-										minimumFractionDigits: 2,
-										maximumFractionDigits: 2,
-									})
-									: ""}
+									? q.Float64.toLocaleString('es-EC', {
+											minimumFractionDigits: 2,
+											maximumFractionDigits: 2,
+										})
+									: ''}
 							</span>
 						)
 					},
 				},
 				{
-					accessorKey: "spent_total",
-					header: "Total",
+					accessorKey: 'spent_total',
+					header: 'Total',
 					cell: ({ row }) => {
 						const q = row.original.spent_total
 
 						return (
 							<span className='block w-full text-right'>
-								{q.toLocaleString("es-EC", {
+								{q.toLocaleString('es-EC', {
 									minimumFractionDigits: 2,
 									maximumFractionDigits: 2,
 								})}
@@ -122,54 +122,54 @@ function RouteComponent() {
 			],
 		},
 		{
-			id: "por gastar",
+			id: 'por gastar',
 			header: () => <span className='block text-center'>Por Gastar</span>,
 			columns: [
 				{
-					accessorKey: "remaining_quantity",
-					header: "Cantidad",
+					accessorKey: 'remaining_quantity',
+					header: 'Cantidad',
 					cell: ({ row }) => {
 						const q = row.original.remaining_quantity
 
 						return (
 							<span className='block w-full text-right'>
 								{q.Valid
-									? q.Float64.toLocaleString("es-EC", {
-										minimumFractionDigits: 2,
-										maximumFractionDigits: 2,
-									})
-									: ""}
+									? q.Float64.toLocaleString('es-EC', {
+											minimumFractionDigits: 2,
+											maximumFractionDigits: 2,
+										})
+									: ''}
 							</span>
 						)
 					},
 				},
 				{
-					accessorKey: "remaining_cost",
-					header: "Costo",
+					accessorKey: 'remaining_cost',
+					header: 'Costo',
 					cell: ({ row }) => {
 						const q = row.original.remaining_cost
 
 						return (
 							<span className='block w-full text-right'>
 								{q.Valid
-									? q.Float64.toLocaleString("es-EC", {
-										minimumFractionDigits: 2,
-										maximumFractionDigits: 2,
-									})
-									: ""}
+									? q.Float64.toLocaleString('es-EC', {
+											minimumFractionDigits: 2,
+											maximumFractionDigits: 2,
+										})
+									: ''}
 							</span>
 						)
 					},
 				},
 				{
-					accessorKey: "remaining_total",
-					header: "Total",
+					accessorKey: 'remaining_total',
+					header: 'Total',
 					cell: ({ row }) => {
 						const q = row.original.remaining_total
 
 						return (
 							<span className='block w-full text-right'>
-								{q.toLocaleString("es-EC", {
+								{q.toLocaleString('es-EC', {
 									minimumFractionDigits: 2,
 									maximumFractionDigits: 2,
 								})}
@@ -184,11 +184,11 @@ function RouteComponent() {
 	const results = useSuspenseQueries({
 		queries: [
 			{
-				queryKey: ["proyectos", "active"],
+				queryKey: ['proyectos', 'active'],
 				queryFn: () => GetAllProjects({ data: { active: true } }),
 			},
 			{
-				queryKey: ["niveles"],
+				queryKey: ['niveles'],
 				queryFn: () => GetAllLevels(),
 			},
 		],
@@ -200,8 +200,8 @@ function RouteComponent() {
 			value: item.id as string,
 		})) || []
 	proyValues.unshift({
-		label: "Seleccione un proyecto",
-		value: "",
+		label: 'Seleccione un proyecto',
+		value: '',
 	})
 
 	const levelValues = results[1].data?.map(item => ({
@@ -209,8 +209,8 @@ function RouteComponent() {
 		value: item.key,
 	}))
 	levelValues.unshift({
-		label: "Seleccione un nivel",
-		value: "",
+		label: 'Seleccione un nivel',
+		value: '',
 	})
 
 	return (
@@ -280,7 +280,7 @@ function RouteComponent() {
 											data: form.state.values,
 										})
 
-										downloadExcelFile(await b.blob(), "reporte.xlsx")
+										downloadExcelFile(await b.blob(), 'reporte.xlsx')
 									} catch (e) {
 										console.error(e)
 									}

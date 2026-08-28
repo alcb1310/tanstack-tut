@@ -1,22 +1,22 @@
-import { useQueryClient, useSuspenseQuery } from "@tanstack/react-query"
-import { createFileRoute } from "@tanstack/react-router"
-import type { ColumnDef } from "@tanstack/react-table"
-import { CheckIcon, X } from "lucide-react"
-import { useEffect, useState } from "react"
-import PageTitle from "@/components/layout/page-title"
-import { DataTable } from "@/components/table/data-table"
-import { Input } from "@/components/ui/input"
-import { Spinner } from "@/components/ui/spinner"
-import { PartidaCreateDrawer } from "@/drawers/partidas/crear-partida"
-import { PartidaEditDrawer } from "@/drawers/partidas/editar-partida"
-import { GetAllPartidas } from "@/queries/partidas"
-import type { BudgetItemResponse } from "@/types/partidas"
+import { useQueryClient, useSuspenseQuery } from '@tanstack/react-query'
+import { createFileRoute } from '@tanstack/react-router'
+import type { ColumnDef } from '@tanstack/react-table'
+import { CheckIcon, X } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import PageTitle from '@/components/layout/page-title'
+import { DataTable } from '@/components/table/data-table'
+import { Input } from '@/components/ui/input'
+import { Spinner } from '@/components/ui/spinner'
+import { PartidaCreateDrawer } from '@/drawers/partidas/crear-partida'
+import { PartidaEditDrawer } from '@/drawers/partidas/editar-partida'
+import { GetAllPartidas } from '@/queries/partidas'
+import type { BudgetItemResponse } from '@/types/partidas'
 
-export const Route = createFileRoute("/_authed/parametros/partidas")({
+export const Route = createFileRoute('/_authed/parametros/partidas')({
 	component: RouteComponent,
 	loader: ({ context: { queryClient } }) => {
 		queryClient.query({
-			queryKey: ["partidas"],
+			queryKey: ['partidas'],
 			queryFn: () => GetAllPartidas({ data: {} }),
 		})
 	},
@@ -24,30 +24,30 @@ export const Route = createFileRoute("/_authed/parametros/partidas")({
 
 function RouteComponent() {
 	const queryClient = useQueryClient()
-	const [search, setSearch] = useState<string>("")
+	const [search, setSearch] = useState<string>('')
 	const [debounced, setDebounced] = useState<string>(search)
 
 	const { data, isLoading, isFetching } = useSuspenseQuery({
-		queryKey: ["partidas"],
+		queryKey: ['partidas'],
 		queryFn: () => GetAllPartidas({ data: { query: search } }),
 	})
 
 	const columns: ColumnDef<BudgetItemResponse>[] = [
 		{
-			accessorKey: "code",
-			header: "Codigo",
+			accessorKey: 'code',
+			header: 'Codigo',
 		},
 		{
-			accessorKey: "name",
-			header: "Nombre",
+			accessorKey: 'name',
+			header: 'Nombre',
 		},
 		{
-			accessorKey: "level",
-			header: "Nivel",
+			accessorKey: 'level',
+			header: 'Nivel',
 		},
 		{
-			accessorKey: "accumulate",
-			header: "Acumula",
+			accessorKey: 'accumulate',
+			header: 'Acumula',
 			cell: ({ row }) => {
 				return (
 					<span className='block w-full text-right'>
@@ -61,14 +61,14 @@ function RouteComponent() {
 			},
 		},
 		{
-			accessorKey: "parent",
-			header: "Padre",
+			accessorKey: 'parent',
+			header: 'Padre',
 			cell: ({ row }) => {
 				return <span>{row.original.parent?.code}</span>
 			},
 		},
 		{
-			id: "actions",
+			id: 'actions',
 			cell: ({ row }) => {
 				const partida = row.original
 
@@ -83,7 +83,7 @@ function RouteComponent() {
 	}, [search])
 
 	useEffect(() => {
-		queryClient.invalidateQueries({ queryKey: ["partidas"] })
+		queryClient.invalidateQueries({ queryKey: ['partidas'] })
 	}, [debounced, queryClient])
 
 	return (

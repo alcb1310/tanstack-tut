@@ -1,8 +1,8 @@
-import { useMutation } from "@tanstack/react-query"
-import { useEffect } from "react"
-import { toast } from "sonner"
-import { z } from "zod"
-import { Button } from "@/components/ui/button"
+import { useMutation } from '@tanstack/react-query'
+import { useEffect } from 'react'
+import { toast } from 'sonner'
+import { z } from 'zod'
+import { Button } from '@/components/ui/button'
 import {
 	Dialog,
 	DialogClose,
@@ -12,22 +12,22 @@ import {
 	DialogHeader,
 	DialogTitle,
 	DialogTrigger,
-} from "@/components/ui/dialog"
-import { FieldGroup, FieldSet } from "@/components/ui/field"
-import { useAppForm } from "@/hooks/app-form"
-import { UpdatePassword } from "@/queries/user"
+} from '@/components/ui/dialog'
+import { FieldGroup, FieldSet } from '@/components/ui/field'
+import { useAppForm } from '@/hooks/app-form'
+import { UpdatePassword } from '@/queries/user'
 
 export function UserChangePasswordDialog() {
 	const useUpdatePasswordMutation = useMutation({
 		mutationFn: UpdatePassword,
 		onSuccess: () => {
-			toast.success("Contraseña actualizada exitosamente")
+			toast.success('Contraseña actualizada exitosamente')
 		},
 		onError: error => {
 			toast.error(error.message, {
-				position: "top-center",
+				position: 'top-center',
 				style: {
-					color: "red",
+					color: 'red',
 				},
 			})
 		},
@@ -35,13 +35,13 @@ export function UserChangePasswordDialog() {
 
 	const form = useAppForm({
 		defaultValues: {
-			password: "",
+			password: '',
 		},
 		validators: {
 			onSubmit: z.object({
 				password: z
 					.string()
-					.min(6, "La contraseña debe tener al menos 6 caracteres"),
+					.min(6, 'La contraseña debe tener al menos 6 caracteres'),
 			}),
 		},
 		onSubmit: data => {

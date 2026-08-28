@@ -1,8 +1,8 @@
-import { useMutation, useQueries, useQueryClient } from "@tanstack/react-query"
-import { CircleXIcon, PlusIcon, SaveIcon } from "lucide-react"
-import { useEffect, useState } from "react"
-import { toast } from "sonner"
-import { Button } from "@/components/ui/button"
+import { useMutation, useQueries, useQueryClient } from '@tanstack/react-query'
+import { CircleXIcon, PlusIcon, SaveIcon } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { toast } from 'sonner'
+import { Button } from '@/components/ui/button'
 import {
 	Drawer,
 	DrawerClose,
@@ -12,13 +12,13 @@ import {
 	DrawerHeader,
 	DrawerTitle,
 	DrawerTrigger,
-} from "@/components/ui/drawer"
-import { FieldGroup, FieldSet } from "@/components/ui/field"
-import { useAppForm } from "@/hooks/app-form"
-import { GetAllPartidas } from "@/queries/partidas"
-import { CreateBudget } from "@/queries/presupuesto"
-import { GetAllProjects } from "@/queries/proyectos"
-import { type BudgetEditType, budgetEditSchema } from "@/types/presupuesto"
+} from '@/components/ui/drawer'
+import { FieldGroup, FieldSet } from '@/components/ui/field'
+import { useAppForm } from '@/hooks/app-form'
+import { GetAllPartidas } from '@/queries/partidas'
+import { CreateBudget } from '@/queries/presupuesto'
+import { GetAllProjects } from '@/queries/proyectos'
+import { type BudgetEditType, budgetEditSchema } from '@/types/presupuesto'
 
 export function PresupuestoCreateDrawer() {
 	const queryClient = useQueryClient()
@@ -27,11 +27,11 @@ export function PresupuestoCreateDrawer() {
 	const result = useQueries({
 		queries: [
 			{
-				queryKey: ["partidas"],
+				queryKey: ['partidas'],
 				queryFn: () => GetAllPartidas({ data: { accum: false } }),
 			},
 			{
-				queryKey: ["proyectos", "active"],
+				queryKey: ['proyectos', 'active'],
 				queryFn: () => GetAllProjects({ data: { active: true } }),
 			},
 		],
@@ -44,14 +44,14 @@ export function PresupuestoCreateDrawer() {
 		mutationFn: CreateBudget,
 		onSuccess: () => {
 			setOpen(false)
-			toast.success("Presupuesto creado exitosamente")
-			queryClient.invalidateQueries({ queryKey: ["presupuesto"] })
+			toast.success('Presupuesto creado exitosamente')
+			queryClient.invalidateQueries({ queryKey: ['presupuesto'] })
 		},
 		onError: error => {
 			toast.error(error.message, {
-				position: "top-center",
+				position: 'top-center',
 				style: {
-					color: "red",
+					color: 'red',
 				},
 			})
 		},
@@ -59,8 +59,8 @@ export function PresupuestoCreateDrawer() {
 
 	const form = useAppForm({
 		defaultValues: {
-			project_id: "",
-			budget_item_id: "",
+			project_id: '',
+			budget_item_id: '',
 			quantity: 0,
 			cost: 0,
 			total: 0,
@@ -104,8 +104,8 @@ export function PresupuestoCreateDrawer() {
 			value: item.id as string,
 		})) || []
 	proyValues.unshift({
-		label: "Seleccione un proyecto",
-		value: "",
+		label: 'Seleccione un proyecto',
+		value: '',
 	})
 
 	const partValues =
@@ -114,8 +114,8 @@ export function PresupuestoCreateDrawer() {
 			value: item.id as string,
 		})) || []
 	partValues.unshift({
-		label: "Seleccione una partida",
-		value: "",
+		label: 'Seleccione una partida',
+		value: '',
 	})
 
 	return (

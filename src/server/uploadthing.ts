@@ -1,11 +1,11 @@
-import { createUploadthing, type FileRouter } from "uploadthing/server"
+import { createUploadthing, type FileRouter } from 'uploadthing/server'
 
 const f = createUploadthing()
 
 export const uploadRouter = {
 	fileUploader: f({
 		blob: {
-			maxFileSize: "32MB",
+			maxFileSize: '32MB',
 			maxFileCount: 1,
 		},
 	}).onUploadComplete(async ({ file }) => {

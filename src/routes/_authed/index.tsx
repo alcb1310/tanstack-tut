@@ -1,12 +1,12 @@
-import { useSuspenseQuery } from "@tanstack/react-query"
-import { createFileRoute } from "@tanstack/react-router"
-import { MeQuery } from "@/queries/user"
+import { useSuspenseQuery } from '@tanstack/react-query'
+import { createFileRoute } from '@tanstack/react-router'
+import { MeQuery } from '@/queries/user'
 
-export const Route = createFileRoute("/_authed/")({
+export const Route = createFileRoute('/_authed/')({
 	component: RouteComponent,
 	loader: ({ context: { queryClient } }) => {
 		queryClient.query({
-			queryKey: ["me"],
+			queryKey: ['me'],
 			queryFn: () => MeQuery(),
 		})
 	},
@@ -14,7 +14,7 @@ export const Route = createFileRoute("/_authed/")({
 
 function RouteComponent() {
 	const { data } = useSuspenseQuery({
-		queryKey: ["me"],
+		queryKey: ['me'],
 		queryFn: () => MeQuery(),
 	})
 
