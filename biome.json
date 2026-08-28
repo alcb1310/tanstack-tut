@@ -7,7 +7,7 @@
 	},
 	"files": {
 		"ignoreUnknown": false,
-		"includes": ["**/*", "!**/*.gen.ts", "!src/components/ui/*"]
+		"includes": ["**", "!src/routeTree.gen.ts", "!src/styles.css"]
 	},
 	"formatter": {
 		"enabled": true,
@@ -33,7 +33,7 @@
 	},
 	"javascript": {
 		"formatter": {
-			"quoteStyle": "double",
+			"quoteStyle": "single",
 			"semicolons": "asNeeded",
 			"jsxQuoteStyle": "single",
 			"arrowParentheses": "asNeeded"
