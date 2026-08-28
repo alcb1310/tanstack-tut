@@ -1,8 +1,8 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { CircleXIcon, PlusIcon, SaveIcon } from "lucide-react"
-import { useEffect, useState } from "react"
-import { toast } from "sonner"
-import { Button } from "@/components/ui/button"
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { CircleXIcon, PlusIcon, SaveIcon } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { toast } from 'sonner'
+import { Button } from '@/components/ui/button'
 import {
 	Drawer,
 	DrawerClose,
@@ -12,14 +12,14 @@ import {
 	DrawerHeader,
 	DrawerTitle,
 	DrawerTrigger,
-} from "@/components/ui/drawer"
-import { FieldGroup, FieldSet } from "@/components/ui/field"
-import { useAppForm } from "@/hooks/app-form"
-import { CreateSupplier } from "@/queries/proveedor"
+} from '@/components/ui/drawer'
+import { FieldGroup, FieldSet } from '@/components/ui/field'
+import { useAppForm } from '@/hooks/app-form'
+import { CreateSupplier } from '@/queries/proveedor'
 import {
 	type SupplierCreateType,
 	supplierCreateSchema,
-} from "@/types/proveedor"
+} from '@/types/proveedor'
 
 export function SupplierCreateDrawer() {
 	const queryClient = useQueryClient()
@@ -29,14 +29,14 @@ export function SupplierCreateDrawer() {
 		mutationFn: CreateSupplier,
 		onSuccess: () => {
 			setOpen(false)
-			toast.success("Proveedor creado exitosamente")
-			queryClient.invalidateQueries({ queryKey: ["proveedores"] })
+			toast.success('Proveedor creado exitosamente')
+			queryClient.invalidateQueries({ queryKey: ['proveedores'] })
 		},
 		onError: error => {
 			toast.error(error.message, {
-				position: "top-center",
+				position: 'top-center',
 				style: {
-					color: "red",
+					color: 'red',
 				},
 			})
 		},
@@ -44,11 +44,11 @@ export function SupplierCreateDrawer() {
 
 	const form = useAppForm({
 		defaultValues: {
-			name: "",
-			supplier_id: "",
-			contact_email: "",
-			contact_name: "",
-			contact_phone: "",
+			name: '',
+			supplier_id: '',
+			contact_email: '',
+			contact_name: '',
+			contact_phone: '',
 		} as SupplierCreateType,
 		validators: {
 			onSubmit: supplierCreateSchema,

@@ -2,42 +2,44 @@ import {
 	useMutation,
 	useQueryClient,
 	useSuspenseQuery,
-} from "@tanstack/react-query"
-import { createFileRoute, useNavigate } from "@tanstack/react-router"
-import { CircleXIcon, SaveIcon, UploadIcon } from "lucide-react"
-import { toast } from "sonner"
-import { FilesCollapsible } from "@/collapsibles/files"
-import { FormBackground } from "@/components/layout/form-background"
-import PageTitle from "@/components/layout/page-title"
-import { Button } from "@/components/ui/button"
-import { FieldGroup, FieldSet } from "@/components/ui/field"
-import { useAppForm } from "@/hooks/app-form"
-import { UploadButton } from "@/lib/uploadthing"
-import { cn } from "@/lib/utils"
+} from '@tanstack/react-query'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import { CircleXIcon, SaveIcon, UploadIcon } from 'lucide-react'
+import { toast } from 'sonner'
+import { FilesCollapsible } from '@/collapsibles/files'
+import { FormBackground } from '@/components/layout/form-background'
+import PageTitle from '@/components/layout/page-title'
+import { Button } from '@/components/ui/button'
+import { FieldGroup, FieldSet } from '@/components/ui/field'
+import { useAppForm } from '@/hooks/app-form'
+import { UploadButton } from '@/lib/uploadthing'
+import { cn } from '@/lib/utils'
 import {
 	AddFile,
 	GetFiles,
 	GetOneProject,
 	UpdateProject,
-} from "@/queries/proyectos"
-import { type ProjectType, projectSchema } from "@/types/proyectos"
+} from '@/queries/proyectos'
+import { type ProjectType, projectSchema } from '@/types/proyectos'
 
 export const Route = createFileRoute(
-	"/_authed/parametros/proyectos/$proyectoId",
+	'/_authed/parametros/proyectos/$proyectoId',
 )({
 	component: RouteComponent,
 	loader: async ({
 		context: { queryClient },
 		params: { proyectoId: facturaId },
 	}) => {
-		await queryClient.ensureQueryData({
-			queryKey: ["proyectos", facturaId],
-			queryFn: () => GetOneProject({ data: { id: facturaId } }),
-		})
-		await queryClient.ensureQueryData({
-			queryKey: ["files", facturaId],
-			queryFn: () => GetFiles({ data: { id: facturaId } }),
-		})
+		Promise.all([
+			await queryClient.query({
+				queryKey: ['proyectos', facturaId],
+				queryFn: () => GetOneProject({ data: { id: facturaId } }),
+			}),
+			await queryClient.query({
+				queryKey: ['files', facturaId],
+				queryFn: () => GetFiles({ data: { id: facturaId } }),
+			}),
+		])
 	},
 })
 
@@ -46,12 +48,12 @@ function RouteComponent() {
 	const queryClient = useQueryClient()
 	const { proyectoId } = Route.useParams()
 	const { data: project } = useSuspenseQuery({
-		queryKey: ["proyectos", proyectoId],
+		queryKey: ['proyectos', proyectoId],
 		queryFn: () => GetOneProject({ data: { id: proyectoId } }),
 	})
 
 	const { data: files } = useSuspenseQuery({
-		queryKey: ["files", proyectoId],
+		queryKey: ['files', proyectoId],
 		queryFn: () => GetFiles({ data: { id: proyectoId } }),
 	})
 
@@ -62,22 +64,22 @@ function RouteComponent() {
 	const addFile = useMutation({
 		mutationFn: AddFile,
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ["files"] })
-			toast.success("Archivo subido exitosamente")
+			queryClient.invalidateQueries({ queryKey: ['files'] })
+			toast.success('Archivo subido exitosamente')
 		},
 	})
 
 	const editProjectMutation = useMutation({
 		mutationFn: UpdateProject,
 		onSuccess: () => {
-			toast.success("Proyecto actualizado exitosamente")
-			queryClient.invalidateQueries({ queryKey: ["proyectos"] })
+			toast.success('Proyecto actualizado exitosamente')
+			queryClient.invalidateQueries({ queryKey: ['proyectos'] })
 		},
 		onError: error => {
 			toast.error(error.message, {
-				position: "top-center",
+				position: 'top-center',
 				style: {
-					color: "red",
+					color: 'red',
 				},
 			})
 		},
@@ -93,8 +95,8 @@ function RouteComponent() {
 				id: project.id,
 				name: data.value.name,
 				is_active: data.value.is_active,
-				gross_area: Number.parseFloat(data.value.gross_area?.toString() || "0"),
-				net_area: Number.parseFloat(data.value.net_area?.toString() || "0"),
+				gross_area: Number.parseFloat(data.value.gross_area?.toString() || '0'),
+				net_area: Number.parseFloat(data.value.net_area?.toString() || '0'),
 			}
 
 			editProjectMutation.mutate({ data: realData })
@@ -158,7 +160,7 @@ function RouteComponent() {
 						<Button
 							type='button'
 							variant='secondary'
-							onClick={() => navigate({ to: "/parametros/proyectos" })}
+							onClick={() => navigate({ to: '/parametros/proyectos' })}
 						>
 							<CircleXIcon size={10} />
 							Cancelar
@@ -168,7 +170,7 @@ function RouteComponent() {
 			</FormBackground>
 			<div className='md:w-1/2 md:mx-auto my-3 p-3 flex items-start flex-col gap-2'>
 				<UploadButton
-					endpoint={"fileUploader"}
+					endpoint={'fileUploader'}
 					onClientUploadComplete={res => {
 						addFile.mutate({
 							data: {
@@ -182,7 +184,7 @@ function RouteComponent() {
 						cn: classes =>
 							cn(
 								classes,
-								"ut-allowed-content:hidden ut-button:rounded-none ut-button:w-fit ut-button:px-2.5 ut-button:text-xs ut-button:font-medium ut-button:bg-chart-4 ut-button:text-primary-foreground ut-button:[a]:hover:bg-chart-4/80 ut-uploading:opacity-50 ut-uploading:cursor-not-allowed ut-button:text-xs",
+								'ut-allowed-content:hidden ut-button:rounded-none ut-button:w-fit ut-button:px-2.5 ut-button:text-xs ut-button:font-medium ut-button:bg-chart-4 ut-button:text-primary-foreground ut-button:[a]:hover:bg-chart-4/80 ut-uploading:opacity-50 ut-uploading:cursor-not-allowed ut-button:text-xs',
 							),
 					}}
 					content={{

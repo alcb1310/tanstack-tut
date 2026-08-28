@@ -1,9 +1,9 @@
-import { useQuery } from "@tanstack/react-query"
-import type { ColumnDef } from "@tanstack/react-table"
-import { ViewIcon } from "lucide-react"
-import { ReportDataTable } from "@/components/table/report-data-table"
-import { Button } from "@/components/ui/button"
-import { DialogClose } from "@/components/ui/dialog"
+import { useQuery } from '@tanstack/react-query'
+import type { ColumnDef } from '@tanstack/react-table'
+import { ViewIcon } from 'lucide-react'
+import { ReportDataTable } from '@/components/table/report-data-table'
+import { Button } from '@/components/ui/button'
+import { DialogClose } from '@/components/ui/dialog'
 import {
 	Drawer,
 	DrawerContent,
@@ -12,10 +12,10 @@ import {
 	DrawerHeader,
 	DrawerTitle,
 	DrawerTrigger,
-} from "@/components/ui/drawer"
-import { Spinner } from "@/components/ui/spinner"
-import { GetSpentDetails } from "@/queries/reportes"
-import type { Spent, SpentDetailsType } from "@/types/reportes"
+} from '@/components/ui/drawer'
+import { Spinner } from '@/components/ui/spinner'
+import { GetSpentDetails } from '@/queries/reportes'
+import type { Spent, SpentDetailsType } from '@/types/reportes'
 
 type SpentDetailsDrawerProps = {
 	report: Spent
@@ -29,7 +29,7 @@ export function SpentDetailsDrawer({
 	date,
 }: SpentDetailsDrawerProps) {
 	const { data, isLoading } = useQuery({
-		queryKey: ["spent-detail", project_id, report.budget_item.id, date],
+		queryKey: ['spent-detail', project_id, report.budget_item.id, date],
 		queryFn: () =>
 			GetSpentDetails({
 				data: {
@@ -42,32 +42,32 @@ export function SpentDetailsDrawer({
 
 	const columns: ColumnDef<SpentDetailsType>[] = [
 		{
-			accessorKey: "invoice_date",
-			header: "Fecha",
+			accessorKey: 'invoice_date',
+			header: 'Fecha',
 			cell: ({ row }) => {
 				const dt = new Date(row.original.invoice_date)
-				return dt.toLocaleDateString("es-EC", {
-					year: "numeric",
-					month: "2-digit",
-					day: "2-digit",
+				return dt.toLocaleDateString('es-EC', {
+					year: 'numeric',
+					month: '2-digit',
+					day: '2-digit',
 				})
 			},
 		},
 		{
-			accessorKey: "supplier_name",
-			header: "Proveedor",
+			accessorKey: 'supplier_name',
+			header: 'Proveedor',
 		},
 		{
-			accessorKey: "invoice_number",
-			header: "Factura",
+			accessorKey: 'invoice_number',
+			header: 'Factura',
 		},
 		{
-			accessorKey: "total",
-			header: "Total",
+			accessorKey: 'total',
+			header: 'Total',
 			cell: ({ row }) => {
 				return (
 					<span className='block w-full text-right'>
-						{row.original.total.toLocaleString("es-EC", {
+						{row.original.total.toLocaleString('es-EC', {
 							minimumFractionDigits: 2,
 							maximumFractionDigits: 2,
 						})}

@@ -1,8 +1,8 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { CircleXIcon, PlusIcon, SaveIcon } from "lucide-react"
-import { useEffect, useState } from "react"
-import { toast } from "sonner"
-import { Button } from "@/components/ui/button"
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { CircleXIcon, PlusIcon, SaveIcon } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { toast } from 'sonner'
+import { Button } from '@/components/ui/button'
 import {
 	Drawer,
 	DrawerClose,
@@ -12,11 +12,11 @@ import {
 	DrawerHeader,
 	DrawerTitle,
 	DrawerTrigger,
-} from "@/components/ui/drawer"
-import { FieldGroup, FieldSet } from "@/components/ui/field"
-import { useAppForm } from "@/hooks/app-form"
-import { CreateCategory } from "@/queries/categorias"
-import { type CategoryType, categorySchema } from "@/types/categorias"
+} from '@/components/ui/drawer'
+import { FieldGroup, FieldSet } from '@/components/ui/field'
+import { useAppForm } from '@/hooks/app-form'
+import { CreateCategory } from '@/queries/categorias'
+import { type CategoryType, categorySchema } from '@/types/categorias'
 
 export function CategoryCreateDrawer() {
 	const queryClient = useQueryClient()
@@ -26,14 +26,14 @@ export function CategoryCreateDrawer() {
 		mutationFn: CreateCategory,
 		onSuccess: () => {
 			setOpen(false)
-			toast.success("Categoria creada exitosamente")
-			queryClient.invalidateQueries({ queryKey: ["categorias"] })
+			toast.success('Categoria creada exitosamente')
+			queryClient.invalidateQueries({ queryKey: ['categorias'] })
 		},
 		onError: error => {
 			toast.error(error.message, {
-				position: "top-center",
+				position: 'top-center',
 				style: {
-					color: "red",
+					color: 'red',
 				},
 			})
 		},
@@ -41,7 +41,7 @@ export function CategoryCreateDrawer() {
 
 	const form = useAppForm({
 		defaultValues: {
-			name: "",
+			name: '',
 		} as CategoryType,
 		validators: {
 			onSubmit: categorySchema,

@@ -1,8 +1,8 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { CircleXIcon, PlusIcon, SaveIcon } from "lucide-react"
-import { useEffect, useState } from "react"
-import { toast } from "sonner"
-import { Button } from "@/components/ui/button"
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { CircleXIcon, PlusIcon, SaveIcon } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { toast } from 'sonner'
+import { Button } from '@/components/ui/button'
 import {
 	Drawer,
 	DrawerClose,
@@ -12,21 +12,21 @@ import {
 	DrawerHeader,
 	DrawerTitle,
 	DrawerTrigger,
-} from "@/components/ui/drawer"
-import { FieldGroup, FieldSet } from "@/components/ui/field"
-import { useAppForm } from "@/hooks/app-form"
-import { GetAllCategories } from "@/queries/categorias"
-import { CreateMaterial } from "@/queries/materiales"
+} from '@/components/ui/drawer'
+import { FieldGroup, FieldSet } from '@/components/ui/field'
+import { useAppForm } from '@/hooks/app-form'
+import { GetAllCategories } from '@/queries/categorias'
+import { CreateMaterial } from '@/queries/materiales'
 import {
 	type MaterialCreateType,
 	materialCreateSchema,
-} from "@/types/materiales"
+} from '@/types/materiales'
 
 export function MaterialCreateDrawer() {
 	const queryClient = useQueryClient()
 	const [open, setOpen] = useState(false)
 	const { data } = useQuery({
-		queryKey: ["categorias"],
+		queryKey: ['categorias'],
 		queryFn: () => GetAllCategories(),
 	})
 
@@ -34,14 +34,14 @@ export function MaterialCreateDrawer() {
 		mutationFn: CreateMaterial,
 		onSuccess: () => {
 			setOpen(false)
-			toast.success("Material creado exitosamente")
-			queryClient.invalidateQueries({ queryKey: ["materiales"] })
+			toast.success('Material creado exitosamente')
+			queryClient.invalidateQueries({ queryKey: ['materiales'] })
 		},
 		onError: error => {
 			toast.error(error.message, {
-				position: "top-center",
+				position: 'top-center',
 				style: {
-					color: "red",
+					color: 'red',
 				},
 			})
 		},
@@ -49,10 +49,10 @@ export function MaterialCreateDrawer() {
 
 	const form = useAppForm({
 		defaultValues: {
-			name: "",
-			code: "",
-			unit: "",
-			category_id: "",
+			name: '',
+			code: '',
+			unit: '',
+			category_id: '',
 		} as MaterialCreateType,
 		validators: {
 			onSubmit: materialCreateSchema,
@@ -74,8 +74,8 @@ export function MaterialCreateDrawer() {
 			value: item.id as string,
 		})) || []
 	catValues.unshift({
-		label: "Seleccione una categoria",
-		value: "",
+		label: 'Seleccione una categoria',
+		value: '',
 	})
 
 	return (

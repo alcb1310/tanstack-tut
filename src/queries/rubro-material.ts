@@ -1,15 +1,15 @@
-import { createServerFn } from "@tanstack/react-start"
-import { getCookie } from "@tanstack/react-start/server"
+import { createServerFn } from '@tanstack/react-start'
+import { getCookie } from '@tanstack/react-start/server'
 import type {
 	RubroMaterialResponseTye,
 	RubroMaterialType,
-} from "@/types/rubro-material"
+} from '@/types/rubro-material'
 
 const URL = import.meta.env.VITE_BACKEND_SERVER
-const cookieName = "BCA-TOKEN"
+const cookieName = 'BCA-TOKEN'
 
-export const GetAllRubrosMaterials = createServerFn({ method: "GET" })
-	.inputValidator((data: { rubroId: string }) => data)
+export const GetAllRubrosMaterials = createServerFn({ method: 'GET' })
+	.validator((data: { rubroId: string }) => data)
 	.handler(
 		async ({ data: { rubroId } }): Promise<RubroMaterialResponseTye[]> => {
 			const token = getCookie(cookieName)
@@ -17,9 +17,9 @@ export const GetAllRubrosMaterials = createServerFn({ method: "GET" })
 			const response = await fetch(
 				`${URL}/parametros/rubros/${rubroId}/materiales`,
 				{
-					method: "GET",
+					method: 'GET',
 					headers: {
-						"Content-Type": "application/json",
+						'Content-Type': 'application/json',
 						Authorization: `Bearer ${token}`,
 					},
 				},
@@ -34,17 +34,17 @@ export const GetAllRubrosMaterials = createServerFn({ method: "GET" })
 		},
 	)
 
-export const CreateRubroMaterial = createServerFn({ method: "POST" })
-	.inputValidator((data: RubroMaterialType) => data)
+export const CreateRubroMaterial = createServerFn({ method: 'POST' })
+	.validator((data: RubroMaterialType) => data)
 	.handler(async ({ data }) => {
 		const token = getCookie(cookieName)
 
 		const response = await fetch(
 			`${URL}/parametros/rubros/${data.item_id}/materiales`,
 			{
-				method: "POST",
+				method: 'POST',
 				headers: {
-					"Content-Type": "application/json",
+					'Content-Type': 'application/json',
 					Authorization: `Bearer ${token}`,
 				},
 				body: JSON.stringify(data),
@@ -59,17 +59,17 @@ export const CreateRubroMaterial = createServerFn({ method: "POST" })
 		return
 	})
 
-export const UpdateRubroMaterial = createServerFn({ method: "POST" })
-	.inputValidator((data: RubroMaterialType) => data)
+export const UpdateRubroMaterial = createServerFn({ method: 'POST' })
+	.validator((data: RubroMaterialType) => data)
 	.handler(async ({ data }) => {
 		const token = getCookie(cookieName)
 
 		const response = await fetch(
 			`${URL}/parametros/rubros/${data.item_id}/materiales/${data.material_id}`,
 			{
-				method: "PUT",
+				method: 'PUT',
 				headers: {
-					"Content-Type": "application/json",
+					'Content-Type': 'application/json',
 					Authorization: `Bearer ${token}`,
 				},
 				body: JSON.stringify(data),
@@ -84,17 +84,17 @@ export const UpdateRubroMaterial = createServerFn({ method: "POST" })
 		return
 	})
 
-export const DeleteRubroMaterial = createServerFn({ method: "POST" })
-	.inputValidator((data: { rubroId: string; materialId: string }) => data)
+export const DeleteRubroMaterial = createServerFn({ method: 'POST' })
+	.validator((data: { rubroId: string; materialId: string }) => data)
 	.handler(async ({ data: { rubroId, materialId } }) => {
 		const token = getCookie(cookieName)
 
 		const response = await fetch(
 			`${URL}/parametros/rubros/${rubroId}/materiales/${materialId}`,
 			{
-				method: "DELETE",
+				method: 'DELETE',
 				headers: {
-					"Content-Type": "application/json",
+					'Content-Type': 'application/json',
 					Authorization: `Bearer ${token}`,
 				},
 			},

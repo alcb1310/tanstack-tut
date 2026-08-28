@@ -1,31 +1,31 @@
-import { useQuery, useSuspenseQueries } from "@tanstack/react-query"
-import { createFileRoute } from "@tanstack/react-router"
-import type { ColumnDef } from "@tanstack/react-table"
-import { DownloadIcon, PlayIcon } from "lucide-react"
-import { FormBackground } from "@/components/layout/form-background"
-import PageTitle from "@/components/layout/page-title"
-import { ReportDataTable } from "@/components/table/report-data-table"
-import { Button } from "@/components/ui/button"
-import { FieldGroup, FieldSet } from "@/components/ui/field"
-import { Spinner } from "@/components/ui/spinner"
-import { SpentDetailsDrawer } from "@/drawers/reportes/gastado-por-partida"
-import { useAppForm } from "@/hooks/app-form"
-import { downloadExcelFile } from "@/lib/excel-download"
-import { spentExcelExport } from "@/queries/excel"
-import { GetAllProjects } from "@/queries/proyectos"
-import { GetAllLevels, GetSpentReport } from "@/queries/reportes"
-import { type ReportTypes, reportSchema, type Spent } from "@/types/reportes"
+import { useQuery, useSuspenseQueries } from '@tanstack/react-query'
+import { createFileRoute } from '@tanstack/react-router'
+import type { ColumnDef } from '@tanstack/react-table'
+import { DownloadIcon, PlayIcon } from 'lucide-react'
+import { FormBackground } from '@/components/layout/form-background'
+import PageTitle from '@/components/layout/page-title'
+import { ReportDataTable } from '@/components/table/report-data-table'
+import { Button } from '@/components/ui/button'
+import { FieldGroup, FieldSet } from '@/components/ui/field'
+import { Spinner } from '@/components/ui/spinner'
+import { SpentDetailsDrawer } from '@/drawers/reportes/gastado-por-partida'
+import { useAppForm } from '@/hooks/app-form'
+import { downloadExcelFile } from '@/lib/excel-download'
+import { spentExcelExport } from '@/queries/excel'
+import { GetAllProjects } from '@/queries/proyectos'
+import { GetAllLevels, GetSpentReport } from '@/queries/reportes'
+import { type ReportTypes, reportSchema, type Spent } from '@/types/reportes'
 
-export const Route = createFileRoute("/_authed/reportes/gastado-por-partida")({
+export const Route = createFileRoute('/_authed/reportes/gastado-por-partida')({
 	component: RouteComponent,
 	loader: async ({ context: { queryClient } }) => {
 		Promise.all([
-			queryClient.ensureQueryData({
-				queryKey: ["proyectos", "active"],
+			queryClient.query({
+				queryKey: ['proyectos', 'active'],
 				queryFn: () => GetAllProjects({ data: { active: true } }),
 			}),
-			queryClient.ensureQueryData({
-				queryKey: ["niveles"],
+			queryClient.query({
+				queryKey: ['niveles'],
 				queryFn: () => GetAllLevels(),
 			}),
 		])
@@ -35,9 +35,9 @@ export const Route = createFileRoute("/_authed/reportes/gastado-por-partida")({
 function RouteComponent() {
 	const form = useAppForm({
 		defaultValues: {
-			project_id: "",
-			level: "",
-			date: "",
+			project_id: '',
+			level: '',
+			date: '',
 		} as ReportTypes,
 		validators: {
 			onSubmit: reportSchema,
@@ -48,30 +48,30 @@ function RouteComponent() {
 	})
 
 	const { data, isLoading, isFetching, refetch } = useQuery({
-		queryKey: ["historico", form.state.values],
+		queryKey: ['historico', form.state.values],
 		queryFn: () => GetSpentReport({ data: form.state.values }),
 		enabled:
-			form.state.values.project_id !== "" &&
-			form.state.values.level !== "" &&
-			form.state.values.date !== "",
+			form.state.values.project_id !== '' &&
+			form.state.values.level !== '' &&
+			form.state.values.date !== '',
 	})
 
 	const columns: ColumnDef<Spent>[] = [
 		{
-			accessorKey: "budget_item.code",
-			header: "Código",
+			accessorKey: 'budget_item.code',
+			header: 'Código',
 		},
 		{
-			accessorKey: "budget_item.name",
-			header: "Partida",
+			accessorKey: 'budget_item.name',
+			header: 'Partida',
 		},
 		{
-			accessorKey: "spent",
-			header: "Total",
+			accessorKey: 'spent',
+			header: 'Total',
 			cell: ({ row }) => {
 				return (
 					<span className='block w-full text-right'>
-						{row.original.spent.toLocaleString("es-EC", {
+						{row.original.spent.toLocaleString('es-EC', {
 							minimumFractionDigits: 2,
 							maximumFractionDigits: 2,
 						})}
@@ -80,7 +80,7 @@ function RouteComponent() {
 			},
 		},
 		{
-			id: "actions",
+			id: 'actions',
 			cell: ({ row }) => {
 				return (
 					<SpentDetailsDrawer
@@ -96,11 +96,11 @@ function RouteComponent() {
 	const results = useSuspenseQueries({
 		queries: [
 			{
-				queryKey: ["proyectos", "active"],
+				queryKey: ['proyectos', 'active'],
 				queryFn: () => GetAllProjects({ data: { active: true } }),
 			},
 			{
-				queryKey: ["niveles"],
+				queryKey: ['niveles'],
 				queryFn: () => GetAllLevels(),
 			},
 		],
@@ -112,8 +112,8 @@ function RouteComponent() {
 			value: item.id as string,
 		})) || []
 	proyValues.unshift({
-		label: "Seleccione un proyecto",
-		value: "",
+		label: 'Seleccione un proyecto',
+		value: '',
 	})
 
 	const levelValues = results[1].data?.map(item => ({
@@ -121,8 +121,8 @@ function RouteComponent() {
 		value: item.key,
 	}))
 	levelValues.unshift({
-		label: "Seleccione un nivel",
-		value: "",
+		label: 'Seleccione un nivel',
+		value: '',
 	})
 	return (
 		<div>
@@ -193,7 +193,7 @@ function RouteComponent() {
 
 										downloadExcelFile(
 											await b.blob(),
-											"gastado=por=partida.xlsx",
+											'gastado=por=partida.xlsx',
 										)
 									} catch (e) {
 										console.error(e)

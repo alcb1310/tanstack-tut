@@ -1,6 +1,6 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { DeleteIcon } from "lucide-react"
-import { toast } from "sonner"
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { DeleteIcon } from 'lucide-react'
+import { toast } from 'sonner'
 import {
 	AlertDialog,
 	AlertDialogAction,
@@ -12,10 +12,10 @@ import {
 	AlertDialogMedia,
 	AlertDialogTitle,
 	AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
-import { Button } from "@/components/ui/button"
-import { DeleteRubroMaterial } from "@/queries/rubro-material"
-import type { RubroMaterialType } from "@/types/rubro-material"
+} from '@/components/ui/alert-dialog'
+import { Button } from '@/components/ui/button'
+import { DeleteRubroMaterial } from '@/queries/rubro-material'
+import type { RubroMaterialType } from '@/types/rubro-material'
 
 type RubroMaterialEditDrawerProps = {
 	material_name: string
@@ -31,14 +31,14 @@ export function RubroMaterialDeleteDialog({
 	const useDeleteItemMaterialMutation = useMutation({
 		mutationFn: DeleteRubroMaterial,
 		onSuccess: () => {
-			toast.success("Material eliminado exitosamente")
-			queryClient.invalidateQueries({ queryKey: ["rubros-material"] })
+			toast.success('Material eliminado exitosamente')
+			queryClient.invalidateQueries({ queryKey: ['rubros-material'] })
 		},
 		onError: error => {
 			toast.error(error.message, {
-				position: "top-center",
+				position: 'top-center',
 				style: {
-					color: "red",
+					color: 'red',
 				},
 			})
 		},
@@ -59,7 +59,7 @@ export function RubroMaterialDeleteDialog({
 						Eliminar Material
 					</AlertDialogTitle>
 					<AlertDialogDescription>
-						¿Estás seguro de eliminar el material{" "}
+						¿Estás seguro de eliminar el material{' '}
 						<span className='font-bold'>{material_name}</span>?. Esta acción no
 						se puede deshacer
 					</AlertDialogDescription>

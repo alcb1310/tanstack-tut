@@ -1,8 +1,8 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { CircleXIcon, EditIcon, SaveIcon } from "lucide-react"
-import { useEffect, useState } from "react"
-import { toast } from "sonner"
-import { Button } from "@/components/ui/button"
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { CircleXIcon, EditIcon, SaveIcon } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { toast } from 'sonner'
+import { Button } from '@/components/ui/button'
 import {
 	Drawer,
 	DrawerClose,
@@ -12,11 +12,11 @@ import {
 	DrawerHeader,
 	DrawerTitle,
 	DrawerTrigger,
-} from "@/components/ui/drawer"
-import { FieldGroup, FieldSet } from "@/components/ui/field"
-import { useAppForm } from "@/hooks/app-form"
-import { UpdateSupplier } from "@/queries/proveedor"
-import { type SupplierType, supplierSchema } from "@/types/proveedor"
+} from '@/components/ui/drawer'
+import { FieldGroup, FieldSet } from '@/components/ui/field'
+import { useAppForm } from '@/hooks/app-form'
+import { UpdateSupplier } from '@/queries/proveedor'
+import { type SupplierType, supplierSchema } from '@/types/proveedor'
 
 type EditSupplierDrawerProps = {
 	supplier: SupplierType
@@ -30,14 +30,14 @@ export function SupplierEditDrawer({ supplier }: EditSupplierDrawerProps) {
 		mutationFn: UpdateSupplier,
 		onSuccess: () => {
 			setOpen(false)
-			toast.success("Proveedor actualizado exitosamente")
-			queryClient.invalidateQueries({ queryKey: ["proveedores"] })
+			toast.success('Proveedor actualizado exitosamente')
+			queryClient.invalidateQueries({ queryKey: ['proveedores'] })
 		},
 		onError: error => {
 			toast.error(error.message, {
-				position: "top-center",
+				position: 'top-center',
 				style: {
-					color: "red",
+					color: 'red',
 				},
 			})
 		},
@@ -52,9 +52,9 @@ export function SupplierEditDrawer({ supplier }: EditSupplierDrawerProps) {
 			const edited = {
 				name: data.value.name,
 				supplier_id: data.value.supplier_id,
-				contact_email: data.value.contact_email.String || "",
-				contact_name: data.value.contact_name.String || "",
-				contact_phone: data.value.contact_phone.String || "",
+				contact_email: data.value.contact_email.String || '',
+				contact_name: data.value.contact_name.String || '',
+				contact_phone: data.value.contact_phone.String || '',
 			}
 
 			useUpdateSupplierMutation.mutate({

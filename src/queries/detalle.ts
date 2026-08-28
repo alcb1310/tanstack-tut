@@ -1,49 +1,47 @@
-import { createServerFn } from "@tanstack/react-start"
-import { getCookie } from "@tanstack/react-start/server"
+import { createServerFn } from '@tanstack/react-start'
+import { getCookie } from '@tanstack/react-start/server'
 import type {
 	InvoiceDetailsCreateType,
 	InvoiceDetailsResponseType,
-} from "@/types/detalle"
+} from '@/types/detalle'
 
 const URL = import.meta.env.VITE_BACKEND_SERVER
-const cookieName = "BCA-TOKEN"
+const cookieName = 'BCA-TOKEN'
 
-export const GetAllInvoiceDetails = createServerFn({ method: "GET" })
-	.inputValidator((data: { id: string }) => data)
+export const GetAllInvoiceDetails = createServerFn({ method: 'GET' })
+	.validator((data: { id: string }) => data)
 	.handler(async ({ data: { id } }): Promise<InvoiceDetailsResponseType[]> => {
 		const token = getCookie(cookieName)
 
 		const response = await fetch(
 			`${URL}/transacciones/facturas/${id}/detalle`,
 			{
-				method: "GET",
+				method: 'GET',
 				headers: {
-					"Content-Type": "application/json",
+					'Content-Type': 'application/json',
 					Authorization: `Bearer ${token}`,
 				},
 			},
 		)
 
 		if (!response.ok) {
-			throw new Error("Network response was not ok")
+			throw new Error('Network response was not ok')
 		}
 
 		return await response.json()
 	})
 
-export const CreateInvoiceDetail = createServerFn({ method: "POST" })
-	.inputValidator(
-		(data: { id: string; data: InvoiceDetailsCreateType }) => data,
-	)
+export const CreateInvoiceDetail = createServerFn({ method: 'POST' })
+	.validator((data: { id: string; data: InvoiceDetailsCreateType }) => data)
 	.handler(async ({ data: { id, data } }) => {
 		const token = getCookie(cookieName)
 
 		const response = await fetch(
 			`${URL}/transacciones/facturas/${id}/detalle`,
 			{
-				method: "POST",
+				method: 'POST',
 				headers: {
-					"Content-Type": "application/json",
+					'Content-Type': 'application/json',
 					Authorization: `Bearer ${token}`,
 				},
 				body: JSON.stringify(data),
@@ -58,16 +56,16 @@ export const CreateInvoiceDetail = createServerFn({ method: "POST" })
 		return
 	})
 
-export const DeleteInvoiceDetail = createServerFn({ method: "POST" })
-	.inputValidator((data: { invoiceId: string; detailId: string }) => data)
+export const DeleteInvoiceDetail = createServerFn({ method: 'POST' })
+	.validator((data: { invoiceId: string; detailId: string }) => data)
 	.handler(async ({ data: { invoiceId, detailId } }) => {
 		const token = getCookie(cookieName)
 		const response = await fetch(
 			`${URL}/transacciones/facturas/${invoiceId}/detalle/${detailId}`,
 			{
-				method: "DELETE",
+				method: 'DELETE',
 				headers: {
-					"Content-Type": "application/json",
+					'Content-Type': 'application/json',
 					Authorization: `Bearer ${token}`,
 				},
 			},

@@ -1,4 +1,4 @@
-import { z } from "zod"
+import { z } from 'zod'
 
 export const invoiceDetailsResponseSchema = z.object({
 	id: z.string().uuid(),
@@ -17,19 +17,19 @@ export type InvoiceDetailsResponseType = z.infer<
 >
 
 export const invoiceDetailsCreateSchema = z.object({
-	budget_item_id: z.string().uuid("Seleccione una partida"),
+	budget_item_id: z.string().uuid('Seleccione una partida'),
 	quantity: z.custom<number>(val => {
 		const num = Number.parseFloat(val as string)
-		return !Number.isNaN(num) || val === ""
-	}, "La cantidad  debe ser un número"),
+		return !Number.isNaN(num) || val === ''
+	}, 'La cantidad  debe ser un número'),
 	cost: z.custom<number>(val => {
 		const num = Number.parseFloat(val as string)
-		return !Number.isNaN(num) || val === ""
-	}, "El costo debe ser un número"),
+		return !Number.isNaN(num) || val === ''
+	}, 'El costo debe ser un número'),
 	total: z.custom<number>(val => {
 		const num = Number.parseFloat(val as string)
-		return !Number.isNaN(num) || val === ""
-	}, "El total debe ser un número"),
+		return !Number.isNaN(num) || val === ''
+	}, 'El total debe ser un número'),
 })
 
 export type InvoiceDetailsCreateType = z.infer<

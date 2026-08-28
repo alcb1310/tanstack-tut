@@ -1,6 +1,6 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { DeleteIcon } from "lucide-react"
-import { toast } from "sonner"
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { DeleteIcon } from 'lucide-react'
+import { toast } from 'sonner'
 import {
 	AlertDialog,
 	AlertDialogAction,
@@ -12,10 +12,10 @@ import {
 	AlertDialogMedia,
 	AlertDialogTitle,
 	AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
-import { Button } from "@/components/ui/button"
-import { DeleteCantidad } from "@/queries/cantidad"
-import type { QuantityResponseType } from "@/types/cantidad"
+} from '@/components/ui/alert-dialog'
+import { Button } from '@/components/ui/button'
+import { DeleteCantidad } from '@/queries/cantidad'
+import type { QuantityResponseType } from '@/types/cantidad'
 
 type CantidadDeleteDialogProps = {
 	cantidad: QuantityResponseType
@@ -26,14 +26,14 @@ export function CantiadDeleteDialog({ cantidad }: CantidadDeleteDialogProps) {
 	const useDeleteCantidadMutation = useMutation({
 		mutationFn: DeleteCantidad,
 		onSuccess: () => {
-			toast.success("Cantidad eliminada exitosamente")
-			queryClient.invalidateQueries({ queryKey: ["cantidades"] })
+			toast.success('Cantidad eliminada exitosamente')
+			queryClient.invalidateQueries({ queryKey: ['cantidades'] })
 		},
 		onError: error => {
 			toast.error(error.message, {
-				position: "top-center",
+				position: 'top-center',
 				style: {
-					color: "red",
+					color: 'red',
 				},
 			})
 		},
@@ -56,7 +56,7 @@ export function CantiadDeleteDialog({ cantidad }: CantidadDeleteDialogProps) {
 						Esta seguro que desea eliminar la cantidad:
 						<ul className='my-3'>
 							<li className='flex justify-between'>
-								<span className='font-bold'>Proyecto</span>{" "}
+								<span className='font-bold'>Proyecto</span>{' '}
 								{cantidad.project.name}
 							</li>
 							<li className='flex justify-between'>

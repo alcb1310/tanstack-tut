@@ -1,16 +1,16 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { createFileRoute, useNavigate } from "@tanstack/react-router"
-import { CircleXIcon, SaveIcon } from "lucide-react"
-import { toast } from "sonner"
-import { FormBackground } from "@/components/layout/form-background"
-import PageTitle from "@/components/layout/page-title"
-import { Button } from "@/components/ui/button"
-import { FieldGroup, FieldSet } from "@/components/ui/field"
-import { useAppForm } from "@/hooks/app-form"
-import { CreateProject } from "@/queries/proyectos"
-import { type ProjectType, projectSchema } from "@/types/proyectos"
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import { CircleXIcon, SaveIcon } from 'lucide-react'
+import { toast } from 'sonner'
+import { FormBackground } from '@/components/layout/form-background'
+import PageTitle from '@/components/layout/page-title'
+import { Button } from '@/components/ui/button'
+import { FieldGroup, FieldSet } from '@/components/ui/field'
+import { useAppForm } from '@/hooks/app-form'
+import { CreateProject } from '@/queries/proyectos'
+import { type ProjectType, projectSchema } from '@/types/proyectos'
 
-export const Route = createFileRoute("/_authed/parametros/proyectos/crear")({
+export const Route = createFileRoute('/_authed/parametros/proyectos/crear')({
 	component: RouteComponent,
 })
 
@@ -21,25 +21,25 @@ function RouteComponent() {
 	const createProjectMutation = useMutation({
 		mutationFn: CreateProject,
 		onSuccess: data => {
-			toast.success("Proyecto creado exitosamente")
-			queryClient.invalidateQueries({ queryKey: ["proyectos"] })
+			toast.success('Proyecto creado exitosamente')
+			queryClient.invalidateQueries({ queryKey: ['proyectos'] })
 			navigate({
-				to: "/parametros/proyectos/$proyectoId",
+				to: '/parametros/proyectos/$proyectoId',
 				params: { proyectoId: data.id as string },
 			})
 		},
 		onError: error => {
 			toast.error(error.message, {
-				position: "top-center",
+				position: 'top-center',
 				style: {
-					color: "red",
+					color: 'red',
 				},
 			})
 		},
 	})
 	const form = useAppForm({
 		defaultValues: {
-			name: "",
+			name: '',
 			is_active: false,
 		} as ProjectType,
 		validators: {
@@ -49,8 +49,8 @@ function RouteComponent() {
 			const realData: ProjectType = {
 				name: data.value.name,
 				is_active: data.value.is_active,
-				gross_area: Number.parseFloat(data.value.gross_area?.toString() || "0"),
-				net_area: Number.parseFloat(data.value.net_area?.toString() || "0"),
+				gross_area: Number.parseFloat(data.value.gross_area?.toString() || '0'),
+				net_area: Number.parseFloat(data.value.net_area?.toString() || '0'),
 			}
 
 			createProjectMutation.mutate({ data: realData })
@@ -113,7 +113,7 @@ function RouteComponent() {
 						<Button
 							type='button'
 							variant='secondary'
-							onClick={() => navigate({ to: "/parametros/proyectos" })}
+							onClick={() => navigate({ to: '/parametros/proyectos' })}
 						>
 							<CircleXIcon size={10} />
 							Cancelar

@@ -1,43 +1,43 @@
-import { createServerFn } from "@tanstack/react-start"
-import { getCookie } from "@tanstack/react-start/server"
-import type { BudgetResponseType } from "@/types/presupuesto"
+import { createServerFn } from '@tanstack/react-start'
+import { getCookie } from '@tanstack/react-start/server'
+import type { BudgetResponseType } from '@/types/presupuesto'
 import type {
 	BalanceResponseType,
 	LevelType,
 	SpentDetailsType,
 	SpentResponseType,
-} from "@/types/reportes"
+} from '@/types/reportes'
 
 const URL = import.meta.env.VITE_BACKEND_SERVER
-const cookieName = "BCA-TOKEN"
+const cookieName = 'BCA-TOKEN'
 
-export const GetAllLevels = createServerFn({ method: "GET" }).handler(
+export const GetAllLevels = createServerFn({ method: 'GET' }).handler(
 	async (): Promise<LevelType[]> => {
 		const token = getCookie(cookieName)
 
 		const response = await fetch(`${URL}/reportes/levels`, {
-			method: "GET",
+			method: 'GET',
 			headers: {
-				"Content-Type": "application/json",
+				'Content-Type': 'application/json',
 				Authorization: `Bearer ${token}`,
 			},
 		})
 		return await response.json()
 	},
 )
-export const GetAllBugetsByProjectAndLevel = createServerFn({ method: "GET" })
-	.inputValidator((data: { project_id: string; level: string }) => data)
+export const GetAllBugetsByProjectAndLevel = createServerFn({ method: 'GET' })
+	.validator((data: { project_id: string; level: string }) => data)
 	.handler(
 		async ({ data: { project_id, level } }): Promise<BudgetResponseType[]> => {
 			const token = getCookie(cookieName)
 
 			const params = new URLSearchParams()
-			params.append("project_id", project_id)
-			params.append("level", level)
+			params.append('project_id', project_id)
+			params.append('level', level)
 
 			const response = await fetch(`${URL}/reportes/actual?${params}`, {
 				headers: {
-					"Content-Type": "application/json",
+					'Content-Type': 'application/json',
 					Authorization: `Bearer ${token}`,
 				},
 			})
@@ -45,8 +45,8 @@ export const GetAllBugetsByProjectAndLevel = createServerFn({ method: "GET" })
 		},
 	)
 
-export const GetAllHistoric = createServerFn({ method: "GET" })
-	.inputValidator(
+export const GetAllHistoric = createServerFn({ method: 'GET' })
+	.validator(
 		(data: { project_id: string; level: string; date: string }) => data,
 	)
 	.handler(
@@ -56,20 +56,20 @@ export const GetAllHistoric = createServerFn({ method: "GET" })
 			const token = getCookie(cookieName)
 
 			const params = new URLSearchParams()
-			params.append("project_id", project_id)
-			params.append("level", level)
-			params.append("date", new Date(date).toISOString())
+			params.append('project_id', project_id)
+			params.append('level', level)
+			params.append('date', new Date(date).toISOString())
 
 			const response = await fetch(`${URL}/reportes/historico?${params}`, {
-				method: "GET",
+				method: 'GET',
 				headers: {
-					"Content-Type": "application/json",
+					'Content-Type': 'application/json',
 					Authorization: `Bearer ${token}`,
 				},
 			})
 
 			if (!response.ok) {
-				throw new Error("Network error")
+				throw new Error('Network error')
 			}
 
 			if (response.status === 204) return [] as BudgetResponseType[]
@@ -78,8 +78,8 @@ export const GetAllHistoric = createServerFn({ method: "GET" })
 		},
 	)
 
-export const GetBalanceReport = createServerFn({ method: "GET" })
-	.inputValidator((data: { project_id: string; date: string }) => data)
+export const GetBalanceReport = createServerFn({ method: 'GET' })
+	.validator((data: { project_id: string; date: string }) => data)
 	.handler(
 		async ({ data: { project_id, date } }): Promise<BalanceResponseType> => {
 			const token = getCookie(cookieName)
@@ -87,34 +87,34 @@ export const GetBalanceReport = createServerFn({ method: "GET" })
 			const dateVal = new Date(date).toISOString()
 
 			const params = new URLSearchParams()
-			params.append("project_id", project_id)
-			params.append("date", dateVal)
+			params.append('project_id', project_id)
+			params.append('date', dateVal)
 
 			const response = await fetch(`${URL}/reportes/cuadre?${params}`, {
-				method: "GET",
+				method: 'GET',
 				headers: {
-					"Content-Type": "application/json",
+					'Content-Type': 'application/json',
 					Authorization: `Bearer ${token}`,
 				},
 			})
 
 			if (!response.ok) {
-				throw new Error("Network error")
+				throw new Error('Network error')
 			}
 
 			return response.json()
 		},
 	)
 
-export const SetBalancedInvoice = createServerFn({ method: "POST" })
-	.inputValidator((data: { invoice_id: string }) => data)
+export const SetBalancedInvoice = createServerFn({ method: 'POST' })
+	.validator((data: { invoice_id: string }) => data)
 	.handler(async ({ data: { invoice_id } }) => {
 		const token = getCookie(cookieName)
 
 		const response = await fetch(`${URL}/reportes/cuadre/${invoice_id}`, {
-			method: "PUT",
+			method: 'PUT',
 			headers: {
-				"Content-Type": "application/json",
+				'Content-Type': 'application/json',
 				Authorization: `Bearer ${token}`,
 			},
 		})
@@ -127,8 +127,8 @@ export const SetBalancedInvoice = createServerFn({ method: "POST" })
 		return
 	})
 
-export const GetSpentReport = createServerFn({ method: "GET" })
-	.inputValidator(
+export const GetSpentReport = createServerFn({ method: 'GET' })
+	.validator(
 		(data: { project_id: string; level: string; date: string }) => data,
 	)
 	.handler(
@@ -138,14 +138,14 @@ export const GetSpentReport = createServerFn({ method: "GET" })
 			const token = getCookie(cookieName)
 
 			const params = new URLSearchParams()
-			params.append("project_id", project_id)
-			params.append("level", level)
-			params.append("date", date)
+			params.append('project_id', project_id)
+			params.append('level', level)
+			params.append('date', date)
 
 			const response = await fetch(`${URL}/reportes/gastado?${params}`, {
-				method: "GET",
+				method: 'GET',
 				headers: {
-					"Content-Type": "application/json",
+					'Content-Type': 'application/json',
 					Authorization: `Bearer ${token}`,
 				},
 			})
@@ -154,8 +154,8 @@ export const GetSpentReport = createServerFn({ method: "GET" })
 		},
 	)
 
-export const GetSpentDetails = createServerFn({ method: "GET" })
-	.inputValidator(
+export const GetSpentDetails = createServerFn({ method: 'GET' })
+	.validator(
 		(data: { project_id: string; budget_item_id: string; date: string }) =>
 			data,
 	)
@@ -168,9 +168,9 @@ export const GetSpentDetails = createServerFn({ method: "GET" })
 			const response = await fetch(
 				`${URL}/reportes/gastado/${project_id}/${budget_item_id}/${date}`,
 				{
-					method: "GET",
+					method: 'GET',
 					headers: {
-						"Content-Type": "application/json",
+						'Content-Type': 'application/json',
 						Authorization: `Bearer ${token}`,
 					},
 				},

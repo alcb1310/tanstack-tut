@@ -1,28 +1,28 @@
-import { useQueryClient, useSuspenseQueries } from "@tanstack/react-query"
-import { createFileRoute } from "@tanstack/react-router"
-import type { ColumnDef } from "@tanstack/react-table"
-import { useEffect, useState } from "react"
-import PageTitle from "@/components/layout/page-title"
-import { DataTable } from "@/components/table/data-table"
-import { Input } from "@/components/ui/input"
-import { NativeSelect, NativeSelectOption } from "@/components/ui/native-select"
-import { Spinner } from "@/components/ui/spinner"
-import { PresupuestoCreateDrawer } from "@/drawers/presupuesto/crear-presupuesto"
-import { PresupuestoUpdateDrawer } from "@/drawers/presupuesto/editar-presupuesto"
-import { GetAllBudgets } from "@/queries/presupuesto"
-import { GetAllProjects } from "@/queries/proyectos"
-import type { BudgetResponseType } from "@/types/presupuesto"
+import { useQueryClient, useSuspenseQueries } from '@tanstack/react-query'
+import { createFileRoute } from '@tanstack/react-router'
+import type { ColumnDef } from '@tanstack/react-table'
+import { useEffect, useState } from 'react'
+import PageTitle from '@/components/layout/page-title'
+import { DataTable } from '@/components/table/data-table'
+import { Input } from '@/components/ui/input'
+import { NativeSelect, NativeSelectOption } from '@/components/ui/native-select'
+import { Spinner } from '@/components/ui/spinner'
+import { PresupuestoCreateDrawer } from '@/drawers/presupuesto/crear-presupuesto'
+import { PresupuestoUpdateDrawer } from '@/drawers/presupuesto/editar-presupuesto'
+import { GetAllBudgets } from '@/queries/presupuesto'
+import { GetAllProjects } from '@/queries/proyectos'
+import type { BudgetResponseType } from '@/types/presupuesto'
 
-export const Route = createFileRoute("/_authed/transacciones/presupuesto")({
+export const Route = createFileRoute('/_authed/transacciones/presupuesto')({
 	component: RouteComponent,
 	loader: ({ context: { queryClient } }) => {
 		Promise.all([
-			queryClient.prefetchQuery({
-				queryKey: ["proyectos"],
+			queryClient.query({
+				queryKey: ['proyectos'],
 				queryFn: () => GetAllProjects({ data: { active: true } }),
 			}),
-			queryClient.prefetchQuery({
-				queryKey: ["presupuesto"],
+			queryClient.query({
+				queryKey: ['presupuesto'],
 				queryFn: () => GetAllBudgets({ data: {} }),
 			}),
 		])
@@ -31,19 +31,19 @@ export const Route = createFileRoute("/_authed/transacciones/presupuesto")({
 
 function RouteComponent() {
 	const queryClient = useQueryClient()
-	const [search, setSearch] = useState<string>("")
-	const [project, setProject] = useState<string>("")
+	const [search, setSearch] = useState<string>('')
+	const [project, setProject] = useState<string>('')
 	const [debounced, setDebounced] = useState<string>(search)
 
 	const queries = useSuspenseQueries({
 		queries: [
 			{
-				queryKey: ["presupuesto"],
+				queryKey: ['presupuesto'],
 				queryFn: () =>
 					GetAllBudgets({ data: { query: search, project: project } }),
 			},
 			{
-				queryKey: ["proyectos"],
+				queryKey: ['proyectos'],
 				queryFn: () => GetAllProjects({ data: { active: true } }),
 			},
 		],
@@ -54,20 +54,20 @@ function RouteComponent() {
 
 	const columns: ColumnDef<BudgetResponseType>[] = [
 		{
-			accessorKey: "project.name",
-			header: "Proyecto",
+			accessorKey: 'project.name',
+			header: 'Proyecto',
 		},
 		{
-			accessorKey: "budget_item.name",
-			header: "Partida",
+			accessorKey: 'budget_item.name',
+			header: 'Partida',
 		},
 		{
-			accessorKey: "spent_total",
-			header: "Gastado",
+			accessorKey: 'spent_total',
+			header: 'Gastado',
 			cell: ({ row }) => {
 				return (
 					<span className='block w-full text-right'>
-						{row.original.spent_total.toLocaleString("es-EC", {
+						{row.original.spent_total.toLocaleString('es-EC', {
 							minimumFractionDigits: 2,
 						})}
 					</span>
@@ -75,50 +75,50 @@ function RouteComponent() {
 			},
 		},
 		{
-			accessorKey: "remaining_quantity",
-			header: "Cantidad",
+			accessorKey: 'remaining_quantity',
+			header: 'Cantidad',
 			cell: ({ row }) => {
 				const q = row.original.remaining_quantity
 
 				return (
 					<span className='block w-full text-right'>
 						{q.Valid
-							? q.Float64.toLocaleString("es-EC", {
+							? q.Float64.toLocaleString('es-EC', {
 									minimumFractionDigits: 2,
 									maximumFractionDigits: 2,
 								})
-							: ""}
+							: ''}
 					</span>
 				)
 			},
 		},
 		{
-			accessorKey: "remaining_cost",
-			header: "Costo",
+			accessorKey: 'remaining_cost',
+			header: 'Costo',
 			cell: ({ row }) => {
 				const q = row.original.remaining_cost
 
 				return (
 					<span className='block w-full text-right'>
 						{q.Valid
-							? q.Float64.toLocaleString("es-EC", {
+							? q.Float64.toLocaleString('es-EC', {
 									minimumFractionDigits: 2,
 									maximumFractionDigits: 2,
 								})
-							: ""}
+							: ''}
 					</span>
 				)
 			},
 		},
 		{
-			accessorKey: "remaining_total",
-			header: "Total",
+			accessorKey: 'remaining_total',
+			header: 'Total',
 			cell: ({ row }) => {
 				const q = row.original.remaining_total
 
 				return (
 					<span className='block w-full text-right'>
-						{q.toLocaleString("es-EC", {
+						{q.toLocaleString('es-EC', {
 							minimumFractionDigits: 2,
 							maximumFractionDigits: 2,
 						})}
@@ -127,14 +127,14 @@ function RouteComponent() {
 			},
 		},
 		{
-			accessorKey: "updated_budget",
-			header: "Presupuesto",
+			accessorKey: 'updated_budget',
+			header: 'Presupuesto',
 			cell: ({ row }) => {
 				const q = row.original.updated_budget
 
 				return (
 					<span className='block w-full text-right'>
-						{q.toLocaleString("es-EC", {
+						{q.toLocaleString('es-EC', {
 							minimumFractionDigits: 2,
 							maximumFractionDigits: 2,
 						})}
@@ -143,7 +143,7 @@ function RouteComponent() {
 			},
 		},
 		{
-			id: "Actions",
+			id: 'Actions',
 			cell: ({ row }) => {
 				const budget = row.original
 				return (
@@ -167,7 +167,7 @@ function RouteComponent() {
 	}, [project])
 
 	useEffect(() => {
-		queryClient.invalidateQueries({ queryKey: ["presupuesto"] })
+		queryClient.invalidateQueries({ queryKey: ['presupuesto'] })
 	}, [debounced, queryClient])
 
 	const proyValues =
@@ -176,8 +176,8 @@ function RouteComponent() {
 			value: item.id as string,
 		})) || []
 	proyValues.unshift({
-		label: "Proyecto",
-		value: "",
+		label: 'Proyecto',
+		value: '',
 	})
 
 	return (
@@ -187,7 +187,7 @@ function RouteComponent() {
 				<PresupuestoCreateDrawer />
 
 				<NativeSelect
-					name={"proyectos"}
+					name={'proyectos'}
 					size='default'
 					value={project}
 					onChange={e => {
