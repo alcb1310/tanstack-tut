@@ -29,7 +29,7 @@ export const GetAllRubros = createServerFn({ method: "GET" }).handler(
 
 export const GetOneRubro = createServerFn({ method: "GET" })
 	.validator((data: { id: string }) => data)
-	.handler(async ({ data: { id } }): Promise<RubrosType> => {
+	.handler(async ({ data: { id } }) => {
 		const token = getCookie(cookieName)
 
 		const response = await fetch(`${URL}/parametros/rubros/${id}`, {

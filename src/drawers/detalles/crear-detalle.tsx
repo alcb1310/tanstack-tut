@@ -1,8 +1,8 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { CircleXIcon, PlusIcon, SaveIcon } from "lucide-react"
-import { useEffect, useState } from "react"
-import { toast } from "sonner"
-import { Button } from "@/components/ui/button"
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { CircleXIcon, PlusIcon, SaveIcon } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { toast } from 'sonner'
+import { Button } from '@/components/ui/button'
 import {
 	Drawer,
 	DrawerClose,
@@ -12,15 +12,15 @@ import {
 	DrawerHeader,
 	DrawerTitle,
 	DrawerTrigger,
-} from "@/components/ui/drawer"
-import { FieldGroup, FieldSet } from "@/components/ui/field"
-import { useAppForm } from "@/hooks/app-form"
-import { CreateInvoiceDetail } from "@/queries/detalle"
-import { GetAllPartidas } from "@/queries/partidas"
+} from '@/components/ui/drawer'
+import { FieldGroup, FieldSet } from '@/components/ui/field'
+import { useAppForm } from '@/hooks/app-form'
+import { CreateInvoiceDetail } from '@/queries/detalle'
+import { GetAllPartidas } from '@/queries/partidas'
 import {
 	type InvoiceDetailsCreateType,
 	invoiceDetailsCreateSchema,
-} from "@/types/detalle"
+} from '@/types/detalle'
 
 type DetalleCreateDrawerProps = {
 	invoice_id: string
@@ -30,22 +30,22 @@ export function DetalleCreateDrawer({ invoice_id }: DetalleCreateDrawerProps) {
 	const queryClient = useQueryClient()
 	const [open, setOpen] = useState(false)
 	const { data: partidas } = useQuery({
-		queryKey: ["partidas", "non-accum"],
+		queryKey: ['partidas', 'non-accum'],
 		queryFn: () => GetAllPartidas({ data: { accum: false } }),
 	})
 
 	const createInvoiceDetailMutation = useMutation({
 		mutationFn: CreateInvoiceDetail,
 		onSuccess: async () => {
-			toast.success("Partida creada exitosamente")
-			queryClient.invalidateQueries({ queryKey: ["facturas"] })
-			queryClient.invalidateQueries({ queryKey: ["facturas-detalle"] })
+			toast.success('Partida creada exitosamente')
+			queryClient.invalidateQueries({ queryKey: ['facturas'] })
+			queryClient.invalidateQueries({ queryKey: ['facturas-detalle'] })
 		},
 		onError: error => {
 			toast.error(error.message, {
-				position: "top-center",
+				position: 'top-center',
 				style: {
-					color: "red",
+					color: 'red',
 				},
 			})
 		},
@@ -53,7 +53,7 @@ export function DetalleCreateDrawer({ invoice_id }: DetalleCreateDrawerProps) {
 
 	const form = useAppForm({
 		defaultValues: {
-			budget_item_id: "",
+			budget_item_id: '',
 			quantity: 0,
 			cost: 0,
 			total: 0,
@@ -92,8 +92,8 @@ export function DetalleCreateDrawer({ invoice_id }: DetalleCreateDrawerProps) {
 			value: item.id as string,
 		})) || []
 	budgetItemValues.unshift({
-		label: "Seleccione una partida",
-		value: "",
+		label: 'Seleccione una partida',
+		value: '',
 	})
 
 	useEffect(() => {
@@ -105,7 +105,7 @@ export function DetalleCreateDrawer({ invoice_id }: DetalleCreateDrawerProps) {
 	return (
 		<Drawer direction='right' open={open} onOpenChange={setOpen}>
 			<DrawerTrigger asChild>
-				<Button variant={"detail"} className='my-3'>
+				<Button variant={'detail'} className='my-3'>
 					<PlusIcon size={10} />
 					Agregar Detalle
 				</Button>

@@ -1,15 +1,15 @@
-import { useStore } from "@tanstack/react-form"
-import type { ComponentProps } from "react"
+import { useStore } from '@tanstack/react-form'
+import type { ComponentProps } from 'react'
 import {
 	Field,
 	FieldDescription,
 	FieldError,
 	FieldLabel,
-} from "@/components/ui/field"
-import { useFieldContext } from "@/hooks/app-form"
-import { Input } from "../ui/input"
+} from '@/components/ui/field'
+import { useFieldContext } from '@/hooks/app-form'
+import { Input } from '../ui/input'
 
-interface TextFieldProps extends ComponentProps<"input"> {
+interface TextFieldProps extends ComponentProps<'input'> {
 	label: string
 	name: string
 	description?: string
@@ -32,7 +32,7 @@ export function TextField({
 				autoComplete='off'
 				value={field.state.value}
 				onChange={e => field.handleChange(e.target.value)}
-				className={errors.length ? "border-destructive" : ""}
+				className={errors.length ? 'border-destructive' : ''}
 				{...props}
 			/>
 			{description && <FieldDescription>{description}</FieldDescription>}

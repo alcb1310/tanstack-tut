@@ -1,28 +1,28 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { createFileRoute } from "@tanstack/react-router"
-import type { ColumnDef } from "@tanstack/react-table"
-import { DownloadIcon, PlayIcon } from "lucide-react"
-import { toast } from "sonner"
-import { FormBackground } from "@/components/layout/form-background"
-import PageTitle from "@/components/layout/page-title"
-import { ReportDataTable } from "@/components/table/report-data-table"
-import { Button } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
-import { FieldGroup, FieldSet } from "@/components/ui/field"
-import { Spinner } from "@/components/ui/spinner"
-import { useAppForm } from "@/hooks/app-form"
-import { downloadExcelFile } from "@/lib/excel-download"
-import { balanceExcelExport } from "@/queries/excel"
-import { GetAllProjects } from "@/queries/proyectos"
-import { GetBalanceReport, SetBalancedInvoice } from "@/queries/reportes"
-import type { InvoiceResponseType } from "@/types/facturas"
-import { type BalanceReportType, balanceReportSchema } from "@/types/reportes"
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { createFileRoute } from '@tanstack/react-router'
+import type { ColumnDef } from '@tanstack/react-table'
+import { DownloadIcon, PlayIcon } from 'lucide-react'
+import { toast } from 'sonner'
+import { FormBackground } from '@/components/layout/form-background'
+import PageTitle from '@/components/layout/page-title'
+import { ReportDataTable } from '@/components/table/report-data-table'
+import { Button } from '@/components/ui/button'
+import { Checkbox } from '@/components/ui/checkbox'
+import { FieldGroup, FieldSet } from '@/components/ui/field'
+import { Spinner } from '@/components/ui/spinner'
+import { useAppForm } from '@/hooks/app-form'
+import { downloadExcelFile } from '@/lib/excel-download'
+import { balanceExcelExport } from '@/queries/excel'
+import { GetAllProjects } from '@/queries/proyectos'
+import { GetBalanceReport, SetBalancedInvoice } from '@/queries/reportes'
+import type { InvoiceResponseType } from '@/types/facturas'
+import { type BalanceReportType, balanceReportSchema } from '@/types/reportes'
 
-export const Route = createFileRoute("/_authed/reportes/cuadre")({
+export const Route = createFileRoute('/_authed/reportes/cuadre')({
 	component: RouteComponent,
 	loader: async ({ context: { queryClient } }) => {
-		queryClient.ensureQueryData({
-			queryKey: ["proyectos", "active"],
+		queryClient.query({
+			queryKey: ['proyectos', 'active'],
 			queryFn: () => GetAllProjects({ data: { active: true } }),
 		})
 	},
@@ -32,8 +32,8 @@ function RouteComponent() {
 	const queryClient = useQueryClient()
 	const form = useAppForm({
 		defaultValues: {
-			project_id: "",
-			date: "",
+			project_id: '',
+			date: '',
 		} as BalanceReportType,
 		validators: {
 			onSubmit: balanceReportSchema,
@@ -47,14 +47,14 @@ function RouteComponent() {
 		mutationFn: SetBalancedInvoice,
 		onSuccess: () => {
 			queryClient.invalidateQueries({
-				queryKey: ["cuadre"],
+				queryKey: ['cuadre'],
 			})
 		},
 		onError: error => {
 			toast.error(error.message, {
-				position: "top-center",
+				position: 'top-center',
 				style: {
-					color: "red",
+					color: 'red',
 				},
 			})
 		},
@@ -65,16 +65,16 @@ function RouteComponent() {
 	}
 
 	const { data, isLoading, isFetching, refetch } = useQuery({
-		queryKey: ["cuadre", form.state.values],
+		queryKey: ['cuadre', form.state.values],
 		queryFn: () => GetBalanceReport({ data: form.state.values }),
 		enabled:
-			form.state.values.project_id !== "" && form.state.values.date !== "",
+			form.state.values.project_id !== '' && form.state.values.date !== '',
 	})
 
 	const columns: ColumnDef<InvoiceResponseType>[] = [
 		{
-			accessorKey: "is_balanced",
-			header: "",
+			accessorKey: 'is_balanced',
+			header: '',
 			cell: ({ row }) => {
 				return (
 					<Checkbox
@@ -85,32 +85,32 @@ function RouteComponent() {
 			},
 		},
 		{
-			accessorKey: "invoice_date",
-			header: "Fecha",
+			accessorKey: 'invoice_date',
+			header: 'Fecha',
 			cell: ({ row }) => {
 				const dt = new Date(row.original.invoice_date)
-				return dt.toLocaleDateString("es-EC", {
-					year: "numeric",
-					month: "2-digit",
-					day: "2-digit",
+				return dt.toLocaleDateString('es-EC', {
+					year: 'numeric',
+					month: '2-digit',
+					day: '2-digit',
 				})
 			},
 		},
 		{
-			accessorKey: "supplier.name",
-			header: "Proveedor",
+			accessorKey: 'supplier.name',
+			header: 'Proveedor',
 		},
 		{
-			accessorKey: "invoice_number",
-			header: "N° Factura",
+			accessorKey: 'invoice_number',
+			header: 'N° Factura',
 		},
 		{
-			accessorKey: "invoice_total",
-			header: "Total",
+			accessorKey: 'invoice_total',
+			header: 'Total',
 			cell: ({ row }) => {
 				return (
 					<span className='block w-full text-right'>
-						{row.original.invoice_total.toLocaleString("es-EC", {
+						{row.original.invoice_total.toLocaleString('es-EC', {
 							minimumFractionDigits: 2,
 							maximumFractionDigits: 2,
 						})}
@@ -121,7 +121,7 @@ function RouteComponent() {
 	]
 
 	const { data: proyects } = useQuery({
-		queryKey: ["proyectos", "active"],
+		queryKey: ['proyectos', 'active'],
 		queryFn: () => GetAllProjects({ data: { active: true } }),
 	})
 
@@ -131,8 +131,8 @@ function RouteComponent() {
 			value: item.id as string,
 		})) || []
 	proyValues.unshift({
-		label: "Seleccione un proyecto",
-		value: "",
+		label: 'Seleccione un proyecto',
+		value: '',
 	})
 
 	return (
@@ -189,7 +189,7 @@ function RouteComponent() {
 											data: form.state.values,
 										})
 
-										downloadExcelFile(await b.blob(), "cuadre.xlsx")
+										downloadExcelFile(await b.blob(), 'cuadre.xlsx')
 									} catch (e) {
 										console.error(e)
 									}
@@ -206,9 +206,9 @@ function RouteComponent() {
 			{data && data.invoices.length > 0 && (
 				<div>
 					<p className='mb-3 text-xs font-bold'>
-						Total:{" "}
+						Total:{' '}
 						<span className='text-chart-4 font-semibold'>
-							{data.total.toLocaleString("es-EC", {
+							{data.total.toLocaleString('es-EC', {
 								minimumFractionDigits: 2,
 								maximumFractionDigits: 2,
 							})}
@@ -219,9 +219,9 @@ function RouteComponent() {
 						columns={columns}
 					/>
 					<p className='mt-3 text-xs font-bold'>
-						Total:{" "}
+						Total:{' '}
 						<span className='text-chart-4 font-semibold'>
-							{data.total.toLocaleString("es-EC", {
+							{data.total.toLocaleString('es-EC', {
 								minimumFractionDigits: 2,
 								maximumFractionDigits: 2,
 							})}

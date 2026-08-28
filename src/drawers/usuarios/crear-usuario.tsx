@@ -1,8 +1,8 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { CircleXIcon, PlusIcon, SaveIcon } from "lucide-react"
-import { useEffect, useState } from "react"
-import { toast } from "sonner"
-import { Button } from "@/components/ui/button"
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { CircleXIcon, PlusIcon, SaveIcon } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { toast } from 'sonner'
+import { Button } from '@/components/ui/button'
 import {
 	Drawer,
 	DrawerClose,
@@ -12,11 +12,11 @@ import {
 	DrawerHeader,
 	DrawerTitle,
 	DrawerTrigger,
-} from "@/components/ui/drawer"
-import { FieldGroup, FieldSet } from "@/components/ui/field"
-import { useAppForm } from "@/hooks/app-form"
-import { CreateUser } from "@/queries/user"
-import { type UserCreate, userCreateSchema } from "@/types/user"
+} from '@/components/ui/drawer'
+import { FieldGroup, FieldSet } from '@/components/ui/field'
+import { useAppForm } from '@/hooks/app-form'
+import { CreateUser } from '@/queries/user'
+import { type UserCreate, userCreateSchema } from '@/types/user'
 
 export function UserCreateDrawer() {
 	const queryClient = useQueryClient()
@@ -27,14 +27,14 @@ export function UserCreateDrawer() {
 		mutationFn: CreateUser,
 		onSuccess: () => {
 			setOpen(false)
-			toast.success("Usuario creado exitosamente")
-			queryClient.invalidateQueries({ queryKey: ["usuarios"] })
+			toast.success('Usuario creado exitosamente')
+			queryClient.invalidateQueries({ queryKey: ['usuarios'] })
 		},
 		onError: error => {
 			toast.error(error.message, {
-				position: "top-center",
+				position: 'top-center',
 				style: {
-					color: "red",
+					color: 'red',
 				},
 			})
 		},
@@ -42,9 +42,9 @@ export function UserCreateDrawer() {
 
 	const form = useAppForm({
 		defaultValues: {
-			email: "",
-			password: "",
-			name: "",
+			email: '',
+			password: '',
+			name: '',
 		} satisfies UserCreate as UserCreate,
 		validators: {
 			onSubmit: userCreateSchema,

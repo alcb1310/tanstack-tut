@@ -1,8 +1,8 @@
-import { useMutation, useQueries, useQueryClient } from "@tanstack/react-query"
-import { CircleXIcon, EditIcon, SaveIcon } from "lucide-react"
-import { useEffect, useState } from "react"
-import { toast } from "sonner"
-import { Button } from "@/components/ui/button"
+import { useMutation, useQueries, useQueryClient } from '@tanstack/react-query'
+import { CircleXIcon, EditIcon, SaveIcon } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { toast } from 'sonner'
+import { Button } from '@/components/ui/button'
 import {
 	Drawer,
 	DrawerClose,
@@ -12,17 +12,17 @@ import {
 	DrawerHeader,
 	DrawerTitle,
 	DrawerTrigger,
-} from "@/components/ui/drawer"
-import { FieldGroup, FieldSet } from "@/components/ui/field"
-import { useAppForm } from "@/hooks/app-form"
-import { GetAllPartidas } from "@/queries/partidas"
-import { UpdateBudget } from "@/queries/presupuesto"
-import { GetAllProjects } from "@/queries/proyectos"
+} from '@/components/ui/drawer'
+import { FieldGroup, FieldSet } from '@/components/ui/field'
+import { useAppForm } from '@/hooks/app-form'
+import { GetAllPartidas } from '@/queries/partidas'
+import { UpdateBudget } from '@/queries/presupuesto'
+import { GetAllProjects } from '@/queries/proyectos'
 import {
 	type BudgetEditType,
 	type BudgetResponseType,
 	budgetEditSchema,
-} from "@/types/presupuesto"
+} from '@/types/presupuesto'
 
 type PresupuestoUpdateDrawerProps = {
 	budget: BudgetResponseType
@@ -37,14 +37,14 @@ export function PresupuestoUpdateDrawer({
 	const useUpdateBudgetMutation = useMutation({
 		mutationFn: UpdateBudget,
 		onSuccess: () => {
-			toast.success("Presupuesto actualizado")
-			queryClient.invalidateQueries({ queryKey: ["presupuesto"] })
+			toast.success('Presupuesto actualizado')
+			queryClient.invalidateQueries({ queryKey: ['presupuesto'] })
 		},
 		onError: error => {
 			toast.error(error.message, {
-				position: "top-center",
+				position: 'top-center',
 				style: {
-					color: "red",
+					color: 'red',
 				},
 			})
 		},
@@ -88,11 +88,11 @@ export function PresupuestoUpdateDrawer({
 	const result = useQueries({
 		queries: [
 			{
-				queryKey: ["partidas"],
+				queryKey: ['partidas'],
 				queryFn: () => GetAllPartidas({ data: { accum: false } }),
 			},
 			{
-				queryKey: ["proyectos", "active"],
+				queryKey: ['proyectos', 'active'],
 				queryFn: () => GetAllProjects({ data: { active: true } }),
 			},
 		],

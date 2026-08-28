@@ -1,6 +1,6 @@
-import { useMutation, useQuery } from "@tanstack/react-query"
-import { InfoIcon, SaveIcon } from "lucide-react"
-import { toast } from "sonner"
+import { useMutation, useQuery } from '@tanstack/react-query'
+import { InfoIcon, SaveIcon } from 'lucide-react'
+import { toast } from 'sonner'
 import {
 	AlertDialog,
 	AlertDialogAction,
@@ -12,10 +12,10 @@ import {
 	AlertDialogMedia,
 	AlertDialogTitle,
 	AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
-import { Button } from "@/components/ui/button"
-import { CreateClosure } from "@/queries/cierre-mensual"
-import { GetOneProject } from "@/queries/proyectos"
+} from '@/components/ui/alert-dialog'
+import { Button } from '@/components/ui/button'
+import { CreateClosure } from '@/queries/cierre-mensual'
+import { GetOneProject } from '@/queries/proyectos'
 
 type CierreDialogProps = {
 	projectId: string
@@ -24,20 +24,20 @@ type CierreDialogProps = {
 
 export function CierreDialog({ projectId, date }: CierreDialogProps) {
 	const { data } = useQuery({
-		queryKey: ["proyectos", projectId],
+		queryKey: ['proyectos', projectId],
 		queryFn: () => GetOneProject({ data: { id: projectId } }),
 	})
 
 	const useGenerateClosureMutation = useMutation({
 		mutationFn: CreateClosure,
 		onSuccess: () => {
-			toast.success("Cierre creado exitosamente")
+			toast.success('Cierre creado exitosamente')
 		},
 		onError: error => {
 			toast.error(error.message, {
-				position: "top-center",
+				position: 'top-center',
 				style: {
-					color: "red",
+					color: 'red',
 				},
 			})
 		},
@@ -60,7 +60,7 @@ export function CierreDialog({ projectId, date }: CierreDialogProps) {
 						Generar Cierre
 					</AlertDialogTitle>
 					<AlertDialogDescription>
-						¿Desea generar el cierre del proyecto{" "}
+						¿Desea generar el cierre del proyecto{' '}
 						<span className='font-bold'>{data?.name}</span> para la fecha&nbsp;
 						<span className='font-bold'>{date}</span>?
 					</AlertDialogDescription>

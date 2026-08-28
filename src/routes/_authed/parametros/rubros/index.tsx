@@ -1,19 +1,19 @@
-import { useSuspenseQuery } from "@tanstack/react-query"
-import { createFileRoute, Link } from "@tanstack/react-router"
-import type { ColumnDef } from "@tanstack/react-table"
-import { EditIcon, PlusIcon } from "lucide-react"
-import PageTitle from "@/components/layout/page-title"
-import { DataTable } from "@/components/table/data-table"
-import { buttonVariants } from "@/components/ui/button"
-import { Spinner } from "@/components/ui/spinner"
-import { GetAllRubros } from "@/queries/rubros"
-import type { RubrosType } from "@/types/rubros"
+import { useSuspenseQuery } from '@tanstack/react-query'
+import { createFileRoute, Link } from '@tanstack/react-router'
+import type { ColumnDef } from '@tanstack/react-table'
+import { EditIcon, PlusIcon } from 'lucide-react'
+import PageTitle from '@/components/layout/page-title'
+import { DataTable } from '@/components/table/data-table'
+import { buttonVariants } from '@/components/ui/button'
+import { Spinner } from '@/components/ui/spinner'
+import { GetAllRubros } from '@/queries/rubros'
+import type { RubrosType } from '@/types/rubros'
 
-export const Route = createFileRoute("/_authed/parametros/rubros/")({
+export const Route = createFileRoute('/_authed/parametros/rubros/')({
 	component: RouteComponent,
 	loader: ({ context: { queryClient } }) => {
-		queryClient.prefetchQuery({
-			queryKey: ["rubros"],
+		queryClient.query({
+			queryKey: ['rubros'],
 			queryFn: () => GetAllRubros(),
 		})
 	},
@@ -21,25 +21,25 @@ export const Route = createFileRoute("/_authed/parametros/rubros/")({
 
 function RouteComponent() {
 	const { data, isLoading } = useSuspenseQuery({
-		queryKey: ["rubros"],
+		queryKey: ['rubros'],
 		queryFn: () => GetAllRubros(),
 	})
 
 	const columns: ColumnDef<RubrosType>[] = [
 		{
-			accessorKey: "code",
-			header: "Codigo",
+			accessorKey: 'code',
+			header: 'Codigo',
 		},
 		{
-			accessorKey: "name",
-			header: "Nombre",
+			accessorKey: 'name',
+			header: 'Nombre',
 		},
 		{
-			accessorKey: "unit",
-			header: "Unidad",
+			accessorKey: 'unit',
+			header: 'Unidad',
 		},
 		{
-			id: "actions",
+			id: 'actions',
 			cell: ({ row }) => {
 				const rubro = row.original
 
@@ -61,7 +61,7 @@ function RouteComponent() {
 
 			<Link
 				to='/parametros/rubros/crear'
-				className={`my-3 ${buttonVariants({ variant: "default" })}`}
+				className={`my-3 ${buttonVariants({ variant: 'default' })}`}
 			>
 				<PlusIcon size={16} />
 				Crear Rubro

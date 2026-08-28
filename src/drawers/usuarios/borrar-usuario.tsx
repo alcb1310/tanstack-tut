@@ -1,6 +1,6 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { DeleteIcon } from "lucide-react"
-import { toast } from "sonner"
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { DeleteIcon } from 'lucide-react'
+import { toast } from 'sonner'
 import {
 	AlertDialog,
 	AlertDialogAction,
@@ -12,9 +12,9 @@ import {
 	AlertDialogMedia,
 	AlertDialogTitle,
 	AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
-import { DeleteUser } from "@/queries/user"
-import type { UserResponse } from "@/types/user"
+} from '@/components/ui/alert-dialog'
+import { DeleteUser } from '@/queries/user'
+import type { UserResponse } from '@/types/user'
 
 type UserDeleteDialogProps = {
 	user: UserResponse
@@ -26,14 +26,14 @@ export function UserDeleteDialog({ user }: UserDeleteDialogProps) {
 	const useDeleteUserMutation = useMutation({
 		mutationFn: DeleteUser,
 		onSuccess: () => {
-			toast.success("Usuario eliminado exitosamente")
-			queryClient.invalidateQueries({ queryKey: ["usuarios"] })
+			toast.success('Usuario eliminado exitosamente')
+			queryClient.invalidateQueries({ queryKey: ['usuarios'] })
 		},
 		onError: error => {
 			toast.error(error.message, {
-				position: "top-center",
+				position: 'top-center',
 				style: {
-					color: "red",
+					color: 'red',
 				},
 			})
 		},
@@ -53,7 +53,7 @@ export function UserDeleteDialog({ user }: UserDeleteDialogProps) {
 						Eliminar Usuario
 					</AlertDialogTitle>
 					<AlertDialogDescription>
-						¿Estás seguro de eliminar el usuario{" "}
+						¿Estás seguro de eliminar el usuario{' '}
 						<span className='font-bold'>{user.name}</span>?. Esta acción no se
 						puede deshacer
 					</AlertDialogDescription>

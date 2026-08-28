@@ -1,6 +1,6 @@
-import { z } from "zod"
-import { supplierSchema } from "./proveedor"
-import { projectSchema } from "./proyectos"
+import { z } from 'zod'
+import { supplierSchema } from './proveedor'
+import { projectSchema } from './proyectos'
 
 export const invoiceResponseSchema = z.object({
 	id: z.string().uuid(),
@@ -18,14 +18,14 @@ export type InvoiceResponseType = z.infer<typeof invoiceResponseSchema>
 
 export const invoiceCreateSchema = z.object({
 	id: z.string().uuid().optional(),
-	supplier_id: z.string().uuid("Seleccione un proveedor"),
-	project_id: z.string().uuid("Seleccione un proyecto"),
-	invoice_number: z.string().min(1, "Ingrese el numero de la Factura"),
-	invoice_date: z.string().min(1, "Ingrese la fecha de la factura"),
+	supplier_id: z.string().uuid('Seleccione un proveedor'),
+	project_id: z.string().uuid('Seleccione un proyecto'),
+	invoice_number: z.string().min(1, 'Ingrese el numero de la Factura'),
+	invoice_date: z.string().min(1, 'Ingrese la fecha de la factura'),
 	invoice_total: z.custom<number>(val => {
 		const num = Number.parseFloat(val as string)
 		return !Number.isNaN(num)
-	}, "El total deber ser un  número"),
+	}, 'El total deber ser un  número'),
 })
 
 export type InvoiceCreateType = z.infer<typeof invoiceCreateSchema>

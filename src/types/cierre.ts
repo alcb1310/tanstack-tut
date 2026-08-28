@@ -1,9 +1,9 @@
-import { z } from "zod"
+import { z } from 'zod'
 
 export const cierreSchema = z.object({
-	project_id: z.string().uuid("Seleccione un proyecto"),
+	project_id: z.string().uuid('Seleccione un proyecto'),
 	date: z.coerce.date({
-		message: "Ingrese una fecha",
+		message: 'Ingrese una fecha',
 	}),
 })
 

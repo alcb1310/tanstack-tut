@@ -1,6 +1,6 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { DeleteIcon } from "lucide-react"
-import { toast } from "sonner"
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { DeleteIcon } from 'lucide-react'
+import { toast } from 'sonner'
 import {
 	AlertDialog,
 	AlertDialogAction,
@@ -12,10 +12,10 @@ import {
 	AlertDialogMedia,
 	AlertDialogTitle,
 	AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
-import { Button } from "@/components/ui/button"
-import { DeleteInvoiceDetail } from "@/queries/detalle"
-import type { InvoiceDetailsResponseType } from "@/types/detalle"
+} from '@/components/ui/alert-dialog'
+import { Button } from '@/components/ui/button'
+import { DeleteInvoiceDetail } from '@/queries/detalle'
+import type { InvoiceDetailsResponseType } from '@/types/detalle'
 
 type DetalleDeleteDialogProps = {
 	invoice_detail: InvoiceDetailsResponseType
@@ -28,15 +28,15 @@ export function DetalleDeleteDialog({
 	const deleteInvoiceDetailMutation = useMutation({
 		mutationFn: DeleteInvoiceDetail,
 		onSuccess: async () => {
-			toast.success("Partida creada exitosamente")
-			queryClient.invalidateQueries({ queryKey: ["facturas"] })
-			queryClient.invalidateQueries({ queryKey: ["facturas-detalle"] })
+			toast.success('Partida creada exitosamente')
+			queryClient.invalidateQueries({ queryKey: ['facturas'] })
+			queryClient.invalidateQueries({ queryKey: ['facturas-detalle'] })
 		},
 		onError: error => {
 			toast.error(error.message, {
-				position: "top-center",
+				position: 'top-center',
 				style: {
-					color: "red",
+					color: 'red',
 				},
 			})
 		},
@@ -60,11 +60,11 @@ export function DetalleDeleteDialog({
 						Esta seguro que desea eliminar el detalle:
 						<ul className='my-3'>
 							<li className='flex justify-between'>
-								<span className='font-bold'>Codigo</span>{" "}
+								<span className='font-bold'>Codigo</span>{' '}
 								{invoice_detail.budget_item_code}
 							</li>
 							<li className='flex justify-between'>
-								<span className='font-bold'>Nombre</span>{" "}
+								<span className='font-bold'>Nombre</span>{' '}
 								{invoice_detail.budget_item_name}
 							</li>
 						</ul>

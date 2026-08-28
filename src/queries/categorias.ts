@@ -1,7 +1,7 @@
+import type { ErrorResponseType } from "@/types/error"
 import { createServerFn } from "@tanstack/react-start"
 import { getCookie } from "@tanstack/react-start/server"
 import type { CategoryType } from "@/types/categorias"
-import type { ErrorResponseType } from "@/types/error"
 
 const URL = import.meta.env.VITE_BACKEND_SERVER
 const cookieName = "BCA-TOKEN"

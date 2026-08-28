@@ -2,13 +2,13 @@ import {
 	useMutation,
 	useQueryClient,
 	useSuspenseQuery,
-} from "@tanstack/react-query"
-import { createFileRoute, Link } from "@tanstack/react-router"
-import type { ColumnDef } from "@tanstack/react-table"
-import { DeleteIcon, EditIcon, PlusIcon } from "lucide-react"
-import { toast } from "sonner"
-import PageTitle from "@/components/layout/page-title"
-import { DataTable } from "@/components/table/data-table"
+} from '@tanstack/react-query'
+import { createFileRoute, Link } from '@tanstack/react-router'
+import type { ColumnDef } from '@tanstack/react-table'
+import { DeleteIcon, EditIcon, PlusIcon } from 'lucide-react'
+import { toast } from 'sonner'
+import PageTitle from '@/components/layout/page-title'
+import { DataTable } from '@/components/table/data-table'
 import {
 	AlertDialog,
 	AlertDialogAction,
@@ -20,17 +20,17 @@ import {
 	AlertDialogMedia,
 	AlertDialogTitle,
 	AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
-import { buttonVariants } from "@/components/ui/button"
-import { Spinner } from "@/components/ui/spinner"
-import { DeleteInvoice, GetAllInvoices } from "@/queries/factura"
-import type { InvoiceResponseType } from "@/types/facturas"
+} from '@/components/ui/alert-dialog'
+import { buttonVariants } from '@/components/ui/button'
+import { Spinner } from '@/components/ui/spinner'
+import { DeleteInvoice, GetAllInvoices } from '@/queries/factura'
+import type { InvoiceResponseType } from '@/types/facturas'
 
-export const Route = createFileRoute("/_authed/transacciones/factura/")({
+export const Route = createFileRoute('/_authed/transacciones/factura/')({
 	component: RouteComponent,
 	loader: ({ context: { queryClient } }) => {
-		queryClient.prefetchQuery({
-			queryKey: ["facturas"],
+		queryClient.query({
+			queryKey: ['facturas'],
 			queryFn: () => GetAllInvoices(),
 		})
 	},
@@ -39,21 +39,21 @@ export const Route = createFileRoute("/_authed/transacciones/factura/")({
 function RouteComponent() {
 	const queryClient = useQueryClient()
 	const { data, isLoading } = useSuspenseQuery({
-		queryKey: ["facturas"],
+		queryKey: ['facturas'],
 		queryFn: () => GetAllInvoices(),
 	})
 
 	const useDeleteInvoiceMutation = useMutation({
 		mutationFn: DeleteInvoice,
 		onSuccess: () => {
-			toast.success("Factura eliminada exitosamente")
-			queryClient.invalidateQueries({ queryKey: ["facturas"] })
+			toast.success('Factura eliminada exitosamente')
+			queryClient.invalidateQueries({ queryKey: ['facturas'] })
 		},
 		onError: error => {
 			toast.error(error.message, {
-				position: "top-center",
+				position: 'top-center',
 				style: {
-					color: "red",
+					color: 'red',
 				},
 			})
 		},
@@ -61,36 +61,36 @@ function RouteComponent() {
 
 	const columns: ColumnDef<InvoiceResponseType>[] = [
 		{
-			accessorKey: "invoice_date",
-			header: "Fecha",
+			accessorKey: 'invoice_date',
+			header: 'Fecha',
 			cell: ({ row }) => {
 				const dt = new Date(row.original.invoice_date)
-				return dt.toLocaleDateString("es-EC", {
-					year: "numeric",
-					month: "2-digit",
-					day: "2-digit",
+				return dt.toLocaleDateString('es-EC', {
+					year: 'numeric',
+					month: '2-digit',
+					day: '2-digit',
 				})
 			},
 		},
 		{
-			accessorKey: "project.name",
-			header: "Proyecto",
+			accessorKey: 'project.name',
+			header: 'Proyecto',
 		},
 		{
-			accessorKey: "supplier.name",
-			header: "Proveedor",
+			accessorKey: 'supplier.name',
+			header: 'Proveedor',
 		},
 		{
-			accessorKey: "invoice_number",
-			header: "N° Factura",
+			accessorKey: 'invoice_number',
+			header: 'N° Factura',
 		},
 		{
-			accessorKey: "invoice_total",
-			header: "Total",
+			accessorKey: 'invoice_total',
+			header: 'Total',
 			cell: ({ row }) => {
 				return (
 					<span className='block w-full text-right'>
-						{row.original.invoice_total.toLocaleString("es-EC", {
+						{row.original.invoice_total.toLocaleString('es-EC', {
 							minimumFractionDigits: 2,
 							maximumFractionDigits: 2,
 						})}
@@ -99,7 +99,7 @@ function RouteComponent() {
 			},
 		},
 		{
-			id: "actions",
+			id: 'actions',
 			cell: ({ row }) => {
 				const factura = row.original
 
@@ -129,26 +129,26 @@ function RouteComponent() {
 											Esta seguro que desea eliminar la factura:
 											<ul className='my-3'>
 												<li className='flex justify-between'>
-													<span className='font-bold'>Fecha:</span>{" "}
+													<span className='font-bold'>Fecha:</span>{' '}
 													{new Date(factura.invoice_date).toLocaleDateString(
-														"es-EC",
+														'es-EC',
 														{
-															year: "numeric",
-															month: "2-digit",
-															day: "2-digit",
+															year: 'numeric',
+															month: '2-digit',
+															day: '2-digit',
 														},
 													)}
 												</li>
 												<li className='flex justify-between'>
-													<span className='font-bold'>Proyecto:</span>{" "}
+													<span className='font-bold'>Proyecto:</span>{' '}
 													{factura.project.name}
 												</li>
 												<li className='flex justify-between'>
-													<span className='font-bold'>Proveedor:</span>{" "}
+													<span className='font-bold'>Proveedor:</span>{' '}
 													{factura.supplier.name}
 												</li>
 												<li className='flex justify-between'>
-													<span className='font-bold'>N° Factura:</span>{" "}
+													<span className='font-bold'>N° Factura:</span>{' '}
 													{factura.invoice_number}
 												</li>
 											</ul>
@@ -183,7 +183,7 @@ function RouteComponent() {
 			<PageTitle title='Facturas' />
 			<Link
 				to='/transacciones/factura/crear'
-				className={`my-3 ${buttonVariants({ variant: "default" })}`}
+				className={`my-3 ${buttonVariants({ variant: 'default' })}`}
 			>
 				<PlusIcon size={16} />
 				Crear Factura

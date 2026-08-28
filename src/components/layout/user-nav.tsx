@@ -1,10 +1,10 @@
-import { useQuery } from "@tanstack/react-query"
-import { Link, useNavigate } from "@tanstack/react-router"
-import { createServerFn } from "@tanstack/react-start"
-import { deleteCookie } from "@tanstack/react-start/server"
-import { ChevronsUpDown, LogOutIcon } from "lucide-react"
-import { UserChangePasswordDialog } from "@/drawers/usuarios/cambiar-contrasena"
-import { MeQuery } from "@/queries/user"
+import { useQuery } from '@tanstack/react-query'
+import { Link, useNavigate } from '@tanstack/react-router'
+import { createServerFn } from '@tanstack/react-start'
+import { deleteCookie } from '@tanstack/react-start/server'
+import { ChevronsUpDown, LogOutIcon } from 'lucide-react'
+import { UserChangePasswordDialog } from '@/drawers/usuarios/cambiar-contrasena'
+import { MeQuery } from '@/queries/user'
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -12,32 +12,32 @@ import {
 	DropdownMenuItem,
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
-} from "../ui/dropdown-menu"
-import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "../ui/sidebar"
-import type { DataType } from "./app-sidebar"
+} from '../ui/dropdown-menu'
+import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '../ui/sidebar'
+import type { DataType } from './app-sidebar'
 
 const userData: DataType = {
-	title: "User",
+	title: 'User',
 	items: [
 		{
-			title: "Perfil",
-			url: "/usuarios/perfil",
+			title: 'Perfil',
+			url: '/usuarios/perfil',
 		},
 		{
-			title: "Administrar",
-			url: "/usuarios/admin",
+			title: 'Administrar',
+			url: '/usuarios/admin',
 		},
 	],
 }
 
-const logout = createServerFn({ method: "POST" }).handler(async () => {
-	deleteCookie("BCA-TOKEN")
+const logout = createServerFn({ method: 'POST' }).handler(async () => {
+	deleteCookie('BCA-TOKEN')
 })
 
 export function UserNav() {
 	const navigate = useNavigate()
 	const { data } = useQuery({
-		queryKey: ["me"],
+		queryKey: ['me'],
 		queryFn: () => MeQuery(),
 		staleTime: 1000 * 60 * 10, // 10 minutes
 	})
@@ -81,7 +81,7 @@ export function UserNav() {
 						<DropdownMenuItem
 							onClick={async () => {
 								await logout()
-								navigate({ to: "/login" })
+								navigate({ to: '/login' })
 							}}
 						>
 							<LogOutIcon />

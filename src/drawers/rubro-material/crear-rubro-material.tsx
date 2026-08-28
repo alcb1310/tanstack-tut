@@ -1,8 +1,8 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { CircleXIcon, PlusIcon, SaveIcon } from "lucide-react"
-import { useEffect, useState } from "react"
-import { toast } from "sonner"
-import { Button } from "@/components/ui/button"
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { CircleXIcon, PlusIcon, SaveIcon } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { toast } from 'sonner'
+import { Button } from '@/components/ui/button'
 import {
 	Drawer,
 	DrawerClose,
@@ -12,15 +12,15 @@ import {
 	DrawerHeader,
 	DrawerTitle,
 	DrawerTrigger,
-} from "@/components/ui/drawer"
-import { FieldGroup, FieldSet } from "@/components/ui/field"
-import { useAppForm } from "@/hooks/app-form"
-import { GetAllMaterials } from "@/queries/materiales"
-import { CreateRubroMaterial } from "@/queries/rubro-material"
+} from '@/components/ui/drawer'
+import { FieldGroup, FieldSet } from '@/components/ui/field'
+import { useAppForm } from '@/hooks/app-form'
+import { GetAllMaterials } from '@/queries/materiales'
+import { CreateRubroMaterial } from '@/queries/rubro-material'
 import {
 	type RubroMaterialType,
 	rubroMaterialSchema,
-} from "@/types/rubro-material"
+} from '@/types/rubro-material'
 
 type RubroMaterialCreateDrawerProps = {
 	item: string
@@ -32,7 +32,7 @@ export function RubroMaterialCreateDrawer({
 	const queryClient = useQueryClient()
 	const [open, setOpen] = useState(false)
 	const { data: material } = useQuery({
-		queryKey: ["materiales"],
+		queryKey: ['materiales'],
 		queryFn: () => GetAllMaterials(),
 	})
 
@@ -40,14 +40,14 @@ export function RubroMaterialCreateDrawer({
 		mutationFn: CreateRubroMaterial,
 		onSuccess: () => {
 			setOpen(false)
-			queryClient.invalidateQueries({ queryKey: ["rubros-material"] })
-			toast.success("Material agregado exitosamente")
+			queryClient.invalidateQueries({ queryKey: ['rubros-material'] })
+			toast.success('Material agregado exitosamente')
 		},
 		onError: error => {
 			toast.error(error.message, {
-				position: "top-center",
+				position: 'top-center',
 				style: {
-					color: "red",
+					color: 'red',
 				},
 			})
 		},
@@ -56,7 +56,7 @@ export function RubroMaterialCreateDrawer({
 	const form = useAppForm({
 		defaultValues: {
 			item_id: item,
-			material_id: "",
+			material_id: '',
 			quantity: 0,
 		} as RubroMaterialType,
 		validators: {
@@ -85,8 +85,8 @@ export function RubroMaterialCreateDrawer({
 			value: item.id as string,
 		})) || []
 	matValues.unshift({
-		label: "Seleccione un material",
-		value: "",
+		label: 'Seleccione un material',
+		value: '',
 	})
 
 	return (

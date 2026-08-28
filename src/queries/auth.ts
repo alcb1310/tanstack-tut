@@ -1,6 +1,6 @@
+import type { ErrorResponseType } from "@/types/error"
 import { createServerFn } from "@tanstack/react-start"
 import { setCookie } from "@tanstack/react-start/server"
-import type { ErrorResponseType } from "@/types/error"
 
 const URL = import.meta.env.VITE_BACKEND_SERVER
 

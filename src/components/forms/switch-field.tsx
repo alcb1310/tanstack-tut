@@ -1,14 +1,14 @@
-import { useStore } from "@tanstack/react-form"
-import type { Switch as SwitchPrimitive } from "radix-ui"
-import type { ComponentProps } from "react"
+import { useStore } from '@tanstack/react-form'
+import type { Switch as SwitchPrimitive } from 'radix-ui'
+import type { ComponentProps } from 'react'
 import {
 	Field,
 	FieldDescription,
 	FieldError,
 	FieldLabel,
-} from "@/components/ui/field"
-import { Switch } from "@/components/ui/switch"
-import { useFieldContext } from "@/hooks/app-form"
+} from '@/components/ui/field'
+import { Switch } from '@/components/ui/switch'
+import { useFieldContext } from '@/hooks/app-form'
 
 interface SwitchFieldProps extends ComponentProps<typeof SwitchPrimitive.Root> {
 	label: string

@@ -1,16 +1,16 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router"
-import { CircleXIcon, SaveIcon } from "lucide-react"
-import { toast } from "sonner"
-import { FormBackground } from "@/components/layout/form-background"
-import PageTitle from "@/components/layout/page-title"
-import { Button, buttonVariants } from "@/components/ui/button"
-import { FieldGroup, FieldSet } from "@/components/ui/field"
-import { useAppForm } from "@/hooks/app-form"
-import { CreateRubro } from "@/queries/rubros"
-import { type RubrosType, rubrosSchema } from "@/types/rubros"
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { createFileRoute, Link, useNavigate } from '@tanstack/react-router'
+import { CircleXIcon, SaveIcon } from 'lucide-react'
+import { toast } from 'sonner'
+import { FormBackground } from '@/components/layout/form-background'
+import PageTitle from '@/components/layout/page-title'
+import { Button, buttonVariants } from '@/components/ui/button'
+import { FieldGroup, FieldSet } from '@/components/ui/field'
+import { useAppForm } from '@/hooks/app-form'
+import { CreateRubro } from '@/queries/rubros'
+import { type RubrosType, rubrosSchema } from '@/types/rubros'
 
-export const Route = createFileRoute("/_authed/parametros/rubros/crear")({
+export const Route = createFileRoute('/_authed/parametros/rubros/crear')({
 	component: RouteComponent,
 })
 
@@ -21,18 +21,18 @@ function RouteComponent() {
 	const createRubroMutation = useMutation({
 		mutationFn: CreateRubro,
 		onSuccess: data => {
-			toast.success("Rubro creado exitosamente")
-			queryClient.invalidateQueries({ queryKey: ["rubros"] })
+			toast.success('Rubro creado exitosamente')
+			queryClient.invalidateQueries({ queryKey: ['rubros'] })
 			navigate({
-				to: "/parametros/rubros/$rubroId",
+				to: '/parametros/rubros/$rubroId',
 				params: { rubroId: data.id as string },
 			})
 		},
 		onError: error => {
 			toast.error(error.message, {
-				position: "top-center",
+				position: 'top-center',
 				style: {
-					color: "red",
+					color: 'red',
 				},
 			})
 		},
@@ -40,9 +40,9 @@ function RouteComponent() {
 
 	const form = useAppForm({
 		defaultValues: {
-			code: "",
-			name: "",
-			unit: "",
+			code: '',
+			name: '',
+			unit: '',
 		} as RubrosType,
 		validators: {
 			onSubmit: rubrosSchema,
@@ -106,7 +106,7 @@ function RouteComponent() {
 
 						<Link
 							to='/parametros/rubros'
-							className={buttonVariants({ variant: "secondary" })}
+							className={buttonVariants({ variant: 'secondary' })}
 						>
 							<CircleXIcon size={10} />
 							Cancelar

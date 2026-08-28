@@ -1,16 +1,17 @@
 import { createServerFn } from "@tanstack/react-start"
 import { getCookie } from "@tanstack/react-start/server"
 import type { ErrorResponseType } from "@/types/error"
+||||||| 5f63fb0
 import type {
 	BudgetItem,
 	BudgetItemResponse,
 	BudgetItemUpdate,
-} from "@/types/partidas"
+} from '@/types/partidas'
 
 const URL = import.meta.env.VITE_BACKEND_SERVER
-const cookieName = "BCA-TOKEN"
+const cookieName = 'BCA-TOKEN'
 
-export const GetAllPartidas = createServerFn({ method: "GET" })
+export const GetAllPartidas = createServerFn({ method: 'GET' })
 	.validator((data: { query?: string; accum?: boolean }) => {
 		return data
 	})
@@ -19,15 +20,15 @@ export const GetAllPartidas = createServerFn({ method: "GET" })
 			const token = getCookie(cookieName)
 
 			const params = new URLSearchParams()
-			if (query) params.set("query", query)
+			if (query) params.set('query', query)
 			if (accum !== undefined) {
-				params.set("accum", accum.toString())
+				params.set('accum', accum.toString())
 			}
 
 			const response = await fetch(`${URL}/parametros/partidas?${params}`, {
-				method: "GET",
+				method: 'GET',
 				headers: {
-					"Content-Type": "application/json",
+					'Content-Type': 'application/json',
 					Authorization: `Bearer ${token}`,
 				},
 			})
@@ -37,19 +38,19 @@ export const GetAllPartidas = createServerFn({ method: "GET" })
 				throw new Error(res.msg)
 			}
 
-			return response.json()
+return response.json()
 		},
 	)
 
-export const CreatePartida = createServerFn({ method: "POST" })
+export const CreatePartida = createServerFn({ method: 'POST' })
 	.validator((data: BudgetItem) => data)
 	.handler(async ({ data }) => {
 		const token = getCookie(cookieName)
 
 		const response = await fetch(`${URL}/parametros/partidas`, {
-			method: "POST",
+			method: 'POST',
 			headers: {
-				"Content-Type": "application/json",
+				'Content-Type': 'application/json',
 				Authorization: `Bearer ${token}`,
 			},
 			body: JSON.stringify(data),
@@ -63,24 +64,24 @@ export const CreatePartida = createServerFn({ method: "POST" })
 		return
 	})
 
-export const UpdatePartida = createServerFn({ method: "POST" })
+export const UpdatePartida = createServerFn({ method: 'POST' })
 	.validator((data: BudgetItemUpdate) => data)
 	.handler(async ({ data }) => {
-		const token = getCookie(cookieName)
+	const token = getCookie(cookieName)
 
-		const response = await fetch(`${URL}/parametros/partidas/${data.id}`, {
-			method: "PUT",
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: `Bearer ${token}`,
-			},
-			body: JSON.stringify(data),
-		})
-
-		if (!response.ok) {
-			const data = (await response.json()) as ErrorResponseType
-			throw new Error(data.msg)
-		}
-
-		return
+	const response = await fetch(`${URL}/parametros/partidas/${data.id}`, {
+		method: 'PUT',
+		headers: {
+			'Content-Type': 'application/json',
+			Authorization: `Bearer ${token}`,
+		},
+		body: JSON.stringify(data),
 	})
+
+	if (!response.ok) {
+		const data = (await response.json()) as ErrorResponseType
+		throw new Error(data.msg)
+	}
+
+	return
+})
