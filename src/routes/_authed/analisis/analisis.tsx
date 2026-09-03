@@ -14,7 +14,8 @@ import { GetAllProjects } from '@/queries/proyectos'
 
 export const Route = createFileRoute('/_authed/analisis/analisis')({
 	component: RouteComponent,
-	loader: ({ context: { queryClient } }) => {
+	beforeLoad: ({ context: { queryClient } }) => {
+		queryClient.resetQueries({ queryKey: ['analisis'] })
 		queryClient.query({
 			queryKey: ['proyectos'],
 			queryFn: () => GetAllProjects({ data: { active: true } }),

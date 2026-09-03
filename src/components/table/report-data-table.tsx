@@ -35,13 +35,17 @@ export function ReportDataTable<TData, TValue>({
 					<TableRow key={headerGroup.id}>
 						{headerGroup.headers.map(header => {
 							return (
-								<TableHead key={header.id} colSpan={header.colSpan}>
+								<TableHead
+									key={header.id}
+									colSpan={header.colSpan}
+									style={{ width: header.getSize() }}
+								>
 									{header.isPlaceholder
 										? null
 										: flexRender(
-												header.column.columnDef.header,
-												header.getContext(),
-											)}
+											header.column.columnDef.header,
+											header.getContext(),
+										)}
 								</TableHead>
 							)
 						})}
