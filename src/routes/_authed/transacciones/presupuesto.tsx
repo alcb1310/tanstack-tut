@@ -88,9 +88,9 @@ function RouteComponent() {
 					<span className='block w-full text-right'>
 						{q.Valid
 							? q.Float64.toLocaleString('es-EC', {
-								minimumFractionDigits: 2,
-								maximumFractionDigits: 2,
-							})
+									minimumFractionDigits: 2,
+									maximumFractionDigits: 2,
+								})
 							: ''}
 					</span>
 				)
@@ -107,9 +107,9 @@ function RouteComponent() {
 					<span className='block w-full text-right'>
 						{q.Valid
 							? q.Float64.toLocaleString('es-EC', {
-								minimumFractionDigits: 2,
-								maximumFractionDigits: 2,
-							})
+									minimumFractionDigits: 2,
+									maximumFractionDigits: 2,
+								})
 							: ''}
 					</span>
 				)
