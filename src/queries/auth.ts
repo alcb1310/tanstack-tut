@@ -1,5 +1,6 @@
 import { createServerFn } from '@tanstack/react-start'
 import { setCookie } from '@tanstack/react-start/server'
+import type { ErrorResponseType } from '@/types/error'
 
 const URL = import.meta.env.VITE_BACKEND_SERVER
 
@@ -26,8 +27,8 @@ export const LoginMutation = createServerFn({ method: 'POST' })
 		})
 
 		if (!response.ok) {
-			const err = await response.json()
-			throw new Error(err.error)
+			const err = (await response.json()) as ErrorResponseType
+			throw new Error(err.msg)
 		}
 
 		const auth = (await response.json()) as LoginResponse

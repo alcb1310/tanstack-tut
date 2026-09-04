@@ -1,5 +1,6 @@
 import { createServerFn } from '@tanstack/react-start'
 import { getCookie } from '@tanstack/react-start/server'
+import type { ErrorResponseType } from '@/types/error'
 import type { BudgetResponseType } from '@/types/presupuesto'
 import type {
 	BalanceResponseType,
@@ -22,6 +23,12 @@ export const GetAllLevels = createServerFn({ method: 'GET' }).handler(
 				Authorization: `Bearer ${token}`,
 			},
 		})
+
+		if (!response.ok) {
+			const res = (await response.json()) as ErrorResponseType
+			throw new Error(res.msg)
+		}
+
 		return await response.json()
 	},
 )
@@ -41,6 +48,12 @@ export const GetAllBugetsByProjectAndLevel = createServerFn({ method: 'GET' })
 					Authorization: `Bearer ${token}`,
 				},
 			})
+
+			if (!response.ok) {
+				const res = (await response.json()) as ErrorResponseType
+				throw new Error(res.msg)
+			}
+
 			return response.json()
 		},
 	)
@@ -69,7 +82,8 @@ export const GetAllHistoric = createServerFn({ method: 'GET' })
 			})
 
 			if (!response.ok) {
-				throw new Error('Network error')
+				const res = (await response.json()) as ErrorResponseType
+				throw new Error(res.msg)
 			}
 
 			if (response.status === 204) return [] as BudgetResponseType[]
@@ -99,7 +113,8 @@ export const GetBalanceReport = createServerFn({ method: 'GET' })
 			})
 
 			if (!response.ok) {
-				throw new Error('Network error')
+				const res = (await response.json()) as ErrorResponseType
+				throw new Error(res.msg)
 			}
 
 			return response.json()
@@ -120,8 +135,8 @@ export const SetBalancedInvoice = createServerFn({ method: 'POST' })
 		})
 
 		if (!response.ok) {
-			const err = await response.json()
-			throw new Error(err.error)
+			const res = (await response.json()) as ErrorResponseType
+			throw new Error(res.msg)
 		}
 
 		return
@@ -150,6 +165,11 @@ export const GetSpentReport = createServerFn({ method: 'GET' })
 				},
 			})
 
+			if (!response.ok) {
+				const res = (await response.json()) as ErrorResponseType
+				throw new Error(res.msg)
+			}
+
 			return response.json()
 		},
 	)
@@ -175,6 +195,11 @@ export const GetSpentDetails = createServerFn({ method: 'GET' })
 					},
 				},
 			)
+
+			if (!response.ok) {
+				const res = (await response.json()) as ErrorResponseType
+				throw new Error(res.msg)
+			}
 
 			return response.json()
 		},

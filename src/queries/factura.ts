@@ -1,5 +1,6 @@
 import { createServerFn } from '@tanstack/react-start'
 import { getCookie } from '@tanstack/react-start/server'
+import type { ErrorResponseType } from '@/types/error'
 import type { InvoiceCreateType, InvoiceResponseType } from '@/types/facturas'
 
 const URL = import.meta.env.VITE_BACKEND_SERVER
@@ -18,10 +19,9 @@ export const GetAllInvoices = createServerFn({ method: 'GET' }).handler(
 		})
 
 		if (!response.ok) {
-			console.log(await response.json())
-			throw new Error('Network response was not ok')
+			const res = (await response.json()) as ErrorResponseType
+			throw new Error(res.msg)
 		}
-		console.log(response)
 
 		return response.json()
 	},
@@ -40,7 +40,8 @@ export const GetOneInvoice = createServerFn({ method: 'GET' })
 		})
 
 		if (!response.ok) {
-			throw new Error('Network response was not ok')
+			const res = (await response.json()) as ErrorResponseType
+			throw new Error(res.msg)
 		}
 
 		return await response.json()
@@ -60,8 +61,8 @@ export const CreateInvoice = createServerFn({ method: 'POST' })
 		})
 
 		if (!response.ok) {
-			const error = await response.json()
-			throw new Error(error.error)
+			const error = (await response.json()) as ErrorResponseType
+			throw new Error(error.msg)
 		}
 
 		return response.json() as Promise<InvoiceResponseType>
@@ -84,8 +85,8 @@ export const UpdateInvoice = createServerFn({ method: 'POST' })
 		})
 
 		if (!response.ok) {
-			const error = await response.json()
-			throw new Error(error.error)
+			const error = (await response.json()) as ErrorResponseType
+			throw new Error(error.msg)
 		}
 
 		return
@@ -104,8 +105,8 @@ export const DeleteInvoice = createServerFn({ method: 'POST' })
 		})
 
 		if (!response.ok) {
-			const error = await response.json()
-			throw new Error(error.error)
+			const error = (await response.json()) as ErrorResponseType
+			throw new Error(error.msg)
 		}
 
 		return

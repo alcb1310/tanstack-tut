@@ -1,5 +1,6 @@
 import { createServerFn } from '@tanstack/react-start'
 import { getCookie } from '@tanstack/react-start/server'
+import type { ErrorResponseType } from '@/types/error'
 import type { RubrosType } from '@/types/rubros'
 
 const URL = import.meta.env.VITE_BACKEND_SERVER
@@ -18,9 +19,8 @@ export const GetAllRubros = createServerFn({ method: 'GET' }).handler(
 		})
 
 		if (!response.ok) {
-			const data = await response.json()
-
-			throw new Error(data.error)
+			const data = (await response.json()) as ErrorResponseType
+			throw new Error(data.msg)
 		}
 
 		return await response.json()
@@ -41,12 +41,11 @@ export const GetOneRubro = createServerFn({ method: 'GET' })
 		})
 
 		if (!response.ok) {
-			const data = await response.json()
-
-			throw new Error(data.error)
+			const data = (await response.json()) as ErrorResponseType
+			throw new Error(data.msg)
 		}
 
-		return (await response.json()) as RubrosType
+		return await response.json()
 	})
 
 export const CreateRubro = createServerFn({ method: 'GET' })
@@ -64,9 +63,8 @@ export const CreateRubro = createServerFn({ method: 'GET' })
 		})
 
 		if (!response.ok) {
-			const data = await response.json()
-
-			throw new Error(data.error)
+			const data = (await response.json()) as ErrorResponseType
+			throw new Error(data.msg)
 		}
 
 		return (await response.json()) as RubrosType
@@ -87,9 +85,8 @@ export const UpdateRubro = createServerFn({ method: 'GET' })
 		})
 
 		if (!response.ok) {
-			const data = await response.json()
-
-			throw new Error(data.error)
+			const data = (await response.json()) as ErrorResponseType
+			throw new Error(data.msg)
 		}
 
 		return

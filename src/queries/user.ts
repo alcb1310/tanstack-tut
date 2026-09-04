@@ -1,5 +1,6 @@
 import { createServerFn } from '@tanstack/react-start'
 import { getCookie } from '@tanstack/react-start/server'
+import type { ErrorResponseType } from '@/types/error'
 import type { UserCreate, UserResponse } from '@/types/user'
 
 const URL = import.meta.env.VITE_BACKEND_SERVER
@@ -21,8 +22,8 @@ export const MeQuery = createServerFn({ method: 'GET' }).handler(
 		})
 
 		if (!response.ok) {
-			const data = await response.json()
-			throw new Error(data.error)
+			const data = (await response.json()) as ErrorResponseType
+			throw new Error(data.msg)
 		}
 
 		return await response.json()
@@ -42,8 +43,8 @@ export const GetAllUsers = createServerFn({ method: 'GET' }).handler(
 		})
 
 		if (!response.ok) {
-			const data = await response.json()
-			throw new Error(data.error)
+			const data = (await response.json()) as ErrorResponseType
+			throw new Error(data.msg)
 		}
 
 		return await response.json()
@@ -65,8 +66,8 @@ export const CreateUser = createServerFn({ method: 'POST' })
 		})
 
 		if (!response.ok) {
-			const data = await response.json()
-			throw new Error(data.error)
+			const data = (await response.json()) as ErrorResponseType
+			throw new Error(data.msg)
 		}
 
 		return
@@ -87,8 +88,8 @@ export const UpdateUser = createServerFn({ method: 'POST' })
 		})
 
 		if (!response.ok) {
-			const data = await response.json()
-			throw new Error(data.error)
+			const data = (await response.json()) as ErrorResponseType
+			throw new Error(data.msg)
 		}
 
 		return
@@ -109,8 +110,8 @@ export const UpdatePassword = createServerFn({ method: 'POST' })
 		})
 
 		if (!response.ok) {
-			const data = await response.json()
-			throw new Error(data.error)
+			const data = (await response.json()) as ErrorResponseType
+			throw new Error(data.msg)
 		}
 
 		return
@@ -120,7 +121,6 @@ export const DeleteUser = createServerFn({ method: 'POST' })
 	.validator((data: { id: string }) => data)
 	.handler(async ({ data: { id } }) => {
 		const token = getCookie(cookieName)
-		console.log('DeleteUser', token)
 
 		const response = await fetch(`${URL}/users/${id}`, {
 			method: 'DELETE',
@@ -135,8 +135,8 @@ export const DeleteUser = createServerFn({ method: 'POST' })
 				throw new Error('No tienes permiso para realizar esta acción')
 			}
 
-			const data = await response.json()
-			throw new Error(data.error)
+			const data = (await response.json()) as ErrorResponseType
+			throw new Error(data.msg)
 		}
 
 		return

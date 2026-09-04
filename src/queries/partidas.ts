@@ -1,5 +1,7 @@
 import { createServerFn } from '@tanstack/react-start'
 import { getCookie } from '@tanstack/react-start/server'
+import type { ErrorResponseType } from '@/types/error'
+
 import type {
 	BudgetItem,
 	BudgetItemResponse,
@@ -31,7 +33,10 @@ export const GetAllPartidas = createServerFn({ method: 'GET' })
 				},
 			})
 
-			if (!response.ok) throw new Error('Network response was not ok')
+			if (!response.ok) {
+				const res = (await response.json()) as ErrorResponseType
+				throw new Error(res.msg)
+			}
 
 			return response.json()
 		},
@@ -52,8 +57,8 @@ export const CreatePartida = createServerFn({ method: 'POST' })
 		})
 
 		if (!response.ok) {
-			const data = await response.json()
-			throw new Error(data.error)
+			const data = (await response.json()) as ErrorResponseType
+			throw new Error(data.msg)
 		}
 
 		return
@@ -74,8 +79,8 @@ export const UpdatePartida = createServerFn({ method: 'POST' })
 		})
 
 		if (!response.ok) {
-			const data = await response.json()
-			throw new Error(data.error)
+			const data = (await response.json()) as ErrorResponseType
+			throw new Error(data.msg)
 		}
 
 		return

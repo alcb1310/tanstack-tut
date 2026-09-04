@@ -61,18 +61,22 @@ function RouteComponent() {
 		{
 			accessorKey: 'material.code',
 			header: 'Codigo',
+			size: 100,
 		},
 		{
 			accessorKey: 'material.name',
 			header: 'Codigo',
+			size: 800,
 		},
 		{
 			accessorKey: 'material.unit',
 			header: 'Unidad',
+			size: 50,
 		},
 		{
 			accessorKey: 'quantity',
 			header: 'Cantidad',
+			size: 100,
 			cell: ({ row }) => {
 				return (
 					<span className='block w-full text-right'>
@@ -87,6 +91,7 @@ function RouteComponent() {
 		{
 			id: 'actions',
 			header: 'Acciones',
+			size: 50,
 			cell: ({ row }) => {
 				const material: RubroMaterialType = {
 					item_id: row.original.item.id as string,
@@ -94,7 +99,7 @@ function RouteComponent() {
 					quantity: row.original.quantity,
 				}
 				return (
-					<div className='flex px-3 justify-end items-center gap-2'>
+					<div className='flex justify-end items-center'>
 						<RubroMaterialEditDrawer
 							material_name={row.original.material.name}
 							material={material}

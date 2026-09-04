@@ -29,35 +29,42 @@ function RouteComponent() {
 		{
 			accessorKey: 'code',
 			header: 'Código',
+			size: 100,
 		},
 		{
 			accessorKey: 'name',
 			header: 'Nombre',
+			size: 500,
 		},
 		{
 			accessorKey: 'unit',
 			header: 'Unidad',
+			size: 100,
 		},
 		{
 			accessorKey: 'category.name',
 			header: 'Categoria',
+			size: 500,
 		},
 		{
 			id: 'actions',
+			size: 50,
 			cell: ({ row }) => {
 				const material = row.original
 				if (!material.id) return null
 
 				return (
-					<MaterialEditDrawer
-						material={{
-							code: material.code,
-							name: material.name,
-							unit: material.unit,
-							id: material.id,
-							category: material.category,
-						}}
-					/>
+					<div className='flex justify-end'>
+						<MaterialEditDrawer
+							material={{
+								code: material.code,
+								name: material.name,
+								unit: material.unit,
+								id: material.id,
+								category: material.category,
+							}}
+						/>
+					</div>
 				)
 			},
 		},
