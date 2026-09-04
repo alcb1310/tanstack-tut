@@ -56,13 +56,16 @@ function RouteComponent() {
 		{
 			accessorKey: 'project.name',
 			header: 'Proyecto',
+			size: 500,
 		},
 		{
 			accessorKey: 'budget_item.name',
 			header: 'Partida',
+			size: 800,
 		},
 		{
 			accessorKey: 'spent_total',
+			size: 200,
 			header: 'Gastado',
 			cell: ({ row }) => {
 				return (
@@ -76,6 +79,7 @@ function RouteComponent() {
 		},
 		{
 			accessorKey: 'remaining_quantity',
+			size: 200,
 			header: 'Cantidad',
 			cell: ({ row }) => {
 				const q = row.original.remaining_quantity
@@ -84,9 +88,9 @@ function RouteComponent() {
 					<span className='block w-full text-right'>
 						{q.Valid
 							? q.Float64.toLocaleString('es-EC', {
-									minimumFractionDigits: 2,
-									maximumFractionDigits: 2,
-								})
+								minimumFractionDigits: 2,
+								maximumFractionDigits: 2,
+							})
 							: ''}
 					</span>
 				)
@@ -94,6 +98,7 @@ function RouteComponent() {
 		},
 		{
 			accessorKey: 'remaining_cost',
+			size: 200,
 			header: 'Costo',
 			cell: ({ row }) => {
 				const q = row.original.remaining_cost
@@ -102,9 +107,9 @@ function RouteComponent() {
 					<span className='block w-full text-right'>
 						{q.Valid
 							? q.Float64.toLocaleString('es-EC', {
-									minimumFractionDigits: 2,
-									maximumFractionDigits: 2,
-								})
+								minimumFractionDigits: 2,
+								maximumFractionDigits: 2,
+							})
 							: ''}
 					</span>
 				)
@@ -112,6 +117,7 @@ function RouteComponent() {
 		},
 		{
 			accessorKey: 'remaining_total',
+			size: 200,
 			header: 'Total',
 			cell: ({ row }) => {
 				const q = row.original.remaining_total
@@ -128,6 +134,7 @@ function RouteComponent() {
 		},
 		{
 			accessorKey: 'updated_budget',
+			size: 200,
 			header: 'Presupuesto',
 			cell: ({ row }) => {
 				const q = row.original.updated_budget
@@ -144,6 +151,7 @@ function RouteComponent() {
 		},
 		{
 			id: 'Actions',
+			size: 20,
 			cell: ({ row }) => {
 				const budget = row.original
 				return (
