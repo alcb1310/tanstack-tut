@@ -36,21 +36,28 @@ function RouteComponent() {
 		{
 			accessorKey: 'code',
 			header: 'Codigo',
+			size: 100,
 		},
 		{
 			accessorKey: 'name',
 			header: 'Nombre',
+			size: 800,
 		},
 		{
 			accessorKey: 'level',
 			header: 'Nivel',
+			size: 50,
+			cell: ({ row }) => {
+				return <span className='flex justify-center'>{row.original.level}</span>
+			},
 		},
 		{
 			accessorKey: 'accumulate',
 			header: 'Acumula',
+			size: 50,
 			cell: ({ row }) => {
 				return (
-					<span className='block w-full text-right'>
+					<span className='flex justify-center w-full '>
 						{row.original.accumulate ? (
 							<CheckIcon size={16} />
 						) : (
@@ -63,12 +70,14 @@ function RouteComponent() {
 		{
 			accessorKey: 'parent',
 			header: 'Padre',
+			size: 100,
 			cell: ({ row }) => {
 				return <span>{row.original.parent?.code}</span>
 			},
 		},
 		{
 			id: 'actions',
+			size: 50,
 			cell: ({ row }) => {
 				const partida = row.original
 

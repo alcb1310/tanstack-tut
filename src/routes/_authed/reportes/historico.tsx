@@ -60,14 +60,17 @@ function RouteComponent() {
 		{
 			accessorKey: 'budget_item.code',
 			header: 'Código',
+			size: 100,
 		},
 		{
 			accessorKey: 'budget_item.name',
 			header: 'Partida',
+			size: 800,
 		},
 		{
 			accessorKey: 'updated_budget',
 			header: 'Presupuesto',
+			size: 150,
 			cell: ({ row }) => {
 				const q = row.original.updated_budget
 
@@ -88,6 +91,7 @@ function RouteComponent() {
 				{
 					accessorKey: 'spent_quantity',
 					header: 'Cantidad',
+					size: 150,
 					cell: ({ row }) => {
 						const q = row.original.spent_quantity
 
@@ -106,6 +110,7 @@ function RouteComponent() {
 				{
 					accessorKey: 'spent_total',
 					header: 'Total',
+					size: 150,
 					cell: ({ row }) => {
 						const q = row.original.spent_total
 
@@ -128,6 +133,7 @@ function RouteComponent() {
 				{
 					accessorKey: 'remaining_quantity',
 					header: 'Cantidad',
+					size: 150,
 					cell: ({ row }) => {
 						const q = row.original.remaining_quantity
 
@@ -146,6 +152,7 @@ function RouteComponent() {
 				{
 					accessorKey: 'remaining_cost',
 					header: 'Costo',
+					size: 150,
 					cell: ({ row }) => {
 						const q = row.original.remaining_cost
 
@@ -164,6 +171,7 @@ function RouteComponent() {
 				{
 					accessorKey: 'remaining_total',
 					header: 'Total',
+					size: 150,
 					cell: ({ row }) => {
 						const q = row.original.remaining_total
 

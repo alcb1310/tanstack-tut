@@ -1,5 +1,6 @@
 import { createServerFn } from '@tanstack/react-start'
 import { getCookie } from '@tanstack/react-start/server'
+import type { ErrorResponseType } from '@/types/error'
 import type { BudgetEditType, BudgetResponseType } from '@/types/presupuesto'
 
 const URL = import.meta.env.VITE_BACKEND_SERVER
@@ -23,6 +24,12 @@ export const GetAllBudgets = createServerFn({ method: 'GET' })
 					},
 				},
 			)
+
+			if (!response.ok) {
+				const res = (await response.json()) as ErrorResponseType
+				throw new Error(res.msg)
+			}
+
 			return response.json()
 		},
 	)
@@ -42,8 +49,8 @@ export const CreateBudget = createServerFn({ method: 'POST' })
 		})
 
 		if (!response.ok) {
-			const error = await response.json()
-			throw new Error(error.error)
+			const error = (await response.json()) as ErrorResponseType
+			throw new Error(error.msg)
 		}
 
 		return
@@ -67,8 +74,8 @@ export const UpdateBudget = createServerFn({ method: 'POST' })
 		)
 
 		if (!response.ok) {
-			const error = await response.json()
-			throw new Error(error.error)
+			const error = (await response.json()) as ErrorResponseType
+			throw new Error(error.msg)
 		}
 
 		return

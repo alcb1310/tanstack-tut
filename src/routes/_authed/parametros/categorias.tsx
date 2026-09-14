@@ -32,10 +32,15 @@ function RouteComponent() {
 		},
 		{
 			id: 'actions',
+			size: 50,
 			cell: ({ row }) => {
 				const category = row.original
 
-				return <CategoryEditDrawer category={category} />
+				return (
+					<div className='flex justify-end'>
+						<CategoryEditDrawer category={category} />
+					</div>
+				)
 			},
 		},
 	]
@@ -48,7 +53,7 @@ function RouteComponent() {
 
 			<CategoryCreateDrawer />
 
-			<div className='max-w-1/3'>
+			<div>
 				<DataTable columns={columns} data={data} />
 			</div>
 		</div>

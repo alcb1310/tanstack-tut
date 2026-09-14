@@ -63,6 +63,7 @@ function RouteComponent() {
 		{
 			accessorKey: 'invoice_date',
 			header: 'Fecha',
+			size: 100,
 			cell: ({ row }) => {
 				const dt = new Date(row.original.invoice_date)
 				return dt.toLocaleDateString('es-EC', {
@@ -74,19 +75,23 @@ function RouteComponent() {
 		},
 		{
 			accessorKey: 'project.name',
+			size: 500,
 			header: 'Proyecto',
 		},
 		{
 			accessorKey: 'supplier.name',
+			size: 800,
 			header: 'Proveedor',
 		},
 		{
 			accessorKey: 'invoice_number',
 			header: 'N° Factura',
+			size: 300,
 		},
 		{
 			accessorKey: 'invoice_total',
 			header: 'Total',
+			size: 200,
 			cell: ({ row }) => {
 				return (
 					<span className='block w-full text-right'>
@@ -100,6 +105,7 @@ function RouteComponent() {
 		},
 		{
 			id: 'actions',
+			size: 50,
 			cell: ({ row }) => {
 				const factura = row.original
 

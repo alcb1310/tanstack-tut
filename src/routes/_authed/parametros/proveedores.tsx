@@ -35,25 +35,31 @@ function RouteComponent() {
 		{
 			accessorKey: 'supplier_id',
 			header: 'RUC',
+			size: 100,
 		},
 		{
 			accessorKey: 'name',
 			header: 'Nombre',
+			size: 500,
 		},
 		{
 			accessorKey: 'contact_name.String',
 			header: 'Nombre Contacto',
+			size: 200,
 		},
 		{
 			accessorKey: 'contact_email.String',
 			header: 'Email Contacto',
+			size: 200,
 		},
 		{
 			accessorKey: 'contact_phone.String',
 			header: 'Telefono Contacto',
+			size: 100,
 		},
 		{
 			id: 'actions',
+			size: 50,
 			cell: ({ row }) => {
 				const supplier = row.original
 

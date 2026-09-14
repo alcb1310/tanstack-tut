@@ -60,14 +60,17 @@ function RouteComponent() {
 		{
 			accessorKey: 'budget_item.code',
 			header: 'Código',
+			size: 100,
 		},
 		{
 			accessorKey: 'budget_item.name',
+			size: 800,
 			header: 'Partida',
 		},
 		{
 			accessorKey: 'spent',
 			header: 'Total',
+			size: 150,
 			cell: ({ row }) => {
 				return (
 					<span className='block w-full text-right'>
@@ -81,6 +84,7 @@ function RouteComponent() {
 		},
 		{
 			id: 'actions',
+			size: 20,
 			cell: ({ row }) => {
 				return (
 					<SpentDetailsDrawer

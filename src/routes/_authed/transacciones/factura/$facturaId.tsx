@@ -99,14 +99,17 @@ function RouteComponent() {
 		{
 			accessorKey: 'budget_item_code',
 			header: 'Codigo',
+			size: 100,
 		},
 		{
 			accessorKey: 'budget_item_name',
 			header: 'Nombre',
+			size: 800,
 		},
 		{
 			accessorKey: 'quantity',
 			header: 'Cantidad',
+			size: 100,
 			cell: ({ row }) => {
 				return (
 					<span className='block w-full text-right'>
@@ -120,6 +123,7 @@ function RouteComponent() {
 		{
 			accessorKey: 'cost',
 			header: 'Costo',
+			size: 100,
 			cell: ({ row }) => {
 				return (
 					<span className='block w-full text-right'>
@@ -133,6 +137,7 @@ function RouteComponent() {
 		{
 			accessorKey: 'total',
 			header: 'Total',
+			size: 100,
 			cell: ({ row }) => {
 				return (
 					<span className='block w-full text-right'>
@@ -145,6 +150,7 @@ function RouteComponent() {
 		},
 		{
 			id: 'actions',
+			size: 50,
 			cell: ({ row }) => {
 				const detalle = row.original
 				return <DetalleDeleteDialog invoice_detail={detalle} />

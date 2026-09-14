@@ -23,7 +23,7 @@ export const Route = createRootRouteWithContext<{
 				content: 'width=device-width, initial-scale=1',
 			},
 			{
-				title: 'Tanstack Start Starter',
+				title: 'BCA',
 			},
 		],
 		links: [{ rel: 'stylesheet', href: appCss }],

@@ -44,6 +44,7 @@ export function SpentDetailsDrawer({
 		{
 			accessorKey: 'invoice_date',
 			header: 'Fecha',
+			size: 100,
 			cell: ({ row }) => {
 				const dt = new Date(row.original.invoice_date)
 				return dt.toLocaleDateString('es-EC', {
@@ -55,15 +56,18 @@ export function SpentDetailsDrawer({
 		},
 		{
 			accessorKey: 'supplier_name',
+			size: 800,
 			header: 'Proveedor',
 		},
 		{
 			accessorKey: 'invoice_number',
+			size: 150,
 			header: 'Factura',
 		},
 		{
 			accessorKey: 'total',
 			header: 'Total',
+			size: 100,
 			cell: ({ row }) => {
 				return (
 					<span className='block w-full text-right'>

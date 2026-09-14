@@ -1,5 +1,6 @@
 import { createServerFn } from '@tanstack/react-start'
 import { getCookie } from '@tanstack/react-start/server'
+import type { ErrorResponseType } from '@/types/error'
 import type { FilesType, ProjectType } from '@/types/proyectos'
 
 const URL = import.meta.env.VITE_BACKEND_SERVER
@@ -21,6 +22,12 @@ export const GetAllProjects = createServerFn({ method: 'GET' })
 				Authorization: `Bearer ${token}`,
 			},
 		})
+
+		if (!response.ok) {
+			const data = (await response.json()) as ErrorResponseType
+			throw new Error(data.msg)
+		}
+
 		return response.json()
 	})
 
@@ -37,8 +44,8 @@ export const GetOneProject = createServerFn({ method: 'GET' })
 			},
 		})
 		if (!response.ok) {
-			const data = await response.json()
-			throw new Error(data.error)
+			const data = (await response.json()) as ErrorResponseType
+			throw new Error(data.msg)
 		}
 
 		return response.json()
@@ -58,8 +65,8 @@ export const CreateProject = createServerFn({ method: 'POST' })
 			body: JSON.stringify(data),
 		})
 		if (!response.ok) {
-			const data = await response.json()
-			throw new Error(data.error)
+			const data = (await response.json()) as ErrorResponseType
+			throw new Error(data.msg)
 		}
 
 		return await response.json()
@@ -80,8 +87,8 @@ export const UpdateProject = createServerFn({ method: 'POST' })
 		})
 
 		if (!response.ok) {
-			const data = await response.json()
-			throw new Error(data.error)
+			const data = (await response.json()) as ErrorResponseType
+			throw new Error(data.msg)
 		}
 
 		return
@@ -105,8 +112,8 @@ export const AddFile = createServerFn({ method: 'POST' })
 		)
 
 		if (!response.ok) {
-			const data = await response.json()
-			throw new Error(data.error)
+			const data = (await response.json()) as ErrorResponseType
+			throw new Error(data.msg)
 		}
 
 		return
@@ -125,8 +132,8 @@ export const GetFiles = createServerFn({ method: 'GET' })
 			},
 		})
 		if (!response.ok) {
-			const data = await response.json()
-			throw new Error(data.error)
+			const data = (await response.json()) as ErrorResponseType
+			throw new Error(data.msg)
 		}
 
 		return response.json()

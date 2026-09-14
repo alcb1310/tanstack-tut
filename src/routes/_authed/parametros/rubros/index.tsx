@@ -29,17 +29,21 @@ function RouteComponent() {
 		{
 			accessorKey: 'code',
 			header: 'Codigo',
+			size: 100,
 		},
 		{
 			accessorKey: 'name',
+			size: 800,
 			header: 'Nombre',
 		},
 		{
 			accessorKey: 'unit',
 			header: 'Unidad',
+			size: 50,
 		},
 		{
 			id: 'actions',
+			size: 50,
 			cell: ({ row }) => {
 				const rubro = row.original
 

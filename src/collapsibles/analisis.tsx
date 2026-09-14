@@ -17,14 +17,17 @@ export function AnalisisCollapsible({ data }: AnalisisCollapsibleProps) {
 	const columns: ColumnDef<AnalisysDataType>[] = [
 		{
 			accessorKey: 'material_name',
+			size: 1000,
 			header: 'Rubro',
 		},
 		{
 			accessorKey: 'unit',
+			size: 100,
 			header: 'Unidad',
 		},
 		{
 			accessorKey: 'quantity',
+			size: 100,
 			header: 'Cantidad',
 		},
 	]

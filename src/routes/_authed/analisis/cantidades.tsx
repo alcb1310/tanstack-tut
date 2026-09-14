@@ -30,18 +30,22 @@ function RouteComponent() {
 		{
 			accessorKey: 'project.name',
 			header: 'Proyecto',
+			size: 500,
 		},
 		{
 			accessorKey: 'rubro.name',
+			size: 500,
 			header: 'Rubro',
 		},
 		{
 			accessorKey: 'rubro.unit',
+			size: 50,
 			header: 'Unidad',
 		},
 		{
 			accessorKey: 'quantity',
 			header: 'Cantidad',
+			size: 50,
 			cell: ({ row }) => {
 				const q = row.original.quantity
 				return (
@@ -56,10 +60,11 @@ function RouteComponent() {
 		},
 		{
 			id: 'actions',
+			size: 50,
 			cell: ({ row }) => {
 				const data = row.original
 				return (
-					<div className='flex gap-2'>
+					<div className='flex justify-between'>
 						<CantidadesEditDrawer cantidad={data} />
 						<CantiadDeleteDialog cantidad={data} />
 					</div>

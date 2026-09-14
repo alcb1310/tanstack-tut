@@ -1,5 +1,6 @@
 import { createServerFn } from '@tanstack/react-start'
 import { getCookie } from '@tanstack/react-start/server'
+import type { ErrorResponseType } from '@/types/error'
 import type {
 	ActualReportTypes,
 	BalanceReportType,
@@ -22,9 +23,10 @@ export const actualExcelExport = createServerFn({ method: 'GET' })
 				},
 			},
 		)
+
 		if (!res.ok) {
-			const error = await res.json()
-			throw new Error(error.error)
+			const error = (await res.json()) as ErrorResponseType
+			throw new Error(error.msg)
 		}
 
 		const blob = await res.blob()
@@ -55,6 +57,11 @@ export const balanceExcelExport = createServerFn({ method: 'GET' })
 			},
 		)
 
+		if (!res.ok) {
+			const error = (await res.json()) as ErrorResponseType
+			throw new Error(error.msg)
+		}
+
 		const blob = await res.blob()
 
 		return new Response(blob, {
@@ -83,6 +90,11 @@ export const histroricExcelExport = createServerFn({ method: 'GET' })
 			},
 		)
 
+		if (!res.ok) {
+			const error = (await res.json()) as ErrorResponseType
+			throw new Error(error.msg)
+		}
+
 		const blob = await res.blob()
 
 		return new Response(blob, {
@@ -110,6 +122,11 @@ export const spentExcelExport = createServerFn({ method: 'GET' })
 				},
 			},
 		)
+
+		if (!res.ok) {
+			const error = (await res.json()) as ErrorResponseType
+			throw new Error(error.msg)
+		}
 
 		const blob = await res.blob()
 

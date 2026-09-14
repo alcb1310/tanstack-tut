@@ -1,5 +1,6 @@
 import { createServerFn } from '@tanstack/react-start'
 import { getCookie } from '@tanstack/react-start/server'
+import type { ErrorResponseType } from '@/types/error'
 import type {
 	RubroMaterialResponseTye,
 	RubroMaterialType,
@@ -26,8 +27,8 @@ export const GetAllRubrosMaterials = createServerFn({ method: 'GET' })
 			)
 
 			if (!response.ok) {
-				const error = await response.json()
-				throw new Error(error)
+				const error = (await response.json()) as ErrorResponseType
+				throw new Error(error.msg)
 			}
 
 			return response.json()
@@ -52,8 +53,8 @@ export const CreateRubroMaterial = createServerFn({ method: 'POST' })
 		)
 
 		if (!response.ok) {
-			const error = await response.json()
-			throw new Error(error.error)
+			const error = (await response.json()) as ErrorResponseType
+			throw new Error(error.msg)
 		}
 
 		return
@@ -77,8 +78,8 @@ export const UpdateRubroMaterial = createServerFn({ method: 'POST' })
 		)
 
 		if (!response.ok) {
-			const error = await response.json()
-			throw new Error(error)
+			const error = (await response.json()) as ErrorResponseType
+			throw new Error(error.msg)
 		}
 
 		return
@@ -101,8 +102,8 @@ export const DeleteRubroMaterial = createServerFn({ method: 'POST' })
 		)
 
 		if (!response.ok) {
-			const error = await response.json()
-			throw new Error(error)
+			const error = (await response.json()) as ErrorResponseType
+			throw new Error(error.msg)
 		}
 
 		return
