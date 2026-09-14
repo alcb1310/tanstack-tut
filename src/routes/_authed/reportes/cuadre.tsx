@@ -75,6 +75,7 @@ function RouteComponent() {
 		{
 			accessorKey: 'is_balanced',
 			header: '',
+			size: 20,
 			cell: ({ row }) => {
 				return (
 					<Checkbox
@@ -87,6 +88,7 @@ function RouteComponent() {
 		{
 			accessorKey: 'invoice_date',
 			header: 'Fecha',
+			size: 150,
 			cell: ({ row }) => {
 				const dt = new Date(row.original.invoice_date)
 				return dt.toLocaleDateString('es-EC', {
@@ -98,15 +100,18 @@ function RouteComponent() {
 		},
 		{
 			accessorKey: 'supplier.name',
+			size: 800,
 			header: 'Proveedor',
 		},
 		{
 			accessorKey: 'invoice_number',
+			size: 200,
 			header: 'N° Factura',
 		},
 		{
 			accessorKey: 'invoice_total',
 			header: 'Total',
+			size: 100,
 			cell: ({ row }) => {
 				return (
 					<span className='block w-full text-right'>
