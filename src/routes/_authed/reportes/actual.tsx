@@ -1,7 +1,7 @@
 import { useQuery, useSuspenseQueries } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
 import type { ColumnDef } from '@tanstack/react-table'
-import { DownloadIcon, PlayIcon } from 'lucide-react'
+import { DownloadIcon, PlayIcon, ViewIcon } from 'lucide-react'
 import { FormBackground } from '@/components/layout/form-background'
 import PageTitle from '@/components/layout/page-title'
 import { ReportDataTable } from '@/components/table/report-data-table'
@@ -114,9 +114,9 @@ function RouteComponent() {
 							<span className='block w-full text-right'>
 								{q.Valid
 									? q.Float64.toLocaleString('es-EC', {
-											minimumFractionDigits: 2,
-											maximumFractionDigits: 2,
-										})
+										minimumFractionDigits: 2,
+										maximumFractionDigits: 2,
+									})
 									: ''}
 							</span>
 						)
@@ -156,9 +156,9 @@ function RouteComponent() {
 							<span className='block w-full text-right'>
 								{q.Valid
 									? q.Float64.toLocaleString('es-EC', {
-											minimumFractionDigits: 2,
-											maximumFractionDigits: 2,
-										})
+										minimumFractionDigits: 2,
+										maximumFractionDigits: 2,
+									})
 									: ''}
 							</span>
 						)
@@ -175,9 +175,9 @@ function RouteComponent() {
 							<span className='block w-full text-right'>
 								{q.Valid
 									? q.Float64.toLocaleString('es-EC', {
-											minimumFractionDigits: 2,
-											maximumFractionDigits: 2,
-										})
+										minimumFractionDigits: 2,
+										maximumFractionDigits: 2,
+									})
 									: ''}
 							</span>
 						)
@@ -201,6 +201,13 @@ function RouteComponent() {
 					},
 				},
 			],
+		},
+		{
+			id: 'actions',
+			size: 20,
+			cell: ({ row }) => {
+				return <ViewIcon size={16} />
+			},
 		},
 	]
 
