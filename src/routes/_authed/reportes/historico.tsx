@@ -18,7 +18,7 @@ import { type ReportTypes, reportSchema } from '@/types/reportes'
 
 export const Route = createFileRoute('/_authed/reportes/historico')({
 	component: RouteComponent,
-	loader: async ({ context: { queryClient } }) => {
+	beforeLoad: async ({ context: { queryClient } }) => {
 		Promise.all([
 			queryClient.query({
 				queryKey: ['proyectos', 'active'],
@@ -29,6 +29,7 @@ export const Route = createFileRoute('/_authed/reportes/historico')({
 				queryFn: () => GetAllLevels(),
 			}),
 		])
+		queryClient.resetQueries({ queryKey: ['historico'] })
 	},
 })
 
@@ -99,9 +100,9 @@ function RouteComponent() {
 							<span className='block w-full text-right'>
 								{q.Valid
 									? q.Float64.toLocaleString('es-EC', {
-											minimumFractionDigits: 2,
-											maximumFractionDigits: 2,
-										})
+										minimumFractionDigits: 2,
+										maximumFractionDigits: 2,
+									})
 									: ''}
 							</span>
 						)
@@ -141,9 +142,9 @@ function RouteComponent() {
 							<span className='block w-full text-right'>
 								{q.Valid
 									? q.Float64.toLocaleString('es-EC', {
-											minimumFractionDigits: 2,
-											maximumFractionDigits: 2,
-										})
+										minimumFractionDigits: 2,
+										maximumFractionDigits: 2,
+									})
 									: ''}
 							</span>
 						)
@@ -160,9 +161,9 @@ function RouteComponent() {
 							<span className='block w-full text-right'>
 								{q.Valid
 									? q.Float64.toLocaleString('es-EC', {
-											minimumFractionDigits: 2,
-											maximumFractionDigits: 2,
-										})
+										minimumFractionDigits: 2,
+										maximumFractionDigits: 2,
+									})
 									: ''}
 							</span>
 						)
