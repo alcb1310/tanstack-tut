@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { ColumnDef } from '@tanstack/react-table'
+import type { ColumnDef } from '@tanstack/react-table'
 import { ViewIcon } from 'lucide-react'
 import { ReportDataTable } from '@/components/table/report-data-table'
 import { Button } from '@/components/ui/button'

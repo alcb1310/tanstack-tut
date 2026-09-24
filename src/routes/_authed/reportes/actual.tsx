@@ -19,7 +19,7 @@ import { type ActualReportTypes, actualReportSchema } from '@/types/reportes'
 
 export const Route = createFileRoute('/_authed/reportes/actual')({
 	component: RouteComponent,
-	loader: async ({ context: { queryClient } }) => {
+	beforeLoad: async ({ context: { queryClient } }) => {
 		Promise.all([
 			queryClient.query({
 				queryKey: ['proyectos', 'active'],
@@ -30,6 +30,7 @@ export const Route = createFileRoute('/_authed/reportes/actual')({
 				queryFn: () => GetAllLevels(),
 			}),
 		])
+		queryClient.resetQueries({ queryKey: ['actual'] })
 	},
 })
 
@@ -145,9 +146,9 @@ function RouteComponent() {
 							>
 								{q.Valid
 									? q.Float64.toLocaleString('es-EC', {
-										minimumFractionDigits: 2,
-										maximumFractionDigits: 2,
-									})
+											minimumFractionDigits: 2,
+											maximumFractionDigits: 2,
+										})
 									: ''}
 							</span>
 						)
@@ -191,9 +192,9 @@ function RouteComponent() {
 							>
 								{q.Valid
 									? q.Float64.toLocaleString('es-EC', {
-										minimumFractionDigits: 2,
-										maximumFractionDigits: 2,
-									})
+											minimumFractionDigits: 2,
+											maximumFractionDigits: 2,
+										})
 									: ''}
 							</span>
 						)
@@ -212,9 +213,9 @@ function RouteComponent() {
 							>
 								{q.Valid
 									? q.Float64.toLocaleString('es-EC', {
-										minimumFractionDigits: 2,
-										maximumFractionDigits: 2,
-									})
+											minimumFractionDigits: 2,
+											maximumFractionDigits: 2,
+										})
 									: ''}
 							</span>
 						)
