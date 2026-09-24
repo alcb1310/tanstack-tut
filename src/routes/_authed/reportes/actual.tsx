@@ -1,13 +1,14 @@
 import { useQuery, useSuspenseQueries } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
 import type { ColumnDef } from '@tanstack/react-table'
-import { DownloadIcon, PlayIcon, ViewIcon } from 'lucide-react'
+import { DownloadIcon, PlayIcon } from 'lucide-react'
 import { FormBackground } from '@/components/layout/form-background'
 import PageTitle from '@/components/layout/page-title'
 import { ReportDataTable } from '@/components/table/report-data-table'
 import { Button } from '@/components/ui/button'
 import { FieldGroup, FieldSet } from '@/components/ui/field'
 import { Spinner } from '@/components/ui/spinner'
+import { ActualDetailsDrawer } from '@/drawers/reportes/actual-detail'
 import { useAppForm } from '@/hooks/app-form'
 import { downloadExcelFile } from '@/lib/excel-download'
 import { actualExcelExport } from '@/queries/excel'
@@ -206,7 +207,12 @@ function RouteComponent() {
 			id: 'actions',
 			size: 20,
 			cell: ({ row }) => {
-				return <ViewIcon size={16} />
+				console.log(row.original)
+				return (
+					row.original.budget_item.code !== ' ' && (
+						<ActualDetailsDrawer budget={row.original} />
+					)
+				)
 			},
 		},
 	]
@@ -303,7 +309,9 @@ function RouteComponent() {
 
 			{(isLoading || isFetching) && <Spinner />}
 
-			{data && <ReportDataTable data={data} columns={columns} />}
+			<div>
+				{data && <ReportDataTable data={data.budgets} columns={columns} />}
+			</div>
 		</div>
 	)
 }
