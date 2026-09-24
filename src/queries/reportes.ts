@@ -35,7 +35,12 @@ export const GetAllLevels = createServerFn({ method: 'GET' }).handler(
 export const GetAllBugetsByProjectAndLevel = createServerFn({ method: 'GET' })
 	.validator((data: { project_id: string; level: string }) => data)
 	.handler(
-		async ({ data: { project_id, level } }): Promise<BudgetResponseType[]> => {
+		async ({
+			data: { project_id, level },
+		}): Promise<{
+			budgets: BudgetResponseType[]
+			total: number
+		}> => {
 			const token = getCookie(cookieName)
 
 			const params = new URLSearchParams()
@@ -202,5 +207,39 @@ export const GetSpentDetails = createServerFn({ method: 'GET' })
 			}
 
 			return response.json()
+		},
+	)
+
+type ActualDetailsResponseType = {
+	details: SpentDetailsType[]
+	total: number
+}
+
+export const GetActualDetails = createServerFn({ method: 'GET' })
+	.validator((data: { project_id: string; budget_item_code: string }) => data)
+	.handler(
+		async ({
+			data: { project_id, budget_item_code },
+		}): Promise<ActualDetailsResponseType> => {
+			const token = getCookie(cookieName)
+
+			const response = await fetch(
+				`${URL}/reportes/actual/${project_id}/${budget_item_code}`,
+				{
+					method: 'GET',
+					headers: {
+						'Content-Type': 'application/json',
+						Authorization: `Bearer ${token}`,
+					},
+				},
+			)
+
+			if (!response.ok) {
+				const res = (await response.json()) as ErrorResponseType
+				throw new Error(res.msg)
+			}
+
+			const res = await response.json()
+			return res as ActualDetailsResponseType
 		},
 	)

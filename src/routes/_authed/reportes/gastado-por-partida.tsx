@@ -18,7 +18,7 @@ import { type ReportTypes, reportSchema, type Spent } from '@/types/reportes'
 
 export const Route = createFileRoute('/_authed/reportes/gastado-por-partida')({
 	component: RouteComponent,
-	loader: async ({ context: { queryClient } }) => {
+	beforeLoad: async ({ context: { queryClient } }) => {
 		Promise.all([
 			queryClient.query({
 				queryKey: ['proyectos', 'active'],
@@ -29,6 +29,7 @@ export const Route = createFileRoute('/_authed/reportes/gastado-por-partida')({
 				queryFn: () => GetAllLevels(),
 			}),
 		])
+		queryClient.resetQueries({ queryKey: ['gastado'] })
 	},
 })
 
@@ -48,7 +49,7 @@ function RouteComponent() {
 	})
 
 	const { data, isLoading, isFetching, refetch } = useQuery({
-		queryKey: ['historico', form.state.values],
+		queryKey: ['gastado', form.state.values],
 		queryFn: () => GetSpentReport({ data: form.state.values }),
 		enabled:
 			form.state.values.project_id !== '' &&

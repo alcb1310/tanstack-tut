@@ -8,6 +8,7 @@ import { ReportDataTable } from '@/components/table/report-data-table'
 import { Button } from '@/components/ui/button'
 import { FieldGroup, FieldSet } from '@/components/ui/field'
 import { Spinner } from '@/components/ui/spinner'
+import { ActualDetailsDrawer } from '@/drawers/reportes/actual-detail'
 import { useAppForm } from '@/hooks/app-form'
 import { downloadExcelFile } from '@/lib/excel-download'
 import { actualExcelExport } from '@/queries/excel'
@@ -18,7 +19,7 @@ import { type ActualReportTypes, actualReportSchema } from '@/types/reportes'
 
 export const Route = createFileRoute('/_authed/reportes/actual')({
 	component: RouteComponent,
-	loader: async ({ context: { queryClient } }) => {
+	beforeLoad: async ({ context: { queryClient } }) => {
 		Promise.all([
 			queryClient.query({
 				queryKey: ['proyectos', 'active'],
@@ -29,6 +30,7 @@ export const Route = createFileRoute('/_authed/reportes/actual')({
 				queryFn: () => GetAllLevels(),
 			}),
 		])
+		queryClient.resetQueries({ queryKey: ['actual'] })
 	},
 })
 
@@ -76,11 +78,37 @@ function RouteComponent() {
 			accessorKey: 'budget_item.code',
 			header: 'Código',
 			size: 100,
+			cell: ({ row }) => {
+				return (
+					<span
+						className={
+							row.original.remaining_total < 0
+								? 'bg-destructive text-white'
+								: ''
+						}
+					>
+						{row.original.budget_item.name}
+					</span>
+				)
+			},
 		},
 		{
 			accessorKey: 'budget_item.name',
 			header: 'Partida',
 			size: 800,
+			cell: ({ row }) => {
+				return (
+					<span
+						className={
+							row.original.remaining_total < 0
+								? 'bg-destructive text-white'
+								: ''
+						}
+					>
+						{row.original.budget_item.name}
+					</span>
+				)
+			},
 		},
 		{
 			accessorKey: 'updated_budget',
@@ -90,7 +118,9 @@ function RouteComponent() {
 				const q = row.original.updated_budget
 
 				return (
-					<span className='block w-full text-right'>
+					<span
+						className={`block w-full text-right ${row.original.remaining_total < 0 ? 'bg-destructive text-white' : ''}`}
+					>
 						{q.toLocaleString('es-EC', {
 							minimumFractionDigits: 2,
 							maximumFractionDigits: 2,
@@ -111,7 +141,9 @@ function RouteComponent() {
 						const q = row.original.spent_quantity
 
 						return (
-							<span className='block w-full text-right'>
+							<span
+								className={`block w-full text-right ${row.original.remaining_total < 0 ? 'bg-destructive text-white' : ''}`}
+							>
 								{q.Valid
 									? q.Float64.toLocaleString('es-EC', {
 											minimumFractionDigits: 2,
@@ -130,7 +162,9 @@ function RouteComponent() {
 						const q = row.original.spent_total
 
 						return (
-							<span className='block w-full text-right'>
+							<span
+								className={`block w-full text-right ${row.original.remaining_total < 0 ? 'bg-destructive text-white' : ''}`}
+							>
 								{q.toLocaleString('es-EC', {
 									minimumFractionDigits: 2,
 									maximumFractionDigits: 2,
@@ -153,7 +187,9 @@ function RouteComponent() {
 						const q = row.original.remaining_quantity
 
 						return (
-							<span className='block w-full text-right'>
+							<span
+								className={`block w-full text-right ${row.original.remaining_total < 0 ? 'bg-destructive text-white' : ''}`}
+							>
 								{q.Valid
 									? q.Float64.toLocaleString('es-EC', {
 											minimumFractionDigits: 2,
@@ -172,7 +208,9 @@ function RouteComponent() {
 						const q = row.original.remaining_cost
 
 						return (
-							<span className='block w-full text-right'>
+							<span
+								className={`block w-full text-right ${row.original.remaining_total < 0 ? 'bg-destructive text-white' : ''}`}
+							>
 								{q.Valid
 									? q.Float64.toLocaleString('es-EC', {
 											minimumFractionDigits: 2,
@@ -191,7 +229,9 @@ function RouteComponent() {
 						const q = row.original.remaining_total
 
 						return (
-							<span className='block w-full text-right'>
+							<span
+								className={`block w-full text-right ${q < 0 ? 'bg-destructive text-white' : ''}`}
+							>
 								{q.toLocaleString('es-EC', {
 									minimumFractionDigits: 2,
 									maximumFractionDigits: 2,
@@ -201,6 +241,17 @@ function RouteComponent() {
 					},
 				},
 			],
+		},
+		{
+			id: 'actions',
+			size: 20,
+			cell: ({ row }) => {
+				return (
+					row.original.budget_item.code !== ' ' && (
+						<ActualDetailsDrawer budget={row.original} />
+					)
+				)
+			},
 		},
 	]
 
@@ -296,7 +347,9 @@ function RouteComponent() {
 
 			{(isLoading || isFetching) && <Spinner />}
 
-			{data && <ReportDataTable data={data} columns={columns} />}
+			<div>
+				{data && <ReportDataTable data={data.budgets} columns={columns} />}
+			</div>
 		</div>
 	)
 }
