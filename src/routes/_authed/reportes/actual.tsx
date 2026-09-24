@@ -77,11 +77,37 @@ function RouteComponent() {
 			accessorKey: 'budget_item.code',
 			header: 'Código',
 			size: 100,
+			cell: ({ row }) => {
+				return (
+					<span
+						className={
+							row.original.remaining_total < 0
+								? 'bg-destructive text-white'
+								: ''
+						}
+					>
+						{row.original.budget_item.name}
+					</span>
+				)
+			},
 		},
 		{
 			accessorKey: 'budget_item.name',
 			header: 'Partida',
 			size: 800,
+			cell: ({ row }) => {
+				return (
+					<span
+						className={
+							row.original.remaining_total < 0
+								? 'bg-destructive text-white'
+								: ''
+						}
+					>
+						{row.original.budget_item.name}
+					</span>
+				)
+			},
 		},
 		{
 			accessorKey: 'updated_budget',
@@ -91,7 +117,9 @@ function RouteComponent() {
 				const q = row.original.updated_budget
 
 				return (
-					<span className='block w-full text-right'>
+					<span
+						className={`block w-full text-right ${row.original.remaining_total < 0 ? 'bg-destructive text-white' : ''}`}
+					>
 						{q.toLocaleString('es-EC', {
 							minimumFractionDigits: 2,
 							maximumFractionDigits: 2,
@@ -112,7 +140,9 @@ function RouteComponent() {
 						const q = row.original.spent_quantity
 
 						return (
-							<span className='block w-full text-right'>
+							<span
+								className={`block w-full text-right ${row.original.remaining_total < 0 ? 'bg-destructive text-white' : ''}`}
+							>
 								{q.Valid
 									? q.Float64.toLocaleString('es-EC', {
 										minimumFractionDigits: 2,
@@ -131,7 +161,9 @@ function RouteComponent() {
 						const q = row.original.spent_total
 
 						return (
-							<span className='block w-full text-right'>
+							<span
+								className={`block w-full text-right ${row.original.remaining_total < 0 ? 'bg-destructive text-white' : ''}`}
+							>
 								{q.toLocaleString('es-EC', {
 									minimumFractionDigits: 2,
 									maximumFractionDigits: 2,
@@ -154,7 +186,9 @@ function RouteComponent() {
 						const q = row.original.remaining_quantity
 
 						return (
-							<span className='block w-full text-right'>
+							<span
+								className={`block w-full text-right ${row.original.remaining_total < 0 ? 'bg-destructive text-white' : ''}`}
+							>
 								{q.Valid
 									? q.Float64.toLocaleString('es-EC', {
 										minimumFractionDigits: 2,
@@ -173,7 +207,9 @@ function RouteComponent() {
 						const q = row.original.remaining_cost
 
 						return (
-							<span className='block w-full text-right'>
+							<span
+								className={`block w-full text-right ${row.original.remaining_total < 0 ? 'bg-destructive text-white' : ''}`}
+							>
 								{q.Valid
 									? q.Float64.toLocaleString('es-EC', {
 										minimumFractionDigits: 2,
@@ -192,7 +228,9 @@ function RouteComponent() {
 						const q = row.original.remaining_total
 
 						return (
-							<span className='block w-full text-right'>
+							<span
+								className={`block w-full text-right ${q < 0 ? 'bg-destructive text-white' : ''}`}
+							>
 								{q.toLocaleString('es-EC', {
 									minimumFractionDigits: 2,
 									maximumFractionDigits: 2,
@@ -207,7 +245,6 @@ function RouteComponent() {
 			id: 'actions',
 			size: 20,
 			cell: ({ row }) => {
-				console.log(row.original)
 				return (
 					row.original.budget_item.code !== ' ' && (
 						<ActualDetailsDrawer budget={row.original} />
